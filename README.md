@@ -1,4 +1,4 @@
-# Group_2_SEF
+# Group_2_SEPT
 
 -- ND Telemedicine App  --
 
