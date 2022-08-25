@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Group_2_SEF.iml" filepath="$PROJECT_DIR$/.idea/Group_2_SEF.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/application/application.iml" filepath="$PROJECT_DIR$/app/application/application.iml" />
+    </modules>
+  </component>
+</project>
