@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(const SignInApp());
@@ -43,10 +45,17 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Welcome!', style: Theme.of(context).textTheme.headline2),
-      ),
-    );
+        body: Center(
+          child: Text('Welcome!', style: Theme.of(context).textTheme.headline2),
+        ),
+        // Floating button for making appointments
+        floatingActionButton: FloatingActionButton(
+          onPressed: () =>
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return const MakingAppointment();
+          })),
+          shape: CircleBorder(),
+        ));
   }
 }
 
@@ -153,6 +162,44 @@ class _SignInFormState extends State<SignInForm> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class MakingAppointment extends StatelessWidget {
+  const MakingAppointment();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+          child: Text('Choose a doctor:',
+              style: Theme.of(context).textTheme.headline2),
+        ),
+        // Floating button for selecting date and time
+        floatingActionButton: FloatingActionButton(
+          onPressed: () =>
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return const PickTime();
+          })),
+          shape: CircleBorder(),
+        ));
+  }
+}
+
+class PickTime extends StatelessWidget {
+  const PickTime();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text('todo:calendar picker',
+            style: Theme.of(context).textTheme.headline2),
+      ),
+      // Floating button for selecting date and time
+      floatingActionButton:
+          FloatingActionButton(onPressed: () => print("test")),
     );
   }
 }
