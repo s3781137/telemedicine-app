@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'welcome.dart';
 
 var passwords = {"test": "Password123", "oli": "helloWorld!"};
 
@@ -30,19 +31,6 @@ class SignInScreen extends StatelessWidget {
             child: SignInForm(),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Welcome!', style: Theme.of(context).textTheme.headline2),
       ),
     );
   }
