@@ -40,8 +40,8 @@ public class PatientService {
         return repo.findById(id);
     }
 
-    public boolean checkIfUsernameIsTaken(Patient patient) {
-        return repo.findUsername(patient.getUsername()) != null;
+    public boolean checkIfUsernameIsFree(Patient patient) {
+        return repo.findUsername(patient.getUsername()).equals("");
     }
 
     public void deletePatient(int id) {

@@ -44,7 +44,7 @@ public class PatientController {
 
     @PostMapping
     public ResponseEntity<?> addPatient(@RequestBody Patient patient) {
-        if (service.checkIfUsernameIsTaken(patient)) {
+        if (service.checkIfUsernameIsFree(patient)) {
             Map<String, Object> response = new HashMap<>();
             response.put("status", HttpStatus.NOT_ACCEPTABLE);
             response.put("errors", "Username is already taken");
@@ -59,4 +59,18 @@ public class PatientController {
         }
     }
 
+    @PutMapping("/patient/{id}")
+    public ResponseEntity<?> updatePatient(@RequestBody Patient patient) {
+        try {
+            if (service.findById(patient.getId()) != null) {
+                service.updatePatient(patient.getGender(), patient.getWeight(), patient.getHeight(),
+                        patient.getContactNo(), patient.getContactName(), patient.getId());
+                return new ResponseEntity<>(patient, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("There is no patient with this ID", HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            throw new PatientNotFound("Patient database error");
+        }
+    }
 }
