@@ -2,11 +2,9 @@ package com.sept.telemedicine.service;
 
 import com.sept.telemedicine.model.Patient;
 import com.sept.telemedicine.repository.PatientRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +15,7 @@ public class PatientService {
     @Autowired
     private PatientRepository repo;
 
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Patient findById(Integer id) {
@@ -27,34 +26,39 @@ public class PatientService {
         return repo.findAll();
     }
 
-    public void savePatient(Patient patient) {
+    public Patient savePatient(Patient patient) {
         patient.setPassword(bCryptPasswordEncoder.encode(patient.getPassword()));
         patient.setUsername(patient.getUsername());
-        patient.setConfirmPassword("");
-        repo.save(patient);
+        patient.setConfirmPassword(bCryptPasswordEncoder.encode(patient.getConfirmPassword()));
+        return repo.save(patient);
 
     }
 
-    public Optional<Patient> getPatientByUsername(String username) {
-        Integer id = repo.findIdByUsername(username);
-        return repo.findById(id);
+    public Patient getPatientByUsername(String username) {
+        Optional<Patient> patient = repo.findPatientByUsername(username);
+        if (patient.isPresent()) {
+            return patient.get();
+        } else {
+            throw new RuntimeException("There is no patient against this username: " + username);
+        }
     }
 
     public boolean checkIfUsernameIsFree(Patient patient) {
-        return repo.findUsername(patient.getUsername()).equals("");
+        Optional<Patient> existingPatient = repo.findPatientByUsername(patient.getUsername());
+        return existingPatient.isPresent();
     }
 
     public void deletePatient(int id) {
         repo.deleteById(id);
     }
 
-    public void updatePatient(String gender, double weight, double height, String contactNo, String contactName,
+    public void updatePatient(String status, String gender, double weight, double height, String contactNo,
+            String contactName,
             int id) {
-        repo.updateDetails(gender, weight, height, contactNo, contactName, id);
+        repo.updateDetails(status, gender, weight, height, contactNo, contactName, id);
     }
 
     public Integer findIdByUsername(String username) {
         return repo.findIdByUsername(username);
     }
-
 }

@@ -1,11 +1,6 @@
 package com.sept.telemedicine.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "patient")
@@ -16,6 +11,8 @@ public class Patient {
     @Column(name = "username")
     private String username;
     private String password;
+    @Transient
+    @Column(name = "confirm_password")
     private String confirmPassword;
     private String firstName;
     private String lastName;
@@ -145,4 +142,22 @@ public class Patient {
         this.contactName = contactName;
     }
 
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", status='" + status + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", weight=" + weight +
+                ", height=" + height +
+                ", contactNo='" + contactNo + '\'' +
+                ", contactName='" + contactName + '\'' +
+                '}';
+    }
 }
