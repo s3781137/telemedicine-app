@@ -3,6 +3,8 @@ package com.sept.telemedicine.service;
 import com.sept.telemedicine.model.Patient;
 import com.sept.telemedicine.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -48,14 +50,26 @@ public class PatientService {
         return existingPatient.isPresent();
     }
 
-    public void deletePatient(int id) {
+    public void deletePatient(String username) {
+        int id = repo.findIdByUsername(username);
         repo.deleteById(id);
     }
 
-    public void updatePatient(String status, String gender, double weight, double height, String contactNo,
+    public ResponseEntity<?> updatePatient(String gender, double weight, double height, String contactNo,
             String contactName,
             int id) {
-        repo.updateDetails(status, gender, weight, height, contactNo, contactName, id);
+        Optional<Patient> patient = repo.findById(id);
+        if (patient.isPresent()) {
+            patient.get().setGender(gender);
+            patient.get().setWeight(weight);
+            patient.get().setHeight(height);
+            patient.get().setContactNo(contactNo);
+            patient.get().setContactName(contactName);
+            Patient updatedPatient = repo.save(patient.get());
+            return new ResponseEntity<>(updatedPatient, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("There is no patient with this ID", HttpStatus.OK);
+        }
     }
 
     public Integer findIdByUsername(String username) {

@@ -11,7 +11,6 @@ public class Patient {
     @Column(name = "username")
     private String username;
     private String password;
-    @Transient
     @Column(name = "confirm_password")
     private String confirmPassword;
     private String firstName;

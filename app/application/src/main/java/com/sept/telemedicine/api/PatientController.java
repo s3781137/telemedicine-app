@@ -1,5 +1,7 @@
 package com.sept.telemedicine.api;
 
+import com.mysql.cj.protocol.x.Ok;
+import com.sept.telemedicine.dto.PatientDto;
 import com.sept.telemedicine.exceptions.PatientNotFound;
 import com.sept.telemedicine.model.Patient;
 import com.sept.telemedicine.service.PatientService;
@@ -56,18 +58,23 @@ public class PatientController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updatePatient(@RequestBody Patient patient) {
+    public ResponseEntity<?> updatePatient(@RequestBody PatientDto patient) {
         try {
-            if (service.findById(patient.getId()) != null) {
-                service.updatePatient(patient.getStatus(), patient.getGender(), patient.getWeight(),
-                        patient.getHeight(),
-                        patient.getContactNo(), patient.getContactName(), patient.getId());
-                return new ResponseEntity<>(patient, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("There is no patient with this ID", HttpStatus.OK);
-            }
+            return service.updatePatient(patient.getGender(), patient.getWeight(), patient.getHeight(),
+                    patient.getContactNo(), patient.getContactName(), patient.getId());
         } catch (Exception e) {
             throw new PatientNotFound("Patient database error");
         }
     }
+
+    @DeleteMapping("/delete/{username}")
+    public ResponseEntity<?> deletePatient(@PathVariable String username) {
+        try {
+            service.deletePatient(username);
+            return new ResponseEntity<>("Patient deleted", HttpStatus.OK);
+        } catch (Exception e) {
+            throw new PatientNotFound("Patient database error");
+        }
+    }
+
 }

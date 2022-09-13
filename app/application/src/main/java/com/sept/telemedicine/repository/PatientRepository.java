@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -18,8 +19,8 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     Optional<Patient> findPatientByUsername(String username);
 
     @Modifying
-    @Query("UPDATE Patient SET status = ?1, gender = ?2, weight = ?3, height = ?4, contactNo = ?5, contactName = ?6 WHERE id = ?7")
-    void updateDetails(@Param("status") String status,
+    @Query("UPDATE Patient SET gender = ?1, weight = ?2, height = ?3, contactNo = ?4, contactName = ?5 WHERE id = ?6")
+    void updateDetails(
             @Param("gender") String gender,
             @Param("weight") double weight,
             @Param("height") double height, @Param("contactNo") String contactNo,
@@ -28,4 +29,5 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
 
     @Query("SELECT username FROM Patient Where id = ?1")
     String findUsername(@Param("username") String username);
+
 }
