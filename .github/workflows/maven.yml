@@ -24,6 +24,6 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: 
-        cd ./github
-        cd /workflows
+        cd app
+        cd application
         mvn -B package --file pom.xml
