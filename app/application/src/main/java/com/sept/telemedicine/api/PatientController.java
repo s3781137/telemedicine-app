@@ -60,7 +60,8 @@ public class PatientController {
     @PutMapping("/update")
     public ResponseEntity<?> updatePatient(@RequestBody PatientDto patient) {
         try {
-            return service.updatePatient(patient.getGender(), patient.getWeight(), patient.getHeight(),
+            return service.updatePatient(patient.getStatus(), patient.getGender(), patient.getWeight(),
+                    patient.getHeight(),
                     patient.getContactNo(), patient.getContactName(), patient.getId());
         } catch (Exception e) {
             throw new PatientNotFound("Patient database error");

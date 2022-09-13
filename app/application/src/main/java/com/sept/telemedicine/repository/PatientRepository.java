@@ -19,12 +19,13 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     Optional<Patient> findPatientByUsername(String username);
 
     @Modifying
-    @Query("UPDATE Patient SET gender = ?1, weight = ?2, height = ?3, contactNo = ?4, contactName = ?5 WHERE id = ?6")
+    @Query("UPDATE Patient SET gender = ?1, weight = ?2, height = ?3, contactNo = ?4, contactName = ?5, status = ?6 WHERE id = ?7")
     void updateDetails(
             @Param("gender") String gender,
             @Param("weight") double weight,
             @Param("height") double height, @Param("contactNo") String contactNo,
             @Param("contactName") String contactName,
+            @Param("status") String status,
             @Param("id") int id);
 
     @Query("SELECT username FROM Patient Where id = ?1")

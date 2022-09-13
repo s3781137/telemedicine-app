@@ -55,11 +55,12 @@ public class PatientService {
         repo.deleteById(id);
     }
 
-    public ResponseEntity<?> updatePatient(String gender, double weight, double height, String contactNo,
+    public ResponseEntity<?> updatePatient(String status, String gender, double weight, double height, String contactNo,
             String contactName,
             int id) {
         Optional<Patient> patient = repo.findById(id);
         if (patient.isPresent()) {
+            patient.get().setStatus(status);
             patient.get().setGender(gender);
             patient.get().setWeight(weight);
             patient.get().setHeight(height);

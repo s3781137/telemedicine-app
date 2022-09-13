@@ -2,6 +2,8 @@ package com.sept.telemedicine.model;
 
 import javax.persistence.*;
 
+import org.springframework.data.annotation.Transient;
+
 @Entity
 @Table(name = "patient")
 public class Patient {
@@ -12,6 +14,7 @@ public class Patient {
     private String username;
     private String password;
     @Column(name = "confirm_password")
+    @Transient
     private String confirmPassword;
     private String firstName;
     private String lastName;

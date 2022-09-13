@@ -2,6 +2,7 @@ package com.sept.telemedicine.dto;
 
 public class PatientDto {
     private int id;
+    private String status;
     private String gender;
     private double weight;
     private double height;
@@ -11,8 +12,10 @@ public class PatientDto {
     public PatientDto() {
     }
 
-    public PatientDto(int id, String gender, double weight, double height, String contactNo, String contactName) {
+    public PatientDto(int id, String status, String gender, double weight, double height, String contactNo,
+            String contactName) {
         this.id = id;
+        this.status = status;
         this.gender = gender;
         this.weight = weight;
         this.height = height;
@@ -26,6 +29,10 @@ public class PatientDto {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public String getGender() {
