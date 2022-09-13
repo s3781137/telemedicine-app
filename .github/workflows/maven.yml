@@ -22,5 +22,11 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
+    - name: Check out Repository
+      uses: actions/checkout@v3
+    - name: Packaging Jar
+      id: packaging-jar
+      shell: bash
+      run: mvn clean install
     - name: Build with Maven
       run: mvn -B package --file pom.xml
