@@ -137,7 +137,26 @@ class _LoginFormState extends State<LoginForm> {
               onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
               child: const Text('Sign In'),
             ),
-            // todo sign up button
+            // todo: sign up button
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.resolveWith(
+                    (Set<MaterialState> states) {
+                  return states.contains(MaterialState.disabled)
+                      ? null
+                      : Colors.white;
+                }),
+                backgroundColor: MaterialStateProperty.resolveWith(
+                    (Set<MaterialState> states) {
+                  return states.contains(MaterialState.disabled)
+                      ? null
+                      : Colors.blue;
+                }),
+              ),
+              onPressed: () {},
+              // todo: jump to sign up page
+              child: const Text('New Member? Sign Up!'),
+            ),
           ],
         ),
       ),
