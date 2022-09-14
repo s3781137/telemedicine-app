@@ -7,8 +7,23 @@ class LoginHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        '/': (context) => const LoginHome(),
+        '/': (context) => const LoginHomePage(),
       },
+    );
+  }
+}
+
+class LoginHomePage extends StatelessWidget {
+  const LoginHomePage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('TD TELEMEDICINE'),
+        centerTitle: true,
+      ),
+      body: Center(child: Text('login home page')),
     );
   }
 }
