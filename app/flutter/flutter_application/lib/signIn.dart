@@ -54,6 +54,7 @@ class _SignInFormState extends State<SignInForm> {
     String passwordString = _passwordTextController.value.text;
 
     if (passwords[usernameString] == passwordString) {
+      // todo: sign in to patient homepage
       Navigator.of(context).pushNamed('/welcome');
     } else {
       showDialog(
