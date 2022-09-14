@@ -13,7 +13,18 @@ class Homepage extends StatelessWidget {
       },
       title: 'ListViews',
       home: Scaffold(
-        appBar: AppBar(title: Text('ND TELEMEDICINE')),
+        appBar: AppBar(
+          title: Text('ND TELEMEDICINE'),
+          // todo: top right button click behaviour
+          actions: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Icon(Icons.account_circle),
+                ))
+          ],
+        ),
         body: BodyLayout(),
       ),
     );
