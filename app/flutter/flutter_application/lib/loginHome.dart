@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/signIn.dart';
 import 'package:flutter_application/signUp.dart';
+import 'package:flutter_application/welcome.dart';
+
+import 'doctorSignUp.dart';
 
 // for test
 var passwords = {"test": "Password123", "oli": "helloWorld!", "nic": "nic"};
@@ -11,10 +14,14 @@ class LoginHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // todo: currently, unsure about this routes implementation
+      //       but it's useful at least right now.
       routes: {
         '/': (context) => const LoginHomeScreen(),
+        '/welcome': (context) => const WelcomeScreen(),
         '/choosesignup': (context) => const SignUpScreen(),
         '/doctorsignin': (context) => const SignInScreen(),
+        '/doctorsignup': (context) => const DoctorSignUpScreen(),
       },
     );
   }
