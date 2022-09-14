@@ -16,6 +16,9 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     @Query("SELECT id FROM Patient WHERE username = ?1")
     Integer findIdByUsername(@Param("username") String username);
 
+    @Query("SELECT password FROM Patient WHERE username = ?1")
+    String findPasswordByUsername(@Param("username") String password);
+
     Optional<Patient> findPatientByUsername(String username);
 
     @Modifying

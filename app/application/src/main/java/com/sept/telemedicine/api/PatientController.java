@@ -77,4 +77,16 @@ public class PatientController {
         }
     }
 
+    @GetMapping("/login")
+    public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
+        try {
+            boolean patientfound = service.checkLoginCredentials(username, password);
+            return new ResponseEntity<>(patientfound, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new PatientNotFound("Patient with that username not found");
+        }
+        //to login go to:
+        //http://localhost:8080/patient/login?username=aishwarya&password=BTS
+    } 
+
 }
