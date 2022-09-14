@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/signIn.dart';
 import 'package:flutter_application/signUp.dart';
+import 'package:flutter_application/welcome.dart';
 
 import 'doctorSignUp.dart';
 
@@ -17,6 +18,7 @@ class LoginHome extends StatelessWidget {
       //       but it's useful at least right now.
       routes: {
         '/': (context) => const LoginHomeScreen(),
+        '/welcome': (context) => const WelcomeScreen(),
         '/choosesignup': (context) => const SignUpScreen(),
         '/doctorsignin': (context) => const SignInScreen(),
         '/doctorsignup': (context) => const DoctorSignUpScreen(),
