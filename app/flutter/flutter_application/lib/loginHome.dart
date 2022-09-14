@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/signIn.dart';
 import 'package:flutter_application/signUp.dart';
 
 // for test
@@ -13,6 +14,7 @@ class LoginHome extends StatelessWidget {
       routes: {
         '/': (context) => const LoginHomeScreen(),
         '/choosesignup': (context) => const SignUpScreen(),
+        '/doctorsignin': (context) => const SignInScreen(),
       },
     );
   }
@@ -157,6 +159,24 @@ class _LoginFormState extends State<LoginForm> {
               ),
               onPressed: () => Navigator.of(context).pushNamed('/choosesignup'),
               child: const Text('New Member? Sign Up!'),
+            ),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.resolveWith(
+                    (Set<MaterialState> states) {
+                  return states.contains(MaterialState.disabled)
+                      ? null
+                      : Colors.white;
+                }),
+                backgroundColor: MaterialStateProperty.resolveWith(
+                    (Set<MaterialState> states) {
+                  return states.contains(MaterialState.disabled)
+                      ? null
+                      : Colors.blue;
+                }),
+              ),
+              onPressed: () => Navigator.of(context).pushNamed('/doctorsignin'),
+              child: const Text('Login As Doctor Here'),
             ),
           ],
         ),
