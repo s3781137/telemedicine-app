@@ -75,13 +75,4 @@ public class PatientService {
     public Integer findIdByUsername(String username) {
         return repo.findIdByUsername(username);
     }
-
-    public boolean checkLoginCredentials(String username, String password){
-        Optional<Patient> existingPatient = repo.findPatientByUsername(username);
-        if (existingPatient.isPresent()){
-            return bCryptPasswordEncoder.matches(password, repo.findPasswordByUsername(username));
-            
-        }
-        return false;
-    }
 }
