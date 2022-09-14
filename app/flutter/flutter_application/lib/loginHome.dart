@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/homepage.dart';
 import 'package:flutter_application/signIn.dart';
 import 'package:flutter_application/signUp.dart';
 import 'package:flutter_application/welcome.dart';
@@ -22,6 +23,7 @@ class LoginHome extends StatelessWidget {
         '/choosesignup': (context) => const SignUpScreen(),
         '/doctorsignin': (context) => const SignInScreen(),
         '/doctorsignup': (context) => const DoctorSignUpScreen(),
+        '/homepage': (context) => const Homepage(),
       },
     );
   }
@@ -66,7 +68,7 @@ class _LoginFormState extends State<LoginForm> {
     String passwordString = _passwordTextController.value.text;
 
     if (passwords[usernameString] == passwordString) {
-      Navigator.of(context).pushNamed('/homescreen');
+      Navigator.of(context).pushNamed('/homepage');
       // todo: homescreen
     } else {
       showDialog(
