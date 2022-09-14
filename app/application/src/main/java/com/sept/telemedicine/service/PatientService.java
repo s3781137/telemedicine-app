@@ -1,6 +1,8 @@
 package com.sept.telemedicine.service;
 
 import com.sept.telemedicine.model.Patient;
+import com.sept.telemedicine.model.PatientHealthInformation;
+import com.sept.telemedicine.repository.PatientHealthRepository;
 import com.sept.telemedicine.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ public class PatientService {
 
     @Autowired
     private PatientRepository repo;
+    private PatientHealthRepository healthRepo;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -83,5 +86,14 @@ public class PatientService {
             
         }
         return false;
+    }
+
+    public PatientHealthInformation savePatientHealthInfo(PatientHealthInformation phi){
+        return healthRepo.save(phi);
+    }
+
+    public void updateHealthInfo(PatientHealthInformation healthInfo){
+       healthRepo.updatePatientHealthDetails(healthInfo.getMedication(), healthInfo.getMedicalDescription(), healthInfo.getLiverDisease(), healthInfo.getKidneyDisease(), healthInfo.getHeartDisease(), healthInfo.getDiabetes(), healthInfo.getCancer(), healthInfo.getMedicalProblems(), healthInfo.getPastSurgeries(), healthInfo.getId());
+
     }
 }
