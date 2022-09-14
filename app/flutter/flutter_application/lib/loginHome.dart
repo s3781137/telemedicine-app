@@ -140,7 +140,6 @@ class _LoginFormState extends State<LoginForm> {
               onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
               child: const Text('Sign In'),
             ),
-            // todo: sign up button
             TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.resolveWith(
