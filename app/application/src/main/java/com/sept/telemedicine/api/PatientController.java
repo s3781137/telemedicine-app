@@ -36,7 +36,7 @@ public class PatientController {
         }
     }
 
-    @PostMapping("/add")
+    @PostMapping("/reisterPatient")
     public ResponseEntity<?> addPatient(@RequestBody Patient patient) {
         if (service.checkIfUsernameIsFree(patient)) {
             Map<String, Object> response = new HashMap<>();
