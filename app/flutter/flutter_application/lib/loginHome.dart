@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/signUp.dart';
 
 // for test
 var passwords = {"test": "Password123", "oli": "helloWorld!", "nic": "nic"};
@@ -11,6 +12,7 @@ class LoginHome extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/': (context) => const LoginHomeScreen(),
+        '/choosesignup': (context) => const SignUpScreen(),
       },
     );
   }
@@ -56,6 +58,7 @@ class _LoginFormState extends State<LoginForm> {
 
     if (passwords[usernameString] == passwordString) {
       Navigator.of(context).pushNamed('/homescreen');
+      // todo: homescreen
     } else {
       showDialog(
           context: context,
@@ -153,8 +156,7 @@ class _LoginFormState extends State<LoginForm> {
                       : Colors.blue;
                 }),
               ),
-              onPressed: () {},
-              // todo: jump to sign up page
+              onPressed: () => Navigator.of(context).pushNamed('/choosesignup'),
               child: const Text('New Member? Sign Up!'),
             ),
           ],
