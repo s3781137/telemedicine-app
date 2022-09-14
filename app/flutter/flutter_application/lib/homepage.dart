@@ -22,7 +22,15 @@ class Homepage extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {},
                   child: Icon(Icons.account_circle),
-                ))
+                )),
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/homepage');
+                  },
+                  child: Icon(Icons.home),
+                )),
           ],
         ),
         body: BodyLayout(),
