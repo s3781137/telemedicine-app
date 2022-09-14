@@ -23,7 +23,7 @@ class LoginHome extends StatelessWidget {
         '/choosesignup': (context) => const SignUpScreen(),
         '/doctorsignin': (context) => const SignInScreen(),
         '/doctorsignup': (context) => const DoctorSignUpScreen(),
-        '/homepage': (context) => const Homepage(),
+        '/homepage': (context) => Homepage(),
       },
     );
   }
