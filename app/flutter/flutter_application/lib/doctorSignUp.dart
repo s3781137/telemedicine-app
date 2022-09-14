@@ -1,34 +1,22 @@
 import 'package:flutter/material.dart';
 import 'welcome.dart';
 
-var passwords = {"test": "Password123", "oli": "helloWorld!"};
-
-class SignInApp extends StatelessWidget {
-  const SignInApp();
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        '/': (context) => const SignInScreen(),
-        '/welcome': (context) => const WelcomeScreen(),
-      },
-    );
-  }
-}
-
-class SignInScreen extends StatelessWidget {
-  const SignInScreen();
+class DoctorSignUpScreen extends StatelessWidget {
+  const DoctorSignUpScreen();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Doctor Registration'),
+        centerTitle: true,
+      ),
       backgroundColor: Colors.grey[200],
       body: const Center(
         child: SizedBox(
           width: 600,
           child: Card(
-            child: SignInForm(),
+            child: DoctorSignUpForm(),
           ),
         ),
       ),
@@ -36,33 +24,36 @@ class SignInScreen extends StatelessWidget {
   }
 }
 
-class SignInForm extends StatefulWidget {
-  const SignInForm();
+class DoctorSignUpForm extends StatefulWidget {
+  const DoctorSignUpForm();
 
   @override
-  _SignInFormState createState() => _SignInFormState();
+  _DoctorSignUpFormState createState() => _DoctorSignUpFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _DoctorSignUpFormState extends State<DoctorSignUpForm> {
   final _usernameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
+  final _ConfirmPwTextController = TextEditingController();
+  final _UniqueIdTextController = TextEditingController();
 
   double _formProgress = 0;
 
   void _validateForm() {
+    // todo: validate method & backend stuff for doctor registration
+
     String usernameString = _usernameTextController.value.text;
     String passwordString = _passwordTextController.value.text;
 
-    if (passwords[usernameString] == passwordString) {
-      // todo: sign in to patient homepage
+    if (1 == 2) {
       Navigator.of(context).pushNamed('/welcome');
     } else {
       showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-                title: const Text('Cannot Sign in'),
-                content: const Text('Username and Password do not match'),
+                title: const Text('Cannot Sign Up'),
+                content: const Text('Error'),
                 actions: <Widget>[
                   TextButton(
                     onPressed: () => Navigator.pop(context),
@@ -78,6 +69,8 @@ class _SignInFormState extends State<SignInForm> {
     final controllers = [
       _usernameTextController,
       _passwordTextController,
+      _ConfirmPwTextController,
+      _UniqueIdTextController,
     ];
 
     for (final controller in controllers) {
@@ -102,7 +95,7 @@ class _SignInFormState extends State<SignInForm> {
           mainAxisSize: MainAxisSize.min,
           children: [
             LinearProgressIndicator(value: _formProgress),
-            Text('Doctor Sign In',
+            Text('Doctor Sign Up',
                 style: Theme.of(context).textTheme.headline4),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -117,6 +110,24 @@ class _SignInFormState extends State<SignInForm> {
                 controller: _passwordTextController,
                 decoration: const InputDecoration(hintText: 'Password'),
                 obscureText: true,
+              ),
+            ),
+            // todo: method for confirming password
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: _ConfirmPwTextController,
+                decoration: const InputDecoration(hintText: 'Confirm Password'),
+                obscureText: true,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: _UniqueIdTextController,
+                decoration: const InputDecoration(
+                    hintText:
+                        'Doctor Unique ID (something idk for verification)'),
               ),
             ),
             TextButton(
@@ -135,7 +146,7 @@ class _SignInFormState extends State<SignInForm> {
                 }),
               ),
               onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
-              child: const Text('Sign In'),
+              child: const Text('Sign Up'),
             ),
           ],
         ),

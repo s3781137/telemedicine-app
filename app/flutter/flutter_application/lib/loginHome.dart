@@ -1,34 +1,48 @@
 import 'package:flutter/material.dart';
-import 'welcome.dart';
+import 'package:flutter_application/homepage.dart';
+import 'package:flutter_application/signIn.dart';
+import 'package:flutter_application/signUp.dart';
+import 'package:flutter_application/welcome.dart';
 
-var passwords = {"test": "Password123", "oli": "helloWorld!"};
+import 'doctorSignUp.dart';
 
-class SignInApp extends StatelessWidget {
-  const SignInApp();
+// for test
+var passwords = {"test": "Password123", "oli": "helloWorld!", "nic": "nic"};
+
+class LoginHome extends StatelessWidget {
+  const LoginHome();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // todo: currently, unsure about this routes implementation
+      //       but it's useful at least right now.
       routes: {
-        '/': (context) => const SignInScreen(),
+        '/': (context) => const LoginHomeScreen(),
         '/welcome': (context) => const WelcomeScreen(),
+        '/choosesignup': (context) => const SignUpScreen(),
+        '/doctorsignin': (context) => const SignInScreen(),
+        '/doctorsignup': (context) => const DoctorSignUpScreen(),
+        '/homepage': (context) => Homepage(),
       },
     );
   }
 }
 
-class SignInScreen extends StatelessWidget {
-  const SignInScreen();
+class LoginHomeScreen extends StatelessWidget {
+  const LoginHomeScreen();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body: const Center(
+      appBar: AppBar(
+        title: Text('TD TELEMEDICINE'),
+        centerTitle: true,
+      ),
+      body: Center(
         child: SizedBox(
-          width: 600,
           child: Card(
-            child: SignInForm(),
+            child: LoginForm(),
           ),
         ),
       ),
@@ -36,14 +50,14 @@ class SignInScreen extends StatelessWidget {
   }
 }
 
-class SignInForm extends StatefulWidget {
-  const SignInForm();
+class LoginForm extends StatefulWidget {
+  const LoginForm();
 
   @override
-  _SignInFormState createState() => _SignInFormState();
+  _LoginFormState createState() => _LoginFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _LoginFormState extends State<LoginForm> {
   final _usernameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
 
@@ -54,8 +68,8 @@ class _SignInFormState extends State<SignInForm> {
     String passwordString = _passwordTextController.value.text;
 
     if (passwords[usernameString] == passwordString) {
-      // todo: sign in to patient homepage
-      Navigator.of(context).pushNamed('/welcome');
+      Navigator.of(context).pushNamed('/homepage');
+      // todo: homescreen
     } else {
       showDialog(
           context: context,
@@ -102,7 +116,7 @@ class _SignInFormState extends State<SignInForm> {
           mainAxisSize: MainAxisSize.min,
           children: [
             LinearProgressIndicator(value: _formProgress),
-            Text('Doctor Sign In',
+            Text('Patient Sign In',
                 style: Theme.of(context).textTheme.headline4),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -136,6 +150,42 @@ class _SignInFormState extends State<SignInForm> {
               ),
               onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
               child: const Text('Sign In'),
+            ),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.resolveWith(
+                    (Set<MaterialState> states) {
+                  return states.contains(MaterialState.disabled)
+                      ? null
+                      : Colors.white;
+                }),
+                backgroundColor: MaterialStateProperty.resolveWith(
+                    (Set<MaterialState> states) {
+                  return states.contains(MaterialState.disabled)
+                      ? null
+                      : Colors.blue;
+                }),
+              ),
+              onPressed: () => Navigator.of(context).pushNamed('/choosesignup'),
+              child: const Text('New Member? Sign Up!'),
+            ),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.resolveWith(
+                    (Set<MaterialState> states) {
+                  return states.contains(MaterialState.disabled)
+                      ? null
+                      : Colors.white;
+                }),
+                backgroundColor: MaterialStateProperty.resolveWith(
+                    (Set<MaterialState> states) {
+                  return states.contains(MaterialState.disabled)
+                      ? null
+                      : Colors.blue;
+                }),
+              ),
+              onPressed: () => Navigator.of(context).pushNamed('/doctorsignin'),
+              child: const Text('Login As Doctor Here'),
             ),
           ],
         ),
