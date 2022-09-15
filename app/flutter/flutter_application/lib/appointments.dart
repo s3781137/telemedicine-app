@@ -26,6 +26,7 @@ Widget _myListView(BuildContext context) {
         ),
         ListTile(
           title: Text('Cancel An Appointment'),
+          onTap: () => Navigator.of(context).pushNamed('/cancelappointment'),
         ),
         ListTile(
           title: Text('View Current Bookings'),
