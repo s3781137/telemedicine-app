@@ -1,6 +1,7 @@
 package com.sept.telemedicine.api;
 
 import com.mysql.cj.protocol.x.Ok;
+import com.sept.telemedicine.Validator.UserValidator;
 import com.sept.telemedicine.dto.PatientDto;
 import com.sept.telemedicine.exceptions.PatientNotFound;
 import com.sept.telemedicine.model.Patient;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import com.sept.telemedicine.service.MapValidationErrorService;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +24,12 @@ public class PatientController {
 
     @Autowired
     private PatientService service;
+
+    @Autowired
+    private UserValidator userValidator;
+
+    @Autowired
+    private MapValidationErrorService mapValidationErrorService;
 
     @GetMapping("/list")
     public List<Patient> getPatients() {
@@ -37,7 +47,12 @@ public class PatientController {
     }
 
     @PostMapping("/reisterPatient")
-    public ResponseEntity<?> addPatient(@RequestBody Patient patient) {
+    public ResponseEntity<?> addPatient(@RequestBody Patient patient, BindingResult result) {
+        userValidator.validate(patient, result);
+
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if(errorMap != null)return errorMap;
+
         if (service.checkIfUsernameIsFree(patient)) {
             Map<String, Object> response = new HashMap<>();
             response.put("status", HttpStatus.NOT_ACCEPTABLE);
