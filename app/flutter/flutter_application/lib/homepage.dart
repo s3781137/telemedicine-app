@@ -1,7 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application/appointments.dart';
+import 'package:flutter_application/screens/book_slots.dart';
 import 'welcome.dart';
+import 'screens/view_appointment.dart';
+import 'screens/cancel_appointment.dart';
 
 class Homepage extends StatelessWidget {
   @override
@@ -10,6 +14,10 @@ class Homepage extends StatelessWidget {
       routes: {
         '/homepage': (context) => Homepage(),
         '/welcome': (context) => const WelcomeScreen(),
+        '/appointments': (context) => AppointmentsScreen(),
+        '/viewappointment': (context) => ViewAppointmentScreen(),
+        '/cancelappointment': (context) => CancelAppointmentScreen(),
+        '/bookappointment': (context) => BookAppointment(),
       },
       title: 'ListViews',
       home: Scaffold(
@@ -69,7 +77,7 @@ Widget _myListView(BuildContext context) {
           backgroundImage: AssetImage('assets/Appointments.png'),
         ),
         title: Text('Appointments'),
-        onTap: () => Navigator.of(context).pushNamed('/welcome'),
+        onTap: () => Navigator.of(context).pushNamed('/appointments'),
       ),
       ListTile(
         leading: CircleAvatar(
