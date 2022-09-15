@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application/appointments.dart';
+import 'package:flutter_application/screens/book_slots.dart';
 import 'welcome.dart';
 import 'screens/view_appointment.dart';
 import 'screens/cancel_appointment.dart';
@@ -16,6 +17,7 @@ class Homepage extends StatelessWidget {
         '/appointments': (context) => AppointmentsScreen(),
         '/viewappointment': (context) => ViewAppointmentScreen(),
         '/cancelappointment': (context) => CancelAppointmentScreen(),
+        '/bookappointment': (context) => BookAppointment(),
       },
       title: 'ListViews',
       home: Scaffold(

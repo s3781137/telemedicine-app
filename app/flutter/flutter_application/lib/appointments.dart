@@ -22,6 +22,7 @@ Widget _myListView(BuildContext context) {
       tiles: [
         ListTile(
           title: Text('Book An Appointment'),
+          onTap: () => Navigator.of(context).pushNamed('/bookappointment'),
         ),
         ListTile(
           title: Text('Cancel An Appointment'),
