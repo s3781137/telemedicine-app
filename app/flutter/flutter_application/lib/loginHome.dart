@@ -109,7 +109,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Form(
         onChanged: _updateFormProgress, // NEW
         child: Column(
@@ -149,8 +149,9 @@ class _LoginFormState extends State<LoginForm> {
                 }),
               ),
               onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
-              child: const Text('Sign In'),
+              child: const Text('         Sign           In          '),
             ),
+            Padding(padding: EdgeInsets.all(20)),
             TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.resolveWith(
@@ -167,8 +168,9 @@ class _LoginFormState extends State<LoginForm> {
                 }),
               ),
               onPressed: () => Navigator.of(context).pushNamed('/choosesignup'),
-              child: const Text('New Member? Sign Up!'),
+              child: const Text('New Member? Sign Up! '),
             ),
+            Padding(padding: EdgeInsets.all(20)),
             TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.resolveWith(
@@ -185,7 +187,7 @@ class _LoginFormState extends State<LoginForm> {
                 }),
               ),
               onPressed: () => Navigator.of(context).pushNamed('/doctorsignin'),
-              child: const Text('Login As Doctor Here'),
+              child: const Text('Login  As  Doctor  Here'),
             ),
           ],
         ),

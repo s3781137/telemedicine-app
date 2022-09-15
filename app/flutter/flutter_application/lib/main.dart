@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/loginHome.dart';
-import 'signIn.dart';
 import 'welcome.dart';
 
 void main() {
