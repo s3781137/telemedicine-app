@@ -1,0 +1,21 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch TelemedicineApplication",
+      "request": "launch",
+      "mainClass": "com.sept.telemedicine.TelemedicineApplication",
+      "projectName": "telemedicine"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-Application<application>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.example.application.Application",
+      "projectName": "application",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
