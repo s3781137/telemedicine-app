@@ -17,16 +17,23 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/patient")
-public class PatientController {
+public class PatientController { // api/controller methods for patient, CRUD methods between http/client and
+                                 // service layer
 
     @Autowired
     private PatientService service;
 
+    @Autowired
+    private PatientHealthService healthService;
+
+    // Retrieves all patient accounts
     @GetMapping("/list")
     public List<Patient> getPatients() {
         return service.findAll();
     }
 
+    // Retrieves patient account information (patient personal information and
+    // account information, not medical information)
     @GetMapping("/getBy/{username}")
     public ResponseEntity<?> getPatientByUsername(@PathVariable(name = "username") String username) {
         try {
@@ -37,6 +44,8 @@ public class PatientController {
         }
     }
 
+    // Saves new patient information and stores it in the database [patient]. Also
+    // creates a default medical information with their id in [patient_health] table
     @PostMapping("/registerPatient")
     public ResponseEntity<?> addPatient(@RequestBody Patient patient) {
         if (service.checkIfUsernameIsFree(patient)) {
@@ -51,6 +60,7 @@ public class PatientController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         } else {
             Patient currentPatient = service.savePatient(patient);
+            healthService.createPatientHealthInfo(currentPatient.getId());
             Map<String, Object> response = new HashMap<>();
             response.put("id", currentPatient.getId());
             response.put("username", currentPatient.getUsername());
@@ -58,16 +68,19 @@ public class PatientController {
         }
     }
 
+    // updates patient personal information (modify patient information)
     @PutMapping("/update")
     public ResponseEntity<?> updatePatient(@RequestBody PatientDto patient) {
         try {
-            return service.updatePatient(patient.getGender(), patient.getWeight(), patient.getHeight(),
+            return service.updatePatient(patient.getStatus(), patient.getGender(), patient.getWeight(),
+                    patient.getHeight(),
                     patient.getContactNo(), patient.getContactName(), patient.getId());
         } catch (Exception e) {
             throw new PatientNotFound("Patient database error");
         }
     }
 
+    // delete patient (admin)
     @DeleteMapping("/delete/{username}")
     public ResponseEntity<?> deletePatient(@PathVariable String username) {
         try {
@@ -78,6 +91,7 @@ public class PatientController {
         }
     }
 
+    // login by getting entered username and password and checking with database
     @GetMapping("/login")
     public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
         try {
@@ -88,6 +102,21 @@ public class PatientController {
         }
         // to login go to:
         // http://localhost:8080/patient/login?username=aishwarya&password=BTS
+    }
+
+    // update medical health information
+    @PutMapping("/updateHealthInfo")
+    public ResponseEntity<?> updateHealthInfo(@RequestBody PatientHealthInfo healthInfo) {
+        try {
+            return healthService.updatePatientHealth(healthInfo.getId(), healthInfo.getCancer(),
+                    healthInfo.getDiabetes(),
+                    healthInfo.getHeartDisease(), healthInfo.getKidneyDisease(), healthInfo.getLiverDisease(),
+                    healthInfo.getMedicalProblems(),
+                    healthInfo.getMedication(), healthInfo.getMedicationDescription(), healthInfo.getPastSurgeries());
+
+        } catch (Exception e) {
+            throw new PatientNotFound("PatientHealth database error");
+        }
     }
 
 }

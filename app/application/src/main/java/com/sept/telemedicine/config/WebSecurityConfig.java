@@ -14,6 +14,7 @@ import java.util.List;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    // hashes String
     @Bean
     public static BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

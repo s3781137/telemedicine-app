@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface PatientRepository extends JpaRepository<Patient, Integer> {
+public interface PatientRepository extends JpaRepository<Patient, Integer> { // jpa repository for patient
 
     @Query("SELECT id FROM Patient WHERE username = ?1")
     Integer findIdByUsername(@Param("username") String username);
@@ -20,6 +20,7 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
 
     Optional<Patient> findPatientByUsername(String username);
 
+    // query for updating patient personal information
     @Modifying
     @Query("UPDATE Patient SET gender = ?1, weight = ?2, height = ?3, contactNo = ?4, contactName = ?5 WHERE id = ?6")
     void updateDetails(

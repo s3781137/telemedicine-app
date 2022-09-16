@@ -9,7 +9,7 @@ import com.sept.telemedicine.model.PatientHealthInfo;
 import com.sept.telemedicine.repository.PatientHealthRepository;
 
 @Service
-public class PatientHealthService {
+public class PatientHealthService { // patient health services to interact with database/model
 
     @Autowired
     private PatientHealthRepository healthRepo;
@@ -18,7 +18,18 @@ public class PatientHealthService {
         return healthRepo.findById(id).orElse(null);
     }
 
-    public PatientHealthInfo createPatientHealthInfo(PatientHealthInfo newInfo) {
+    public PatientHealthInfo createPatientHealthInfo(int id) {
+        PatientHealthInfo newInfo = new PatientHealthInfo();
+        newInfo.setId(id);
+        newInfo.setCancer("negative");
+        newInfo.setDiabetes("negative");
+        newInfo.setHeartDisease("negative");
+        newInfo.setKidneyDisease("negative");
+        newInfo.setLiverDisease("negative");
+        newInfo.setMedicalProblems("none");
+        newInfo.setMedication("none");
+        newInfo.setMedicationDescription("none");
+        newInfo.setPastSurgeries("none");
         return healthRepo.save(newInfo);
 
     }

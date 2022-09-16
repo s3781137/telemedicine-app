@@ -1,7 +1,9 @@
 package com.sept.telemedicine.dto;
 
+//object to store patient details in patient
 public class PatientDto {
     private int id;
+    private String status;
     private String gender;
     private double weight;
     private double height;
@@ -11,7 +13,9 @@ public class PatientDto {
     public PatientDto() {
     }
 
-    public PatientDto(int id, String gender, double weight, double height, String contactNo, String contactName) {
+    public PatientDto(int id, String status, String gender, double weight, double height, String contactNo,
+            String contactName) {
+        this.status = status;
         this.id = id;
         this.gender = gender;
         this.weight = weight;
@@ -67,4 +71,13 @@ public class PatientDto {
     public void setContactName(String contactName) {
         this.contactName = contactName;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 }
