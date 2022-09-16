@@ -1,48 +1,42 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application/appointments.dart';
-import 'package:flutter_application/screens/book_slots.dart';
-import 'welcome.dart';
-import 'screens/view_appointment.dart';
-import 'screens/cancel_appointment.dart';
 
-class Homepage extends StatelessWidget {
+class Patient extends StatelessWidget {
+  const Patient();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        '/homepage': (context) => Homepage(),
-        '/welcome': (context) => const WelcomeScreen(),
-        '/appointments': (context) => AppointmentsScreen(),
-        '/viewappointment': (context) => ViewAppointmentScreen(),
-        '/cancelappointment': (context) => CancelAppointmentScreen(),
-        '/bookappointment': (context) => BookAppointment(),
-      },
-      title: 'ListViews',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('ND TELEMEDICINE'),
-          // todo: top right button click behaviour
-          actions: <Widget>[
-            Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Icon(Icons.account_circle),
-                )),
-            Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/homepage');
-                  },
-                  child: Icon(Icons.home),
-                )),
-          ],
-        ),
-        body: BodyLayout(),
+    return PatientContent();
+  }
+}
+
+class PatientContent extends StatelessWidget {
+  const PatientContent();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('ND TELEMEDICINE'),
+        // todo: top right button click behaviour
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {},
+                child: Icon(Icons.account_circle),
+              )),
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed('/patient');
+                },
+                child: Icon(Icons.home),
+              )),
+        ],
       ),
+      body: BodyLayout(),
     );
   }
 }
@@ -77,7 +71,7 @@ Widget _myListView(BuildContext context) {
           backgroundImage: AssetImage('assets/Appointments.png'),
         ),
         title: Text('Appointments'),
-        onTap: () => Navigator.of(context).pushNamed('/appointments'),
+        onTap: () => Navigator.of(context).pushNamed('/patient/appointments'),
       ),
       ListTile(
         leading: CircleAvatar(

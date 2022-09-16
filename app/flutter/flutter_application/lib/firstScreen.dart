@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/loginHome.dart';
-import 'package:flutter_application/signIn.dart';
 
 class firstScreen extends StatelessWidget {
   const firstScreen();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        '/': (context) => const firstScreenContent(),
-        '/loginHome': (context) => const LoginHome(),
-        '/signIn': (context) => const SignInApp(),
-      },
-    );
+    return firstScreenContent();
   }
 }
 
@@ -52,7 +44,7 @@ class firstScreenContent extends StatelessWidget {
                     backgroundColor: MaterialStateProperty.all(Colors.blue),
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/loginHome');
+                    Navigator.of(context).pushNamed('/loginhome');
                   }, // UPDATED
                   child: const Text('Patient Sign In'),
                 ),
@@ -75,7 +67,7 @@ class firstScreenContent extends StatelessWidget {
                     backgroundColor: MaterialStateProperty.all(Colors.blue),
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/signIn');
+                    Navigator.of(context).pushNamed('/doctorsignin');
                   }, // UPDATED
                   child: const Text('Doctor Sign In'),
                 ),
