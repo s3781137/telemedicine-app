@@ -132,7 +132,7 @@ class _LoginFormState extends State<LoginForm> {
                 }),
               ),
               onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
-              child: const Text('         Sign           In          '),
+              child: const Text('         Sign            In          '),
             ),
             Padding(padding: EdgeInsets.all(20)),
             TextButton(
@@ -154,24 +154,6 @@ class _LoginFormState extends State<LoginForm> {
               child: const Text('New Member? Sign Up! '),
             ),
             Padding(padding: EdgeInsets.all(20)),
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.resolveWith(
-                    (Set<MaterialState> states) {
-                  return states.contains(MaterialState.disabled)
-                      ? null
-                      : Colors.white;
-                }),
-                backgroundColor: MaterialStateProperty.resolveWith(
-                    (Set<MaterialState> states) {
-                  return states.contains(MaterialState.disabled)
-                      ? null
-                      : Colors.blue;
-                }),
-              ),
-              onPressed: () => Navigator.of(context).pushNamed('/doctorsignin'),
-              child: const Text('Login  As  Doctor  Here'),
-            ),
           ],
         ),
       ),
