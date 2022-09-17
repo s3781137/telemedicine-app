@@ -93,9 +93,15 @@ public class PatientController {
         }
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
         try {
+            System.out.println("here");
+            System.out.println("here");
+            System.out.println("here");
+            System.out.println("here");
+            System.out.println("here");
+            // todo remove dbugmsg above
             boolean patientfound = service.checkLoginCredentials(username, password);
             return new ResponseEntity<>(patientfound, HttpStatus.OK);
         } catch (Exception e) {

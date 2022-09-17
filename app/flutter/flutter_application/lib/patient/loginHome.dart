@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/patient/Bloc/MainBloc.dart';
+import 'package:provider/provider.dart';
 
 // for test
 var passwords = {"test": "Password123", "oli": "helloWorld!", "nic": "nic"};
@@ -131,9 +133,23 @@ class _LoginFormState extends State<LoginForm> {
                       : Colors.blue;
                 }),
               ),
-              onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
+              // onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
+              onPressed: () => {
+                context.read<MainBloc>().authenticate(
+                    username: _usernameTextController.text,
+                    pass: _passwordTextController.text),
+                print(_usernameTextController.text + " at button"),
+                // todo: remove debug msg
+              },
               child: const Text('         Sign            In          '),
             ),
+            (context.watch<MainBloc>().errormsg ?? "").isNotEmpty
+                ? Container(
+                    color: Colors.red,
+                    padding: EdgeInsets.all(1),
+                    child: Text('${context.watch<MainBloc>().errormsg}'),
+                  )
+                : Container(),
             Padding(padding: EdgeInsets.all(20)),
             TextButton(
               style: ButtonStyle(
