@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'signIn.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen();
@@ -7,6 +6,10 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('ND TELEMEDICINE'),
+        centerTitle: true,
+      ),
       body: Center(
         child: Text('Welcome!', style: Theme.of(context).textTheme.headline2),
       ),

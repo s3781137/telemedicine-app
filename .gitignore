@@ -1,0 +1,6 @@
+.github/
+.idea/
+.vscode/
+.mvn/
+.dart_tool/
+.packages

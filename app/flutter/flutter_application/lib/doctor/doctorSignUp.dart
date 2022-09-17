@@ -1,39 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/signIn.dart';
-import 'package:flutter_application/signUp.dart';
+import 'welcome.dart';
 
-// for test
-var passwords = {"test": "Password123", "oli": "helloWorld!", "nic": "nic"};
-
-class LoginHome extends StatelessWidget {
-  const LoginHome();
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        '/': (context) => const LoginHomeScreen(),
-        '/choosesignup': (context) => const SignUpScreen(),
-        '/doctorsignin': (context) => const SignInScreen(),
-      },
-    );
-  }
-}
-
-class LoginHomeScreen extends StatelessWidget {
-  const LoginHomeScreen();
+class DoctorSignUpScreen extends StatelessWidget {
+  const DoctorSignUpScreen();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('TD TELEMEDICINE'),
+        title: Text('Doctor Registration'),
         centerTitle: true,
       ),
-      body: Center(
+      backgroundColor: Colors.grey[200],
+      body: const Center(
         child: SizedBox(
+          width: 600,
           child: Card(
-            child: LoginForm(),
+            child: DoctorSignUpForm(),
           ),
         ),
       ),
@@ -41,33 +24,36 @@ class LoginHomeScreen extends StatelessWidget {
   }
 }
 
-class LoginForm extends StatefulWidget {
-  const LoginForm();
+class DoctorSignUpForm extends StatefulWidget {
+  const DoctorSignUpForm();
 
   @override
-  _LoginFormState createState() => _LoginFormState();
+  _DoctorSignUpFormState createState() => _DoctorSignUpFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _DoctorSignUpFormState extends State<DoctorSignUpForm> {
   final _usernameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
+  final _ConfirmPwTextController = TextEditingController();
+  final _UniqueIdTextController = TextEditingController();
 
   double _formProgress = 0;
 
   void _validateForm() {
+    // todo: validate method & backend stuff for doctor registration
+
     String usernameString = _usernameTextController.value.text;
     String passwordString = _passwordTextController.value.text;
 
-    if (passwords[usernameString] == passwordString) {
-      Navigator.of(context).pushNamed('/homescreen');
-      // todo: homescreen
+    if (1 == 2) {
+      Navigator.of(context).pushNamed('/welcome');
     } else {
       showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-                title: const Text('Cannot Sign in'),
-                content: const Text('Username and Password do not match'),
+                title: const Text('Cannot Sign Up'),
+                content: const Text('Error'),
                 actions: <Widget>[
                   TextButton(
                     onPressed: () => Navigator.pop(context),
@@ -83,6 +69,8 @@ class _LoginFormState extends State<LoginForm> {
     final controllers = [
       _usernameTextController,
       _passwordTextController,
+      _ConfirmPwTextController,
+      _UniqueIdTextController,
     ];
 
     for (final controller in controllers) {
@@ -107,7 +95,7 @@ class _LoginFormState extends State<LoginForm> {
           mainAxisSize: MainAxisSize.min,
           children: [
             LinearProgressIndicator(value: _formProgress),
-            Text('Patient Sign In',
+            Text('Doctor Sign Up',
                 style: Theme.of(context).textTheme.headline4),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -122,6 +110,24 @@ class _LoginFormState extends State<LoginForm> {
                 controller: _passwordTextController,
                 decoration: const InputDecoration(hintText: 'Password'),
                 obscureText: true,
+              ),
+            ),
+            // todo: method for confirming password
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: _ConfirmPwTextController,
+                decoration: const InputDecoration(hintText: 'Confirm Password'),
+                obscureText: true,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: _UniqueIdTextController,
+                decoration: const InputDecoration(
+                    hintText:
+                        'Doctor Unique ID (something idk for verification)'),
               ),
             ),
             TextButton(
@@ -140,43 +146,7 @@ class _LoginFormState extends State<LoginForm> {
                 }),
               ),
               onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
-              child: const Text('Sign In'),
-            ),
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.resolveWith(
-                    (Set<MaterialState> states) {
-                  return states.contains(MaterialState.disabled)
-                      ? null
-                      : Colors.white;
-                }),
-                backgroundColor: MaterialStateProperty.resolveWith(
-                    (Set<MaterialState> states) {
-                  return states.contains(MaterialState.disabled)
-                      ? null
-                      : Colors.blue;
-                }),
-              ),
-              onPressed: () => Navigator.of(context).pushNamed('/choosesignup'),
-              child: const Text('New Member? Sign Up!'),
-            ),
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.resolveWith(
-                    (Set<MaterialState> states) {
-                  return states.contains(MaterialState.disabled)
-                      ? null
-                      : Colors.white;
-                }),
-                backgroundColor: MaterialStateProperty.resolveWith(
-                    (Set<MaterialState> states) {
-                  return states.contains(MaterialState.disabled)
-                      ? null
-                      : Colors.blue;
-                }),
-              ),
-              onPressed: () => Navigator.of(context).pushNamed('/doctorsignin'),
-              child: const Text('Login As Doctor Here'),
+              child: const Text('Sign Up'),
             ),
           ],
         ),

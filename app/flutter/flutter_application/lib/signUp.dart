@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'welcome.dart';
+import 'package:flutter_application/doctor/doctorSignUp.dart';
+import 'doctor/welcome.dart';
 
 var passwords = {"test": "Password123", "oli": "helloWorld!"};
 
@@ -8,12 +9,7 @@ class SignUpApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        '/': (context) => const SignUpScreen(),
-        '/welcome': (context) => const WelcomeScreen(),
-      },
-    );
+    return const SignUpScreen();
   }
 }
 
@@ -30,11 +26,11 @@ class SignUpScreen extends StatelessWidget {
           child: Card(
               child: Column(
             children: [
-              patientSignUpButton(),
+              patientSignUpButton(context),
               const Padding(
                 padding: EdgeInsets.all(8.0),
               ),
-              doctorSignUpButton(),
+              doctorSignUpButton(context),
               const Padding(
                 padding: EdgeInsets.all(8.0),
               ),
@@ -45,11 +41,14 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  Widget patientSignUpButton() {
+  Widget patientSignUpButton(BuildContext context) {
+    // todo: patient registration page
     return ElevatedButton(onPressed: () {}, child: Text('I am patient'));
   }
 
-  Widget doctorSignUpButton() {
-    return ElevatedButton(onPressed: () {}, child: Text('I am doctor'));
+  Widget doctorSignUpButton(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () => Navigator.of(context).pushNamed('/doctorsignup'),
+        child: Text('I am doctor'));
   }
 }
