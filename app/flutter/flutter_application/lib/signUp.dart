@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/doctorSignUp.dart';
-import 'welcome.dart';
+import 'package:flutter_application/doctor/doctorSignUp.dart';
+import 'doctor/welcome.dart';
 
 var passwords = {"test": "Password123", "oli": "helloWorld!"};
 
@@ -9,11 +9,7 @@ class SignUpApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        '/': (context) => const SignUpScreen(),
-      },
-    );
+    return const SignUpScreen();
   }
 }
 
