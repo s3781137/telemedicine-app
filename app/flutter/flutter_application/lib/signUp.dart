@@ -7,22 +7,11 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("ND TELEMEDICINE"),
+        title: Text("Sign up"),
         centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 20,
-              color: Colors.black,
-            )),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -37,23 +26,6 @@ class SignUpScreen extends StatelessWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
-                          "Sign up",
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "Create an Account,Its free",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey[700],
-                          ),
-                        ),
                         SizedBox(
                           height: 30,
                         )
@@ -63,9 +35,12 @@ class SignUpScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 40),
                       child: Column(
                         children: [
-                          makeInput(label: "Email"),
+                          makeInput(label: "Username"),
                           makeInput(label: "Password", obsureText: true),
-                          makeInput(label: "Confirm Pasword", obsureText: true)
+                          makeInput(label: "Confirm Pasword", obsureText: true),
+                          makeInput(label: "First Name"),
+                          makeInput(label: "Last Name"),
+                          makeInput(label: "Email"),
                         ],
                       ),
                     ),
@@ -100,17 +75,6 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Already have an account? "),
-                        Text(
-                          "Login",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 18),
-                        ),
-                      ],
-                    )
                   ],
                 ),
               ],
