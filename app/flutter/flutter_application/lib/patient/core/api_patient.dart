@@ -9,21 +9,6 @@ class ApiClient {
 
       if (response.statusCode == 200) {
         return response.body.toString();
-
-        // showDialog(
-        //     context: context,
-        //     builder: (BuildContext context) {
-        //       return AlertDialog(
-        //           title: const Text('Cannot Sign in'),
-        //           content: const Text('Username and Password do not match'),
-        //           actions: <Widget>[
-        //             TextButton(
-        //               onPressed: () => Navigator.pop(context),
-        //               child: const Text('OK'),
-        //             ),
-        //           ]);
-        //     });
-
       }
     } catch (e) {}
   }
