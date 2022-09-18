@@ -156,6 +156,7 @@ class _LoginFormState extends State<LoginForm> {
                 }),
               ),
               onPressed: () => Navigator.of(context).pushNamed('/choosesignup'),
+              // redirect the sign up page
               child: const Text('New Member? Sign Up! '),
             ),
             Padding(padding: EdgeInsets.all(20)),
