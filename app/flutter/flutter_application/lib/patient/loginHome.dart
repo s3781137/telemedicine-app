@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+
+import 'core/api_patient.dart';
 
 // for test
 var passwords = {"test": "Password123", "oli": "helloWorld!", "nic": "nic"};
@@ -46,7 +47,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final _usernameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
-
+  final ApiClient _apiClient = ApiClient();
   double _formProgress = 0;
 
   // void _validateForm() {
@@ -92,33 +93,28 @@ class _LoginFormState extends State<LoginForm> {
     });
   }
 
-  void login(String username, password) async {
-    try {
-      Response response = await post(
-          Uri.parse('http://localhost:8080/patient/login'),
-          body: {'username': username, 'password': password});
-
-      if (response.statusCode == 200) {
-        String data = response.body.toString();
-        if (data == 'true') {
-          Navigator.of(context).pushNamed('/patient');
-        } else {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                    title: const Text('Cannot Sign in'),
-                    content: const Text('Username and Password do not match'),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text('OK'),
-                      ),
-                    ]);
-              });
-        }
-      }
-    } catch (e) {}
+  Future<void> login() async {
+    dynamic res = await _apiClient.login(
+      _usernameTextController.text,
+      _passwordTextController.text,
+    );
+    if (res == 'true') {
+      Navigator.of(context).pushNamed('/patient');
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                title: const Text('Cannot Sign in'),
+                content: const Text('Username and Password do not match'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('OK'),
+                  ),
+                ]);
+          });
+    }
   }
 
   @override
@@ -164,10 +160,7 @@ class _LoginFormState extends State<LoginForm> {
                 }),
               ),
               // onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
-              onPressed: () => {
-                login(
-                    _usernameTextController.text, _passwordTextController.text)
-              },
+              onPressed: () => {login()},
               child: const Text('         Sign            In          '),
             ),
             Padding(padding: EdgeInsets.all(20)),
