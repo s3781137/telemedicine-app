@@ -47,7 +47,7 @@ public class PatientController {
         }
     }
 
-    @PostMapping("/reisterPatient")
+    @PostMapping("/registerPatient")
     public ResponseEntity<?> addPatient(@RequestBody Patient patient, BindingResult result) {
         userValidator.validate(patient, result);
 
