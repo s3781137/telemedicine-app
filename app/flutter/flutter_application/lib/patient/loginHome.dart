@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 // for test
 var passwords = {"test": "Password123", "oli": "helloWorld!", "nic": "nic"};
@@ -46,29 +49,29 @@ class _LoginFormState extends State<LoginForm> {
 
   double _formProgress = 0;
 
-  void _validateForm() {
-    String usernameString = _usernameTextController.value.text;
-    String passwordString = _passwordTextController.value.text;
+  // void _validateForm() {
+  //   String usernameString = _usernameTextController.value.text;
+  //   String passwordString = _passwordTextController.value.text;
 
-    if (passwords[usernameString] == passwordString) {
-      Navigator.of(context).pushNamed('/patient');
-      // todo: homescreen
-    } else {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-                title: const Text('Cannot Sign in'),
-                content: const Text('Username and Password do not match'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('OK'),
-                  ),
-                ]);
-          });
-    }
-  }
+  //   if (passwords[usernameString] == passwordString) {
+  //     Navigator.of(context).pushNamed('/patient');
+  //     // todo: homescreen
+  //   } else {
+  //     showDialog(
+  //         context: context,
+  //         builder: (BuildContext context) {
+  //           return AlertDialog(
+  //               title: const Text('Cannot Sign in'),
+  //               content: const Text('Username and Password do not match'),
+  //               actions: <Widget>[
+  //                 TextButton(
+  //                   onPressed: () => Navigator.pop(context),
+  //                   child: const Text('OK'),
+  //                 ),
+  //               ]);
+  //         });
+  //   }
+  // }
 
   void _updateFormProgress() {
     var progress = 0.0;
@@ -87,6 +90,35 @@ class _LoginFormState extends State<LoginForm> {
     setState(() {
       _formProgress = progress;
     });
+  }
+
+  void login(String username, password) async {
+    try {
+      Response response = await post(
+          Uri.parse('http://localhost:8080/patient/login'),
+          body: {'username': username, 'password': password});
+
+      if (response.statusCode == 200) {
+        String data = response.body.toString();
+        if (data == 'true') {
+          Navigator.of(context).pushNamed('/patient');
+        } else {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                    title: const Text('Cannot Sign in'),
+                    content: const Text('Username and Password do not match'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('OK'),
+                      ),
+                    ]);
+              });
+        }
+      }
+    } catch (e) {}
   }
 
   @override
@@ -131,7 +163,11 @@ class _LoginFormState extends State<LoginForm> {
                       : Colors.blue;
                 }),
               ),
-              onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
+              // onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
+              onPressed: () => {
+                login(
+                    _usernameTextController.text, _passwordTextController.text)
+              },
               child: const Text('         Sign            In          '),
             ),
             Padding(padding: EdgeInsets.all(20)),
