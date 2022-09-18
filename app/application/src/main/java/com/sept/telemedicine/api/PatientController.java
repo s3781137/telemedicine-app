@@ -93,7 +93,7 @@ public class PatientController {
         }
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
         try {
             boolean patientfound = service.checkLoginCredentials(username, password);
