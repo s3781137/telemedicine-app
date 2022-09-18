@@ -23,7 +23,7 @@ class LoginHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TD TELEMEDICINE'),
+        title: const Text('ND TELEMEDICINE'),
         centerTitle: true,
       ),
       body: const Center(
