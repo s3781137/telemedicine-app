@@ -18,6 +18,10 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("ND TELEMEDICINE"),
+        centerTitle: true,
+      ),
       backgroundColor: Colors.grey[200],
       body: const Center(
         child: SizedBox(
@@ -87,6 +91,13 @@ class _SignInFormState extends State<SignInForm> {
     });
   }
 
+  // doctor sign up button
+  Widget doctorSignUpButton(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () => Navigator.of(context).pushNamed('/doctorsignup'),
+        child: Text('Sign Up'));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -131,6 +142,10 @@ class _SignInFormState extends State<SignInForm> {
               ),
               onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
               child: const Text('Sign In'),
+            ),
+            doctorSignUpButton(context),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
             ),
           ],
         ),

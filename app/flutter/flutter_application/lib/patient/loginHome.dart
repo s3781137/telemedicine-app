@@ -23,7 +23,7 @@ class LoginHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TD TELEMEDICINE'),
+        title: const Text('ND TELEMEDICINE'),
         centerTitle: true,
       ),
       body: const Center(
@@ -49,30 +49,6 @@ class _LoginFormState extends State<LoginForm> {
   final _passwordTextController = TextEditingController();
   final ApiClient _apiClient = ApiClient();
   double _formProgress = 0;
-
-  // void _validateForm() {
-  //   String usernameString = _usernameTextController.value.text;
-  //   String passwordString = _passwordTextController.value.text;
-
-  //   if (passwords[usernameString] == passwordString) {
-  //     Navigator.of(context).pushNamed('/patient');
-  //     // todo: homescreen
-  //   } else {
-  //     showDialog(
-  //         context: context,
-  //         builder: (BuildContext context) {
-  //           return AlertDialog(
-  //               title: const Text('Cannot Sign in'),
-  //               content: const Text('Username and Password do not match'),
-  //               actions: <Widget>[
-  //                 TextButton(
-  //                   onPressed: () => Navigator.pop(context),
-  //                   child: const Text('OK'),
-  //                 ),
-  //               ]);
-  //         });
-  //   }
-  // }
 
   void _updateFormProgress() {
     var progress = 0.0;
@@ -180,6 +156,7 @@ class _LoginFormState extends State<LoginForm> {
                 }),
               ),
               onPressed: () => Navigator.of(context).pushNamed('/choosesignup'),
+              // redirect the sign up page
               child: const Text('New Member? Sign Up! '),
             ),
             Padding(padding: EdgeInsets.all(20)),

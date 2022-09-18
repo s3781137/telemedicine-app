@@ -30,10 +30,6 @@ class SignUpScreen extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(8.0),
               ),
-              doctorSignUpButton(context),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-              ),
             ],
           )),
         ),
@@ -44,11 +40,5 @@ class SignUpScreen extends StatelessWidget {
   Widget patientSignUpButton(BuildContext context) {
     // todo: patient registration page
     return ElevatedButton(onPressed: () {}, child: Text('I am patient'));
-  }
-
-  Widget doctorSignUpButton(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () => Navigator.of(context).pushNamed('/doctorsignup'),
-        child: Text('I am doctor'));
   }
 }
