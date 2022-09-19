@@ -8,7 +8,7 @@ import 'package:flutter_application/patient/screens/view_appointment.dart';
 import 'doctor/doctorSignUp.dart';
 import 'patient/patient.dart';
 import 'doctor/signIn.dart';
-import 'signUp.dart';
+import 'patient/signUp.dart';
 import 'doctor/welcome.dart';
 import 'firstScreen.dart';
 
@@ -18,7 +18,7 @@ void main() {
     home: const firstScreen(),
     routes: {
       '/welcome': (context) => const WelcomeScreen(),
-      '/choosesignup': (context) => const SignUpScreen(),
+      '/patientsignup': (context) => const SignUpScreen(),
       '/doctorsignin': (context) => const SignInScreen(),
       '/doctorsignup': (context) => const DoctorSignUpScreen(),
       '/patient': (context) => const Patient(),

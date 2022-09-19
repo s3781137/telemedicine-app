@@ -155,7 +155,8 @@ class _LoginFormState extends State<LoginForm> {
                       : Colors.blue;
                 }),
               ),
-              onPressed: () => Navigator.of(context).pushNamed('/choosesignup'),
+              onPressed: () =>
+                  Navigator.of(context).pushNamed('/patientsignup'),
               // redirect the sign up page
               child: const Text('New Member? Sign Up! '),
             ),
