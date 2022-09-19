@@ -93,15 +93,18 @@ class _SignInFormState extends State<SignInForm> {
 
   // doctor sign up button
   Widget doctorSignUpButton(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () => Navigator.of(context).pushNamed('/doctorsignup'),
-        child: Text('Sign Up'));
+    return Padding(
+        padding: const EdgeInsets.all(5),
+        child: ElevatedButton(
+          onPressed: () => Navigator.of(context).pushNamed('/doctorsignup'),
+          child: const Text('Sign Up'),
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Form(
         onChanged: _updateFormProgress, // NEW
         child: Column(
@@ -125,21 +128,7 @@ class _SignInFormState extends State<SignInForm> {
                 obscureText: true,
               ),
             ),
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.resolveWith(
-                    (Set<MaterialState> states) {
-                  return states.contains(MaterialState.disabled)
-                      ? null
-                      : Colors.white;
-                }),
-                backgroundColor: MaterialStateProperty.resolveWith(
-                    (Set<MaterialState> states) {
-                  return states.contains(MaterialState.disabled)
-                      ? null
-                      : Colors.blue;
-                }),
-              ),
+            ElevatedButton(
               onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
               child: const Text('Sign In'),
             ),
