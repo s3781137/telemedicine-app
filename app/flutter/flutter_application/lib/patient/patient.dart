@@ -22,9 +22,16 @@ class PatientContent extends StatelessWidget {
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
+              child: PopupMenuButton(
                 child: Icon(Icons.account_circle),
+                itemBuilder: (context) {
+                  return List.generate(5, (index) {
+                    return PopupMenuItem(
+                      value: index,
+                      child: Text('button no $index'),
+                    );
+                  });
+                },
               )),
           Padding(
               padding: EdgeInsets.only(right: 20.0),
