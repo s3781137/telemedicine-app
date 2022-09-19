@@ -9,12 +9,7 @@ import 'package:flutter_application/patient/screens/view_appointment.dart';
 import 'doctor/doctorSignUp.dart';
 import 'patient/patient.dart';
 import 'doctor/signIn.dart';
-<<<<<<< Updated upstream
-import 'patient/signUp.dart';
-=======
-import 'signUp.dart';
 import 'patient/register.dart';
->>>>>>> Stashed changes
 import 'doctor/welcome.dart';
 import 'firstScreen.dart';
 
@@ -24,11 +19,7 @@ void main() {
     home: const firstScreen(),
     routes: {
       '/welcome': (context) => const WelcomeScreen(),
-<<<<<<< Updated upstream
-      '/patientsignup': (context) => const SignUpScreen(),
-=======
-      '/choosesignup': (context) => const RegisterHomeScreen(),
->>>>>>> Stashed changes
+      '/patientsignup': (context) => const RegisterHomeScreen(),
       '/doctorsignin': (context) => const SignInScreen(),
       '/doctorsignup': (context) => const DoctorSignUpScreen(),
       '/patient': (context) => const Patient(),
