@@ -18,6 +18,7 @@ class ApiClient {
     } catch (e) {}
   }
 
+  // Return an instance of PatientModel
   Future<PatientModel> getUser(String username) async {
     Response response = await http
         .get(Uri.parse('http://localhost:8080/patient/getBy/$username'));
