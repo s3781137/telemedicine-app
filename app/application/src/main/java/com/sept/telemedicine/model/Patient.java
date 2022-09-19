@@ -27,7 +27,7 @@ public class Patient {
 
     }
 
-    public Patient(int id, String username, String password, String firstName, String lastName,
+    public Patient(int id, String username, String password, String confirmPassword, String firstName, String lastName,
             String email) {
         this.id = id;
         this.username = username;
@@ -35,6 +35,13 @@ public class Patient {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.confirmPassword= confirmPassword;
+        this.weight = 0;
+        this.height= 0;
+        this.status = null;
+        this.gender= null;
+        this.contactNo= null;
+        this.contactName = null;
     }
 
     public int getId() {
