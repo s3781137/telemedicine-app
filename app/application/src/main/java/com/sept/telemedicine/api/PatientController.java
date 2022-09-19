@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.naming.Binding;
+
 @RestController
 @RequestMapping("/patient")
 public class PatientController {
@@ -48,11 +50,16 @@ public class PatientController {
     }
 
     @PostMapping("/registerPatient")
-    public ResponseEntity<?> addPatient(@RequestBody Patient patient, BindingResult result) {
-        userValidator.validate(patient, result);
+    public ResponseEntity<?> addPatient(@RequestParam String username, @RequestParam String password,@RequestParam String confirmPassword, @RequestParam String firstName, 
+    @RequestParam String lastName, @RequestParam String email
+    ) {
+        //@RequestBody Patient patient
 
-        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if(errorMap != null)return errorMap;
+        Patient patient = new Patient(1, username, password, confirmPassword, firstName, lastName, email);
+        // userValidator.validate(patient, result);
+
+        // ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        // if(errorMap != null)return errorMap;
 
         if (service.checkIfUsernameIsFree(patient)) {
             Map<String, Object> response = new HashMap<>();
@@ -69,8 +76,9 @@ public class PatientController {
             Map<String, Object> response = new HashMap<>();
             response.put("id", currentPatient.getId());
             response.put("username", currentPatient.getUsername());
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity<>(true, HttpStatus.OK);
         }
+        
     }
 
     @PutMapping("/update")

@@ -18,6 +18,34 @@ class ApiClient {
     } catch (e) {}
   }
 
+  Future<dynamic> register(
+      String username,
+      String password,
+      String confirmPassword,
+      String firstName,
+      String lastName,
+      String email) async {
+    try {
+      Response response = await http.post(
+          Uri.parse('http://localhost:8080/patient/registerPatient'),
+          body: {
+            'username': username,
+            'password': password,
+            'confirmPassword': confirmPassword,
+            'firstName': firstName,
+            'lastName': lastName,
+            'email': email
+          });
+      print("username " + username);
+
+      if (response.statusCode == 200) {
+        return response.body.toString();
+      }
+    } catch (e) {
+      throw Exception('Failed to sign up');
+    }
+  }
+
   // Return an instance of PatientModel
   Future<PatientModel> getUser(String username) async {
     Response response = await http
