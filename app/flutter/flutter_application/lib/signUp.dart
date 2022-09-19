@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen();
-  // page for choosing sign up as doctor or patient
+  // page for patient sign up
 
   @override
   Widget build(BuildContext context) {
