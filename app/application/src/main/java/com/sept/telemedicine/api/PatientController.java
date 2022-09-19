@@ -55,7 +55,7 @@ public class PatientController {
     ) {
         //@RequestBody Patient patient
 
-        Patient patient = new Patient(1, username, password, confirmPassword, firstName, lastName, email);
+        Patient patient = new Patient(username, password, confirmPassword, firstName, lastName, email);
         // userValidator.validate(patient, result);
 
         // ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
