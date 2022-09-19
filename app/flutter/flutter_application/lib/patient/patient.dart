@@ -25,12 +25,20 @@ class PatientContent extends StatelessWidget {
               child: PopupMenuButton(
                 child: Icon(Icons.account_circle),
                 itemBuilder: (context) {
-                  return List.generate(5, (index) {
-                    return PopupMenuItem(
-                      value: index,
-                      child: Text('button no $index'),
-                    );
-                  });
+                  return [
+                    PopupMenuItem(
+                      value: 'logout',
+                      child: Text('Log out'),
+                    ),
+                    PopupMenuItem(
+                      value: 'changePW',
+                      child: Text('Change Password'),
+                    ),
+                    PopupMenuItem(
+                      value: 'rmAccount',
+                      child: Text('Delete account'),
+                    ),
+                  ];
                 },
               )),
           Padding(
