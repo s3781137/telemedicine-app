@@ -22,9 +22,24 @@ class PatientContent extends StatelessWidget {
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
+              child: PopupMenuButton(
                 child: Icon(Icons.account_circle),
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      value: 'logout',
+                      child: Text('Log out'),
+                    ),
+                    PopupMenuItem(
+                      value: 'changePW',
+                      child: Text('Change Password'),
+                    ),
+                    PopupMenuItem(
+                      value: 'rmAccount',
+                      child: Text('Delete account'),
+                    ),
+                  ];
+                },
               )),
           Padding(
               padding: EdgeInsets.only(right: 20.0),
