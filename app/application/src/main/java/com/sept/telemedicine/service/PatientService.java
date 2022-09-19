@@ -1,8 +1,8 @@
 package com.sept.telemedicine.service;
 
 import com.sept.telemedicine.model.Patient;
-// import com.sept.telemedicine.model.PatientHealthInformation;
-// import com.sept.telemedicine.repository.PatientHealthRepository;
+import com.sept.telemedicine.model.PatientHealthInformation;
+import com.sept.telemedicine.repository.PatientHealthRepository;
 import com.sept.telemedicine.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,9 @@ public class PatientService {
 
     @Autowired
     private PatientRepository repo;
-    //private PatientHealthRepository healthRepo;
+
+    @Autowired
+    private PatientHealthRepository healthRepo;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -37,7 +39,7 @@ public class PatientService {
         patient.setConfirmPassword(bCryptPasswordEncoder.encode(patient.getConfirmPassword()));
         return repo.save(patient);
 
-     }
+    }
 
     public Patient getPatientByUsername(String username) {
         Optional<Patient> patient = repo.findPatientByUsername(username);
@@ -79,21 +81,36 @@ public class PatientService {
         return repo.findIdByUsername(username);
     }
 
-    public boolean checkLoginCredentials(String username, String password){
+    public boolean checkLoginCredentials(String username, String password) {
         Optional<Patient> existingPatient = repo.findPatientByUsername(username);
-        if (existingPatient.isPresent()){
+        if (existingPatient.isPresent()) {
             return bCryptPasswordEncoder.matches(password, repo.findPasswordByUsername(username));
-            
+
         }
         return false;
     }
 
-    // public PatientHealthInformation savePatientHealthInfo(PatientHealthInformation phi){
-    //     return healthRepo.save(phi);
-    // }
+    public PatientHealthInformation createPatientHealthInfo(int id) {
+        PatientHealthInformation newInfo = new PatientHealthInformation();
+        newInfo.setId(id);
+        newInfo.setCancer("negative");
+        newInfo.setDiabetes("negative");
+        newInfo.setHeartDisease("negative");
+        newInfo.setKidneyDisease("negative");
+        newInfo.setLiverDisease("negative");
+        newInfo.setMedicalProblems("none");
+        newInfo.setMedication("none");
+        newInfo.setMedicationDescription("none");
+        newInfo.setPastSurgeries("none");
+        return healthRepo.save(newInfo);
+    }
 
-    // public void updateHealthInfo(PatientHealthInformation healthInfo){
-    //    healthRepo.updatePatientHealthDetails(healthInfo.getMedication(), healthInfo.getMedicalDescription(), healthInfo.getLiverDisease(), healthInfo.getKidneyDisease(), healthInfo.getHeartDisease(), healthInfo.getDiabetes(), healthInfo.getCancer(), healthInfo.getMedicalProblems(), healthInfo.getPastSurgeries(), healthInfo.getId());
+    public void updateHealthInfo(PatientHealthInformation healthInfo) {
+        healthRepo.save(healthInfo);
 
-    // }
+    }
+
+    public Optional<PatientHealthInformation> getHealthInfo(int id) {
+        return healthRepo.findById(id);
+    }
 }
