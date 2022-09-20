@@ -23,24 +23,24 @@ public class Patient {
     private String contactNo;
     private String contactName;
 
-    Patient() {
+    public Patient() {
 
     }
 
     public Patient(String username, String password, String confirmPassword, String firstName, String lastName,
             String email) {
-        this.id = id;
+        this.id = 0;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.confirmPassword= confirmPassword;
+        this.confirmPassword = confirmPassword;
         this.weight = 0;
-        this.height= 0;
+        this.height = 0;
         this.status = null;
-        this.gender= null;
-        this.contactNo= null;
+        this.gender = null;
+        this.contactNo = null;
         this.contactName = null;
     }
 

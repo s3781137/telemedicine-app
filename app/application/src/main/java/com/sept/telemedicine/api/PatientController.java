@@ -5,7 +5,7 @@ import com.sept.telemedicine.Validator.UserValidator;
 import com.sept.telemedicine.dto.PatientDto;
 import com.sept.telemedicine.exceptions.PatientNotFound;
 import com.sept.telemedicine.model.Patient;
-//import com.sept.telemedicine.model.PatientHealthInformation;
+import com.sept.telemedicine.model.PatientHealthInformation;
 import com.sept.telemedicine.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
 import com.sept.telemedicine.service.MapValidationErrorService;
-
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,15 +49,17 @@ public class PatientController {
     }
 
     @PostMapping("/registerPatient")
-    public ResponseEntity<?> addPatient(@RequestParam String username, @RequestParam String password,@RequestParam String confirmPassword, @RequestParam String firstName, 
-    @RequestParam String lastName, @RequestParam String email
-    ) {
-        //@RequestBody Patient patient
+    public ResponseEntity<?> addPatient(@RequestParam int id, @RequestParam String username,
+            @RequestParam String password,
+            @RequestParam String confirmPassword, @RequestParam String firstName,
+            @RequestParam String lastName, @RequestParam String email) {
+        // @RequestBody Patient patient
 
         Patient patient = new Patient(username, password, confirmPassword, firstName, lastName, email);
         // userValidator.validate(patient, result);
 
-        // ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        // ResponseEntity<?> errorMap =
+        // mapValidationErrorService.MapValidationService(result);
         // if(errorMap != null)return errorMap;
 
         if (service.checkIfUsernameIsFree(patient)) {
@@ -73,12 +74,13 @@ public class PatientController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         } else {
             Patient currentPatient = service.savePatient(patient);
+            service.createPatientHealthInfo(currentPatient.getId());
             Map<String, Object> response = new HashMap<>();
             response.put("id", currentPatient.getId());
             response.put("username", currentPatient.getUsername());
             return new ResponseEntity<>(true, HttpStatus.OK);
         }
-        
+
     }
 
     @PutMapping("/update")
@@ -109,32 +111,21 @@ public class PatientController {
         } catch (Exception e) {
             throw new PatientNotFound("Patient with that username not found");
         }
-        //to login go to:
-        //http://localhost:8080/patient/login?username=Suga&password=Taehyung
-    } 
+        // to login go to:
+        // http://localhost:8080/patient/login?username=Suga&password=Taehyung
+    }
 
-    // @PostMapping("/patientHealthInfo")
-    // public ResponseEntity<?> addPatientHealthInfo(@RequestBody PatientHealthInformation healthInfo) {
-    //      {
-    //         PatientHealthInformation currentPatientHealthInfo = service.savePatientHealthInfo(healthInfo);
-    //         Map<String, Object> response = new HashMap<>();
-    //         response.put("id", currentPatientHealthInfo.getId());
-    //         response.put("message", "health information registered" );
-    //         return new ResponseEntity<>(response, HttpStatus.OK);
-    //     }
-    // } 
+    @PutMapping("/updateHealthInfo")
+    public ResponseEntity<?> updateHealthInfo(@RequestBody PatientHealthInformation healthInfo) {
+        try {
+            service.updateHealthInfo(healthInfo);
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", healthInfo.getId());
+            response.put("message", "health information registered");
+            return new ResponseEntity<>(response, HttpStatus.OK);
 
-    // @PutMapping("/updateHealthInfo")
-    // public ResponseEntity<?> updateHealthInfo(@RequestBody PatientHealthInformation healthInfo) {
-    //     try {
-    //          service.updateHealthInfo(healthInfo);
-    //          Map<String, Object> response = new HashMap<>();
-    //          response.put("id", healthInfo.getId());
-    //          response.put("message", "health information registered" );
-    //          return new ResponseEntity<>(response, HttpStatus.OK);
-
-    //     } catch (Exception e) {
-    //         throw new PatientNotFound("Patient database error");
-    //     }
-    // }
+        } catch (Exception e) {
+            throw new PatientNotFound("Patient database error");
+        }
+    }
 }
