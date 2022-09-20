@@ -49,7 +49,7 @@ public class PatientController {
     }
 
     @PostMapping("/registerPatient")
-    public ResponseEntity<?> addPatient(@RequestParam int id, @RequestParam String username,
+    public ResponseEntity<?> addPatient( @RequestParam String username,
             @RequestParam String password,
             @RequestParam String confirmPassword, @RequestParam String firstName,
             @RequestParam String lastName, @RequestParam String email) {
