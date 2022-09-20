@@ -45,7 +45,7 @@ class SignInForm extends StatefulWidget {
 
   //Creates a stateful widget
   @override
-  _SignInFormState createState() => _SignInFormState();
+  State<SignInForm> createState() => _SignInFormState();
 }
 
 class _SignInFormState extends State<SignInForm> {
