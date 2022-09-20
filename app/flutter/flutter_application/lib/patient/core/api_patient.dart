@@ -6,6 +6,7 @@ import '../model/patient_model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiClient {
+  // Method for login postMapping
   Future<dynamic> login(String username, password) async {
     try {
       Response response = await http.post(
@@ -18,6 +19,7 @@ class ApiClient {
     } catch (e) {}
   }
 
+  // Method for patient registration
   Future<dynamic> register(
       String username,
       String password,
@@ -59,6 +61,7 @@ class ApiClient {
     }
   }
 
+  // Returns a list of users
   Future<List<PatientModel>> fetchUsers() async {
     final response =
         await http.get(Uri.parse('http://localhost:8080/patient/list'));

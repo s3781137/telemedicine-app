@@ -18,7 +18,6 @@ class PatientContent extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('ND TELEMEDICINE'),
-        // todo: top right button click behaviour
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
