@@ -14,25 +14,25 @@ void main() {
   test('Incorect password should reject', () async {
     final api = ApiClient();
     var res = await api.login("incorrectLogin", "incorrectPassword");
-    expect(res, null);
+    expect(res, 'false');
   });
 
   test("No password should reject", () async {
     final api = ApiClient();
     var res = await api.login("username", "");
-    expect(res, null);
+    expect(res, 'false');
   });
 
   test("No username should reject", () async {
     final api = ApiClient();
     var res = await api.login("", "password");
-    expect(res, null);
+    expect(res, 'false');
   });
 
   test("No username or password should reject", () async {
     final api = ApiClient();
     var res = await api.login("", "");
-    expect(res, null);
+    expect(res, 'false');
   });
 
   test("Fetch users should not throw exception", () async {
@@ -58,13 +58,11 @@ void main() {
     expect(() => api.getUser(""), throwsException);
   });
 
-  test("Register user that exists should throw an exeption", () async {
+  test("Register user that exists should return null", () async {
     final api = ApiClient();
     //The user "test" should be in the database for this to work
-    //Will throw expeption on error
-    expect(
-        () async => await api.register("test", "password", "password",
-            "firstName", "lastName", "email@email.com"),
-        throwsException);
+    var res = await api.register("test", "password", "password", "firstName",
+        "lastName", "email@email.com");
+    expect(res, null);
   });
 }
