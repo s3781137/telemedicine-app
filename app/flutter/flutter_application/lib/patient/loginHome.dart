@@ -7,6 +7,7 @@ import 'core/api_patient.dart';
 // for test
 var passwords = {"test": "Password123", "oli": "helloWorld!", "nic": "nic"};
 
+// Page for patient login
 class LoginHome extends StatelessWidget {
   const LoginHome();
 
@@ -22,6 +23,7 @@ class LoginHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // App bar
       appBar: AppBar(
         title: const Text('ND TELEMEDICINE'),
         centerTitle: true,
@@ -50,6 +52,7 @@ class _LoginFormState extends State<LoginForm> {
   final ApiClient _apiClient = ApiClient();
   double _formProgress = 0;
 
+  // Indicates form progress
   void _updateFormProgress() {
     var progress = 0.0;
     final controllers = [
@@ -69,8 +72,10 @@ class _LoginFormState extends State<LoginForm> {
     });
   }
 
+  // Method for calling method in ApiClient class
   Future<void> login() async {
     dynamic res = await _apiClient.login(
+      // text controller
       _usernameTextController.text,
       _passwordTextController.text,
     );
@@ -135,7 +140,6 @@ class _LoginFormState extends State<LoginForm> {
                       : Colors.blue;
                 }),
               ),
-              // onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
               onPressed: () => {login()},
               child: const Text('         Sign            In          '),
             ),
@@ -157,7 +161,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               onPressed: () =>
                   Navigator.of(context).pushNamed('/patientsignup'),
-              // redirect the sign up page
+              // redirect to the sign up page
               child: const Text('New Member? Sign Up! '),
             ),
             Padding(padding: EdgeInsets.all(20)),
