@@ -24,4 +24,4 @@ jobs:
         cache: maven
     - name: Build with Maven
       working-directory: ./app/application
-      run: mvn -B package --file pom.xml
+      run: mvn clean install
