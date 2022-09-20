@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+//this class stores the patient health informaitno into the repo
+
 @Repository
 public interface PatientHealthRepository extends JpaRepository<PatientHealthInformation, Integer> {
 

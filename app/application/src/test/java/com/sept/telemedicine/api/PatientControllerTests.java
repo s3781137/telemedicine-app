@@ -13,6 +13,7 @@ import com.sept.telemedicine.service.PatientService;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+//this class is used to test the backend functionality
 @SpringBootTest
 public class PatientControllerTests {
 

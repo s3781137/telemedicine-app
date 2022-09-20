@@ -5,6 +5,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
 
+//this is a patient health informatino class. 
+//the patient can enter their health information 
+
 @Entity
 @Table(name = "patient_health")
 public class PatientHealthInformation {

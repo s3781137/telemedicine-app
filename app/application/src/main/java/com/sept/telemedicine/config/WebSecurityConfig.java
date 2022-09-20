@@ -13,7 +13,7 @@ import java.util.List;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+    //encrypting the password
     @Bean
     public static BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

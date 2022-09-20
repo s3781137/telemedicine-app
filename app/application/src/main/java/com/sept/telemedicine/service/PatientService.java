@@ -25,14 +25,17 @@ public class PatientService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    //getting a patient by id from the repo
     public Patient findById(Integer id) {
         return repo.findById(id).orElse(null);
     }
 
+    //get all patients from the epo
     public List<Patient> findAll() {
         return repo.findAll();
     }
 
+    //saving a patient in the repo
     public Patient savePatient(Patient patient) {
         patient.setPassword(bCryptPasswordEncoder.encode(patient.getPassword()));
         patient.setUsername(patient.getUsername());
@@ -41,6 +44,7 @@ public class PatientService {
 
     }
 
+    //getting a patient by username from the repo
     public Patient getPatientByUsername(String username) {
         Optional<Patient> patient = repo.findPatientByUsername(username);
         if (patient.isPresent()) {
@@ -49,17 +53,19 @@ public class PatientService {
             throw new RuntimeException("There is no patient against this username: " + username);
         }
     }
-
+    //checking if a username already exists in the repo
     public boolean checkIfUsernameIsFree(Patient patient) {
         Optional<Patient> existingPatient = repo.findPatientByUsername(patient.getUsername());
         return existingPatient.isPresent();
     }
 
+    //removing a patient from the repo
     public void deletePatient(String username) {
         int id = repo.findIdByUsername(username);
         repo.deleteById(id);
     }
 
+    //updating paient informatino in the repo
     public ResponseEntity<?> updatePatient(String gender, double weight, double height, String contactNo,
             String contactName,
             int id) {
@@ -77,10 +83,12 @@ public class PatientService {
         }
     }
 
+    //getting the patient id by username from the repo
     public Integer findIdByUsername(String username) {
         return repo.findIdByUsername(username);
     }
 
+    //checking if the login credentials match the login credintials in the repo
     public boolean checkLoginCredentials(String username, String password) {
         Optional<Patient> existingPatient = repo.findPatientByUsername(username);
         if (existingPatient.isPresent()) {
@@ -89,7 +97,7 @@ public class PatientService {
         }
         return false;
     }
-
+    //adding patient health information in the repo
     public PatientHealthInformation createPatientHealthInfo(int id) {
         PatientHealthInformation newInfo = new PatientHealthInformation();
         newInfo.setId(id);
@@ -105,11 +113,12 @@ public class PatientService {
         return healthRepo.save(newInfo);
     }
 
+    //updating the patient health information in the repo
     public void updateHealthInfo(PatientHealthInformation healthInfo) {
         healthRepo.save(healthInfo);
 
     }
-
+    //getting the patient healthinfo by id from the repo
     public Optional<PatientHealthInformation> getHealthInfo(int id) {
         return healthRepo.findById(id);
     }
