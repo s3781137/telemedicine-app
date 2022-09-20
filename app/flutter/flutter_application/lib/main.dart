@@ -15,9 +15,11 @@ import 'firstScreen.dart';
 
 void main() {
   runApp(MaterialApp(
-    title: 'My App',
+    title: 'ND TELEMEDICINE',
+    //Sets the first page to be taken to, is defaulted to '/' directory so no need to add it to routes
     home: const firstScreen(),
     routes: {
+      //Defining what url's show what screens
       '/welcome': (context) => const WelcomeScreen(),
       '/patientsignup': (context) => const RegisterHomeScreen(),
       '/doctorsignin': (context) => const SignInScreen(),
