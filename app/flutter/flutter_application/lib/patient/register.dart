@@ -85,15 +85,21 @@ class _RegisterFormState extends State<RegisterForm> {
         _firstNameTextController.text,
         _lastNameTextController.text,
         _emailTextController.text);
+    var newContent = 'invalid details';
+
     if (res == 'true') {
       Navigator.of(context).pushNamed('/loginhome');
     } else {
+      if (res.body.status == 406) {
+        print('testing if it works');
+        newContent = res.body.errors;
+      }
       showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-                title: const Text('Cannot Register'),
-                content: const Text('Invalid details'),
+                title: Text('Cannot Register'),
+                content: Text(newContent),
                 actions: <Widget>[
                   TextButton(
                     onPressed: () => Navigator.pop(context),

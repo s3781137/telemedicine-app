@@ -17,6 +17,8 @@ import com.sept.telemedicine.service.MapValidationErrorService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.naming.Binding;
 
@@ -61,26 +63,58 @@ public class PatientController {
     public ResponseEntity<?> addPatient( @RequestParam String username,
             @RequestParam String password,
             @RequestParam String confirmPassword, @RequestParam String firstName,
-            @RequestParam String lastName, @RequestParam String email) {
+            @RequestParam String lastName, @RequestParam String email
+            ) {
+            //BindingResult result
         // @RequestBody Patient patient
+            
 
         Patient patient = new Patient(username, password, confirmPassword, firstName, lastName, email);
+       // int result = userValidator.validate(patient);
         // userValidator.validate(patient, result);
 
-        // ResponseEntity<?> errorMap =
+        //ResponseEntity<?> errorMap;
         // mapValidationErrorService.MapValidationService(result);
         // if(errorMap != null)return errorMap;
+        String regex = "^(.+)@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+;       int result =0 ;
+        Map<String, Object> response = new HashMap<>();
+        //the password should be greater than 6
+        if(patient.getPassword().length() <6){
+            response.put("status", HttpStatus.NOT_ACCEPTABLE);
+            response.put("errors", "Your both password length should be greater than 6.");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+           // errors.rejectValue("password","Length", "Password must be at least 6 characters");
+        }
 
+        //confirm password should match password
+        if(!patient.getPassword().equals(patient.getConfirmPassword())){
+            response.put("status", HttpStatus.NOT_ACCEPTABLE);
+            response.put("errors", "Your both passwords should be match.");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+           // errors.rejectValue("confirmPassword","Match", "Passwords must match");
+        }
+        Matcher matcher = pattern.matcher(patient.getEmail());
+        
+        //there should be an @ symbol for an email to be correct. 
+        //checking if an email is correct
+        if(!matcher.matches()){
+            result = 2;
+            response.put("status", HttpStatus.NOT_ACCEPTABLE);
+            response.put("errors", "invalid email.");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+           // errors.rejectValue("email","Match", "Invalid email");
+        }
 
         //a patient should have a unique username to be registered
         if (service.checkIfUsernameIsFree(patient)) {
-            Map<String, Object> response = new HashMap<>();
             response.put("status", HttpStatus.NOT_ACCEPTABLE);
             response.put("errors", "Username is already taken");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         //the patient should have passwords that match to register
         } else if (!patient.getPassword().equals(patient.getConfirmPassword())) {
-            Map<String, Object> response = new HashMap<>();
+            //Map<String, Object> response = new HashMap<>();
             response.put("status", HttpStatus.NOT_ACCEPTABLE);
             response.put("errors", "Your both passwords should be same.");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -88,10 +122,10 @@ public class PatientController {
             //the patient is getting created. 
             Patient currentPatient = service.savePatient(patient);
             service.createPatientHealthInfo(currentPatient.getId());
-            Map<String, Object> response = new HashMap<>();
+           // Map<String, Object> response = new HashMap<>();
             response.put("id", currentPatient.getId());
             response.put("username", currentPatient.getUsername());
-            return new ResponseEntity<>(true, HttpStatus.OK);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         }
 
     }

@@ -141,7 +141,7 @@ class _LoginFormState extends State<LoginForm> {
                 }),
               ),
               onPressed: () => {login()},
-              child: const Text('         Sign            In          '),
+              child: const Text('         Sign in          '),
             ),
             Padding(padding: EdgeInsets.all(20)),
             TextButton(

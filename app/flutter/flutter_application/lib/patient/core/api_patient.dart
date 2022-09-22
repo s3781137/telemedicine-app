@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart';
 
@@ -38,10 +39,14 @@ class ApiClient {
             'lastName': lastName,
             'email': email
           });
-      print("username " + username);
-
+      print("*******");
       if (response.statusCode == 200) {
         return response.body.toString();
+      }
+      //checking for errors in registration form the atient controller class
+      if (response.statusCode == 400) {
+        print(response.body.toString());
+        return response;
       }
     } catch (e) {
       throw Exception('Failed to sign up');
