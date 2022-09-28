@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.sept.telemedicine.model.Booking;
 import com.sept.telemedicine.repository.BookingRepo;
 
+@Service
 public class BookingService {
     private BookingRepo brepo;
 
