@@ -14,7 +14,11 @@
 	<name>doctor</name>
 	<description>doctor</description>
 	<properties>
+<<<<<<< Updated upstream
 		<java.version>11</java.version>
+=======
+		<java.version>17</java.version>
+>>>>>>> Stashed changes
 	</properties>
 	<dependencies>
 		<dependency>
