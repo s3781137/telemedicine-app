@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppointmentsScreen extends StatelessWidget {
   const AppointmentsScreen();
-
+  // Page for patient making appoinments
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,6 +17,7 @@ class AppointmentsScreen extends StatelessWidget {
 
 Widget _myListView(BuildContext context) {
   return ListView(
+    // Gives a listview of options
     children: ListTile.divideTiles(
       context: context,
       tiles: [

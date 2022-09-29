@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import 'core/api_patient.dart';
 
 // for test
 var passwords = {"test": "Password123", "oli": "helloWorld!", "nic": "nic"};
 
+// Page for patient login
 class LoginHome extends StatelessWidget {
   const LoginHome();
 
@@ -18,8 +23,9 @@ class LoginHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // App bar
       appBar: AppBar(
-        title: const Text('TD TELEMEDICINE'),
+        title: const Text('ND TELEMEDICINE'),
         centerTitle: true,
       ),
       body: const Center(
@@ -43,33 +49,10 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final _usernameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
-
+  final ApiClient _apiClient = ApiClient();
   double _formProgress = 0;
 
-  void _validateForm() {
-    String usernameString = _usernameTextController.value.text;
-    String passwordString = _passwordTextController.value.text;
-
-    if (passwords[usernameString] == passwordString) {
-      Navigator.of(context).pushNamed('/patient');
-      // todo: homescreen
-    } else {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-                title: const Text('Cannot Sign in'),
-                content: const Text('Username and Password do not match'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('OK'),
-                  ),
-                ]);
-          });
-    }
-  }
-
+  // Indicates form progress
   void _updateFormProgress() {
     var progress = 0.0;
     final controllers = [
@@ -87,6 +70,32 @@ class _LoginFormState extends State<LoginForm> {
     setState(() {
       _formProgress = progress;
     });
+  }
+
+  // Method for calling method in ApiClient class
+  Future<void> login() async {
+    dynamic res = await _apiClient.login(
+      // text controller
+      _usernameTextController.text,
+      _passwordTextController.text,
+    );
+    if (res == 'true') {
+      Navigator.of(context).pushNamed('/patient');
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                title: const Text('Cannot Sign in'),
+                content: const Text('Username and Password do not match'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('OK'),
+                  ),
+                ]);
+          });
+    }
   }
 
   @override
@@ -131,7 +140,7 @@ class _LoginFormState extends State<LoginForm> {
                       : Colors.blue;
                 }),
               ),
-              onPressed: _formProgress == 1 ? _validateForm : null, // UPDATED
+              onPressed: () => {login()},
               child: const Text('         Sign            In          '),
             ),
             Padding(padding: EdgeInsets.all(20)),
@@ -150,7 +159,9 @@ class _LoginFormState extends State<LoginForm> {
                       : Colors.blue;
                 }),
               ),
-              onPressed: () => Navigator.of(context).pushNamed('/choosesignup'),
+              onPressed: () =>
+                  Navigator.of(context).pushNamed('/patientsignup'),
+              // redirect to the sign up page
               child: const Text('New Member? Sign Up! '),
             ),
             Padding(padding: EdgeInsets.all(20)),

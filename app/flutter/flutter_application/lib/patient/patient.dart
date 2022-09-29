@@ -18,13 +18,27 @@ class PatientContent extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('ND TELEMEDICINE'),
-        // todo: top right button click behaviour
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
+              child: PopupMenuButton(
                 child: Icon(Icons.account_circle),
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      value: 'logout',
+                      child: Text('Log out'),
+                    ),
+                    PopupMenuItem(
+                      value: 'changePW',
+                      child: Text('Change Password'),
+                    ),
+                    PopupMenuItem(
+                      value: 'rmAccount',
+                      child: Text('Delete account'),
+                    ),
+                  ];
+                },
               )),
           Padding(
               padding: EdgeInsets.only(right: 20.0),
