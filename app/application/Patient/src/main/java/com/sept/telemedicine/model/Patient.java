@@ -2,6 +2,10 @@ package com.sept.telemedicine.model;
 
 import javax.persistence.*;
 
+//this is a patient class
+//the patient has a unique ID that is automatically generated
+//everyone patiient has a unique username
+
 @Entity
 @Table(name = "patient")
 public class Patient {
@@ -23,18 +27,29 @@ public class Patient {
     private String contactNo;
     private String contactName;
 
-    Patient() {
+    public Patient() {
 
     }
 
-    public Patient(int id, String username, String password, String firstName, String lastName,
+    //the mandotary fields for a patient are username, password, confirm pass,
+    //firstname, last name and email for a patient to register the account. 
+    // the other parameters are passed as null since they are not required for registration 
+    //however they can still be modified when a patient needs to update their information.
+    public Patient(String username, String password, String confirmPassword, String firstName, String lastName,
             String email) {
-        this.id = id;
+        this.id = 0;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.confirmPassword = confirmPassword;
+        this.weight = 0;
+        this.height = 0;
+        this.status = null;
+        this.gender = null;
+        this.contactNo = null;
+        this.contactName = null;
     }
 
     public int getId() {

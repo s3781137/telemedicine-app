@@ -1,5 +1,8 @@
 package com.sept.telemedicine.dto;
 
+//this class is used to store the patient information so that it can be accessed
+//by other classes in case the information needs to be updated. 
+
 public class PatientDto {
     private int id;
     private String gender;

@@ -2,23 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/firstScreen.dart';
 import 'package:flutter_application/patient/appointments.dart';
 import 'package:flutter_application/patient/loginHome.dart';
+import 'package:flutter_application/patient/register.dart';
 import 'package:flutter_application/patient/screens/book_slots.dart';
 import 'package:flutter_application/patient/screens/cancel_appointment.dart';
 import 'package:flutter_application/patient/screens/view_appointment.dart';
 import 'doctor/doctorSignUp.dart';
 import 'patient/patient.dart';
 import 'doctor/signIn.dart';
-import 'signUp.dart';
+import 'patient/register.dart';
 import 'doctor/welcome.dart';
 import 'firstScreen.dart';
 
 void main() {
   runApp(MaterialApp(
-    title: 'My App',
+    title: 'ND TELEMEDICINE',
+    //Sets the first page to be taken to, is defaulted to '/' directory so no need to add it to routes
     home: const firstScreen(),
     routes: {
+      //Defining what url's show what screens
       '/welcome': (context) => const WelcomeScreen(),
-      '/choosesignup': (context) => const SignUpScreen(),
+      '/patientsignup': (context) => const RegisterHomeScreen(),
       '/doctorsignin': (context) => const SignInScreen(),
       '/doctorsignup': (context) => const DoctorSignUpScreen(),
       '/patient': (context) => const Patient(),

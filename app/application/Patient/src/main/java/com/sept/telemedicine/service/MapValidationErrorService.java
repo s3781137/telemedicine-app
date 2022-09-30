@@ -9,6 +9,8 @@ import org.springframework.validation.FieldError;
 import java.util.HashMap;
 import java.util.Map;
 
+//this class will be used to validate a user details for when a user is trying to register an account
+//it will check for erros in registration
 @Service
 public class MapValidationErrorService {
 
