@@ -57,6 +57,31 @@ class _doctorChatContentState extends State<doctorChatContent> {
     });
   }
 
+  List<Widget> chatBoxes() {
+    //Styling for text box from https://www.freecodecamp.org/news/build-a-chat-app-ui-with-flutter/
+    return ([
+      Container(
+        padding:
+            const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+        child: Align(
+          alignment: (Alignment.topLeft),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 0.5),
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.grey.shade300,
+            ),
+            padding: const EdgeInsets.all(16),
+            child: const Text(
+              "Test Message",
+              style: TextStyle(fontSize: 15),
+            ),
+          ),
+        ),
+      ),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,6 +113,43 @@ class _doctorChatContentState extends State<doctorChatContent> {
                       onChanged: onDropdownChange,
                     ),
                   ),
+                  //Container for the chat
+                  Container(
+                    //Sets the width to 80% of screen width
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    //Sets height to 60% of screen height
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    decoration:
+                        BoxDecoration(border: Border.all(color: Colors.black)),
+                    child: Column(
+                      children: [
+                        //Received/sent messages
+                        SingleChildScrollView(
+                            child: Column(
+                          children: chatBoxes(),
+                        )),
+                        //Input box to send messages
+                        Column(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(10),
+                              child: TextField(
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Enter Message:'),
+                                  keyboardType: TextInputType.multiline,
+                                  minLines: 2,
+                                  maxLines: 2),
+                            ),
+                            //Button to submit (onpressed needs to be implemented)
+                            TextButton(
+                                onPressed: () => {null},
+                                child: const Text("Submit"))
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
