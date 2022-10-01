@@ -25,10 +25,10 @@ public class BookingController {
     @Autowired
     private BookingService service;
 
-    @GetMapping("/bookingList")
-    public ArrayList<Booking> getBookings(String username) {
-        return service.getBookingList(username);
-    }
+    // @GetMapping("/bookingList")
+    // public ArrayList<Booking> getBookings(String username) {
+    //     return service.getBookingList(username);
+    // }
 
     @PostMapping("/addBooking")
     public ResponseEntity<?> addBooking(@RequestParam String username, @RequestParam String location, @RequestParam String doctorName, @RequestParam Date date) {

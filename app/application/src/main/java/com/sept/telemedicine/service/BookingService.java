@@ -2,6 +2,8 @@ package com.sept.telemedicine.service;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Service;
+
 import com.sept.telemedicine.model.Booking;
 import com.sept.telemedicine.repository.BookingRepo;
 
@@ -15,8 +17,8 @@ public class BookingService {
 
     }
 
-    public ArrayList<Booking> getBookingList(String username) {
-        return brepo.getPatientBookingDetails(username);
-    }
+    // public ArrayList<Booking> getBookingList(String username) {
+    //     return brepo.getPatientBookingDetails(username);
+    // }
     
 }

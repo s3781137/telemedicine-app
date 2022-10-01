@@ -3,10 +3,16 @@ package com.sept.telemedicine.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table(name = "Booking")
 public class Booking {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int bookingId;
     String username;
     String location; //add a clinic database for locations
     String doctorName;
@@ -17,6 +23,10 @@ public class Booking {
         this.location = location;
         this.doctorName = doctorName;
         this.date = date;
+    }
+
+    public int getId(){
+        return bookingId;
     }
 
     public void setUsername(String username){
