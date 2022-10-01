@@ -1,0 +1,36 @@
+version: '3'
+services:
+
+
+
+  Availabilitys:
+    image: 'Availability'
+    build:
+      context: ./BackEnd/Availabilitys
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+
+  Bookings:
+    image: 'Bookings'
+    build:
+      context: ./BackEnd/Bookings
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8085"
+
+  Patient:
+    image: 'Patient'
+    build:
+      context: ./BackEnd/Patient
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+
+  Doctor:
+    image: 'Doctor'
+    build:
+      context: ./BackEnd/Doctor
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
