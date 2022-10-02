@@ -1,4 +1,7 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application/doctor/doctorChat.dart';
 import 'package:flutter_application/firstScreen.dart';
 import 'package:flutter_application/patient/appointments.dart';
 import 'package:flutter_application/patient/loginHome.dart';
@@ -31,6 +34,7 @@ void main() {
       '/patent/appointments/cancel': (context) =>
           const CancelAppointmentScreen(),
       '/patient/appointments/view': (context) => const ViewAppointmentScreen(),
+      '/doctor/chat': (context) => const doctorChat(),
     },
   ));
 }
