@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.cdi.JpaRepositoryExtension;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import com.sept.doctor.model.Doctor;
@@ -25,5 +26,9 @@ public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
 
     @Query("SELECT username FROM Doctor Where id = ?1")
     String findUsername(@Param("username") String username);
+
+    UserDetails findByUsername(String username);
+
+    Doctor getById(Long id);
 
 }

@@ -20,7 +20,7 @@ public class Doctor {
     private String email;
 
     Doctor() {
-
+        
     }
 
     public Doctor(String username, String password, String firstName, String lastName, String email) {
