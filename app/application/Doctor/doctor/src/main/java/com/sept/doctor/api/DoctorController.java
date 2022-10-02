@@ -81,4 +81,14 @@ public class DoctorController {
         // http://localhost:8080/patient/login?username=Suga&password=Taehyung
     }
 
+    @DeleteMapping("/delete/{username}")
+    public ResponseEntity<?> deleteDoctor(@PathVariable(name = "username") String username) {
+        try {
+            service.deleteDoctor(username);
+            return new ResponseEntity<>("Doctor deleted", HttpStatus.OK);
+        } catch (Exception e) {
+            throw new DoctorNotFound("Doctor with that username not found");
+        }
+    }
+
 }
