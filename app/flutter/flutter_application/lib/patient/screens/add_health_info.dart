@@ -118,11 +118,15 @@ class _HealthInfoState extends State<HealthInfo> {
                   for (int i = 0; i < 9; ++i) {
                     print(
                         "returned list of survey$i: ${_key.currentState!.getElementList().elementAt(i).question}");
+                    print(
+                        "returned list of survey$i: ${_key.currentState!.getElementList().elementAt(i).answer}");
                   }
                 } else {
                   for (int i = 0; i < 8; ++i) {
                     print(
                         "returned list of survey$i: ${_key.currentState!.getElementList().elementAt(i).question}");
+                    print(
+                        "returned list of survey$i: ${_key.currentState!.getElementList().elementAt(i).answer}");
                   }
                 }
               })
