@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application/patient/patient.dart';
 
 import 'core/api_patient.dart';
 
@@ -40,7 +41,7 @@ class LoginHomeScreen extends StatelessWidget {
 }
 
 class LoginForm extends StatefulWidget {
-  const LoginForm();
+  const LoginForm({Key? key}) : super(key: key);
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -80,7 +81,9 @@ class _LoginFormState extends State<LoginForm> {
       _passwordTextController.text,
     );
     if (res == 'true') {
-      Navigator.of(context).pushNamed('/patient');
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>
+              Patient(username: _usernameTextController.text)));
     } else {
       showDialog(
           context: context,

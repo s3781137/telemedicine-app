@@ -3,16 +3,9 @@
 import 'package:flutter/material.dart';
 
 class Patient extends StatelessWidget {
-  const Patient();
+  String username;
+  Patient({Key? key, required this.username}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return PatientContent();
-  }
-}
-
-class PatientContent extends StatelessWidget {
-  const PatientContent();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +37,10 @@ class PatientContent extends StatelessWidget {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed('/patient');
+                  // todo debug msg
+                  print("passed username: $username");
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Patient(username: username)));
                 },
                 child: Icon(Icons.home),
               )),
