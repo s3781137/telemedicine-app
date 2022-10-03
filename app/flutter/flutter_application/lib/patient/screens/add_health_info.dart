@@ -114,7 +114,25 @@ class _HealthInfoState extends State<HealthInfo> {
               child: Text("debug"),
               onPressed: () {
                 print(
-                    "returned list of survey: ${_key.currentState!.getElementList().elementAt(0).question}");
+                    "returned list of survey0: ${_key.currentState!.getElementList().elementAt(0).question}");
+                print(
+                    "returned list of survey1: ${_key.currentState!.getElementList().elementAt(1).question}");
+                print(
+                    "returned list of survey2: ${_key.currentState!.getElementList().elementAt(2).question}");
+                print(
+                    "returned list of survey3: ${_key.currentState!.getElementList().elementAt(3).question}");
+                print(
+                    "returned list of survey4: ${_key.currentState!.getElementList().elementAt(4).question}");
+                print(
+                    "returned list of survey5: ${_key.currentState!.getElementList().elementAt(5).question}");
+                print(
+                    "returned list of survey6: ${_key.currentState!.getElementList().elementAt(6).question}");
+                print(
+                    "returned list of survey7: ${_key.currentState!.getElementList().elementAt(7).question}");
+                print(
+                    "returned list of survey8: ${_key.currentState!.getElementList().elementAt(8).question}");
+                print(
+                    "returned list of survey9: ${_key.currentState!.getElementList().elementAt(9).question}");
               })
         ],
         leading: [Text("TITLE")],
