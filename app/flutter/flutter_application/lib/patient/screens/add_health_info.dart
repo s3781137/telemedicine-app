@@ -108,11 +108,16 @@ List<Question> questions() {
           ],
         },
         isMandatory: true),
-    PolarQuestion(question: "Liver disease?", answers: ["Yes", "No"]),
-    PolarQuestion(question: "Kidney Disease?", answers: ["Yes", "No"]),
-    PolarQuestion(question: "Heart Disease?", answers: ["Yes", "No"]),
-    PolarQuestion(question: "Diabetes?", answers: ["Yes", "No"]),
-    PolarQuestion(question: "Cancers?", answers: ["Yes", "No"]),
+    PolarQuestion(
+        question: "Liver disease?", answers: ["Yes", "No"], isMandatory: true),
+    PolarQuestion(
+        question: "Kidney Disease?", answers: ["Yes", "No"], isMandatory: true),
+    PolarQuestion(
+        question: "Heart Disease?", answers: ["Yes", "No"], isMandatory: true),
+    PolarQuestion(
+        question: "Diabetes?", answers: ["Yes", "No"], isMandatory: true),
+    PolarQuestion(
+        question: "Cancers?", answers: ["Yes", "No"], isMandatory: true),
     Question(question: "Any other medical problems or allergies?"),
     Question(question: "Any past surgeries or hospitalisations?"),
   ];
