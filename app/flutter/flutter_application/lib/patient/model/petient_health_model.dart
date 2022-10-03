@@ -1,5 +1,12 @@
 import 'dart:convert';
 
+List<PatientHealthModel> patientHealthModelFromJson(String responseBody) =>
+    List<PatientHealthModel>.from(
+        json.decode(responseBody).map((x) => PatientHealthModel.fromJson(x)));
+
+String patientHealthModelToJson(List<PatientHealthModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class PatientHealthModel {
   PatientHealthModel(
       {required this.id,

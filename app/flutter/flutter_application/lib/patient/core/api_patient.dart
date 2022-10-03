@@ -93,7 +93,7 @@ class ApiClient {
     try {
       Response response = await http.put(
           Uri.parse('http://localhost:8080/patient/updateHealthInfo'),
-          body: {healthInfo});
+          body: healthInfo);
       // todo: remove debug message
       print(
           "api_patient updating patient health info: ${response.body.toString()}");
