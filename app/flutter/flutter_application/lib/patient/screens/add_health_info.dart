@@ -72,6 +72,7 @@ class _HealthInfoState extends State<HealthInfo> {
     // todo: debug message
     print("method id:$id");
     // todo: condition missing
+
     PatientHealthModel healthInfo = PatientHealthModel(
         id: id,
         cancer: _key.currentState!.getElementList().elementAt(6).answer,
@@ -87,7 +88,7 @@ class _HealthInfoState extends State<HealthInfo> {
         pastSurgeries: _key.currentState!.getElementList().elementAt(8).answer);
     dynamic res = await _apiClient.updateHealthInfo(healthInfo);
     print(res);
-    // todo: fix condition
+    // todo: maybe need to fix condition
     if (res.toString().contains("health information registered")) {
       print("updated health info for :$id");
     } else {
@@ -117,9 +118,12 @@ class _HealthInfoState extends State<HealthInfo> {
           MaterialButton(
             color: Colors.deepOrange,
             splashColor: Colors.orangeAccent,
-            // todo: too ugly, need another way
-            //       and, need if else to check
-            onPressed: () => updateHealthInfo(widget.id),
+            onPressed: () async {
+              if (_key.currentState!.validate()) {
+                print("validated!");
+              }
+              updateHealthInfo(widget.id);
+            },
             child: Text("Test Submit"),
           ),
           // todo: remove button for debug
@@ -159,6 +163,10 @@ List<Question> questions() {
           'Yes': [
             Question(
               question: "Comments",
+              validate: (field) {
+                if (field.isEmpty) return "Field cannot be empty";
+                return null;
+              },
             ),
           ],
         },
@@ -173,7 +181,19 @@ List<Question> questions() {
         question: "Diabetes?", answers: ["Yes", "No"], isMandatory: true),
     PolarQuestion(
         question: "Cancers?", answers: ["Yes", "No"], isMandatory: true),
-    Question(question: "Any other medical problems or allergies?"),
-    Question(question: "Any past surgeries or hospitalisations?"),
+    Question(
+      question: "Any other medical problems or allergies?",
+      validate: (field) {
+        if (field.isEmpty) return "Field cannot be empty";
+        return null;
+      },
+    ),
+    Question(
+      question: "Any past surgeries or hospitalisations?",
+      validate: (field) {
+        if (field.isEmpty) return "Field cannot be empty";
+        return null;
+      },
+    ),
   ];
 }
