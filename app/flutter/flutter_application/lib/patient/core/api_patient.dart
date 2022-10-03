@@ -88,12 +88,13 @@ class ApiClient {
     }
   }
 
-  // Method for patient updating health info
   Future<dynamic> updateHealthInfo(PatientHealthModel healthInfo) async {
     try {
       Response response = await http.put(
-          Uri.parse('http://localhost:8080/patient/updateHealthInfo'),
-          body: healthInfo);
+        Uri.parse('http://localhost:8080/patient/updateHealthInfo'),
+        body: jsonEncode(healthInfo),
+        headers: <String, String>{"Content-Type": "application/json"},
+      );
       // todo: remove debug message
       print(
           "api_patient updating patient health info: ${response.body.toString()}");
@@ -101,8 +102,6 @@ class ApiClient {
       if (response.statusCode == 200) {
         return response.body.toString();
       }
-    } catch (e) {
-      throw Exception('Failed to update health info');
-    }
+    } catch (e) {}
   }
 }
