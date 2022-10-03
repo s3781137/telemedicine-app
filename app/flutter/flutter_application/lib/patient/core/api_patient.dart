@@ -91,7 +91,7 @@ class ApiClient {
   // Method for patient updating health info
   Future<dynamic> updateHealthInfo(PatientHealthModel healthInfo) async {
     try {
-      Response response = await http.post(
+      Response response = await http.put(
           Uri.parse('http://localhost:8080/patient/updateHealthInfo'),
           body: {healthInfo});
       // todo: remove debug message
