@@ -113,26 +113,18 @@ class _HealthInfoState extends State<HealthInfo> {
           MaterialButton(
               child: Text("debug"),
               onPressed: () {
-                print(
-                    "returned list of survey0: ${_key.currentState!.getElementList().elementAt(0).question}");
-                print(
-                    "returned list of survey1: ${_key.currentState!.getElementList().elementAt(1).question}");
-                print(
-                    "returned list of survey2: ${_key.currentState!.getElementList().elementAt(2).question}");
-                print(
-                    "returned list of survey3: ${_key.currentState!.getElementList().elementAt(3).question}");
-                print(
-                    "returned list of survey4: ${_key.currentState!.getElementList().elementAt(4).question}");
-                print(
-                    "returned list of survey5: ${_key.currentState!.getElementList().elementAt(5).question}");
-                print(
-                    "returned list of survey6: ${_key.currentState!.getElementList().elementAt(6).question}");
-                print(
-                    "returned list of survey7: ${_key.currentState!.getElementList().elementAt(7).question}");
-                print(
-                    "returned list of survey8: ${_key.currentState!.getElementList().elementAt(8).question}");
-                print(
-                    "returned list of survey9: ${_key.currentState!.getElementList().elementAt(9).question}");
+                if (_key.currentState!.getElementList().elementAt(1).question ==
+                    "Comments") {
+                  for (int i = 0; i < 9; ++i) {
+                    print(
+                        "returned list of survey$i: ${_key.currentState!.getElementList().elementAt(i).question}");
+                  }
+                } else {
+                  for (int i = 0; i < 8; ++i) {
+                    print(
+                        "returned list of survey$i: ${_key.currentState!.getElementList().elementAt(i).question}");
+                  }
+                }
               })
         ],
         leading: [Text("TITLE")],
@@ -143,14 +135,14 @@ class _HealthInfoState extends State<HealthInfo> {
 
 List<Question> questions() {
   return [
-    Question(
-      question: "What is your name?",
-      //isMandatory: true,
-      validate: (field) {
-        if (field.isEmpty) return "Field cannot be empty";
-        return null;
-      },
-    ),
+    // Question(
+    //   question: "What is your name?",
+    //   //isMandatory: true,
+    //   validate: (field) {
+    //     if (field.isEmpty) return "Field cannot be empty";
+    //     return null;
+    //   },
+    // ),
     NestedQuestion(
         question: "Are you on any medications?",
         answers: ["Yes", "No"],
