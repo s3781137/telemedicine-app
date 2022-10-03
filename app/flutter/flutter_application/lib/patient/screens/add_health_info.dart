@@ -67,15 +67,11 @@ class HealthInfo extends StatefulWidget {
 class _HealthInfoState extends State<HealthInfo> {
   final _key = GlobalKey<QuestionFormState>();
   final ApiClient _apiClient = ApiClient();
-  int id = -1;
-  String test = "";
-  HealthInfo(int id) {
-    this.id = id;
-    // todo: debug message
-    print("healthinfo id healthstate: $id");
-  }
 
-  Future<void> updateHealthInfo() async {
+  Future<void> updateHealthInfo(int? id) async {
+    // todo: debug message
+    print("method id:$id");
+    // todo: condition missing
     PatientHealthModel healthInfo = PatientHealthModel(
         id: id,
         cancer: _key.currentState!.getElementList().elementAt(6).answer,
@@ -90,8 +86,9 @@ class _HealthInfoState extends State<HealthInfo> {
             _key.currentState!.getElementList().elementAt(1).answer,
         pastSurgeries: _key.currentState!.getElementList().elementAt(8).answer);
     dynamic res = await _apiClient.updateHealthInfo(healthInfo);
+    print(res);
     // todo: fix condition
-    if (res != null) {
+    if (res.toString().contains("health information registered")) {
       print("updated health info for :$id");
     } else {
       showDialog(
@@ -99,7 +96,7 @@ class _HealthInfoState extends State<HealthInfo> {
           builder: (BuildContext context) {
             return AlertDialog(
                 title: const Text('Update Failure'),
-                content: const Text('Cannot update!!!!!!!'),
+                content: const Text('Cannot update health information'),
                 actions: <Widget>[
                   TextButton(
                     onPressed: () => Navigator.pop(context),
@@ -117,51 +114,12 @@ class _HealthInfoState extends State<HealthInfo> {
         key: _key,
         children: questions(),
         trailing: [
-          // MaterialButton(
-          //   color: Colors.deepOrange,
-          //   splashColor: Colors.orangeAccent,
-          //   onPressed: () async {
-          //     if (_key.currentState!.validate()) {
-          //       print("validated!");
-          //     }
-          //   },
-          //   child: Text("Submit"),
-          // ),
-          // MaterialButton(
-          //   color: Colors.deepOrange,
-          //   splashColor: Colors.orangeAccent,
-          //   onPressed: () {
-          //     healthInfo = PatientHealthModel(
-          //         id: id,
-          //         cancer:
-          //             _key.currentState!.getElementList().elementAt(6).answer,
-          //         diabetes:
-          //             _key.currentState!.getElementList().elementAt(5).answer,
-          //         heartDisease:
-          //             _key.currentState!.getElementList().elementAt(4).answer,
-          //         kidneyDisease:
-          //             _key.currentState!.getElementList().elementAt(3).answer,
-          //         liverDisease:
-          //             _key.currentState!.getElementList().elementAt(2).answer,
-          //         medicalProblems:
-          //             _key.currentState!.getElementList().elementAt(7).answer,
-          //         medication:
-          //             _key.currentState!.getElementList().elementAt(0).answer,
-          //         medicationDescription:
-          //             _key.currentState!.getElementList().elementAt(1).answer,
-          //         pastSurgeries:
-          //             _key.currentState!.getElementList().elementAt(8).answer);
-          //     print("object created");
-          //     print(healthInfo.cancer);
-          //   },
-          //   child: Text("craete object"),
-          // ),
           MaterialButton(
             color: Colors.deepOrange,
             splashColor: Colors.orangeAccent,
             // todo: too ugly, need another way
             //       and, need if else to check
-            onPressed: () => updateHealthInfo(),
+            onPressed: () => updateHealthInfo(widget.id),
             child: Text("Test Submit"),
           ),
           // todo: remove button for debug
@@ -194,14 +152,6 @@ class _HealthInfoState extends State<HealthInfo> {
 
 List<Question> questions() {
   return [
-    // Question(
-    //   question: "What is your name?",
-    //   //isMandatory: true,
-    //   validate: (field) {
-    //     if (field.isEmpty) return "Field cannot be empty";
-    //     return null;
-    //   },
-    // ),
     NestedQuestion(
         question: "Are you on any medications?",
         answers: ["Yes", "No"],
