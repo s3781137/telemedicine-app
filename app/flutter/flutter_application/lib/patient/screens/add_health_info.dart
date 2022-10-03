@@ -108,7 +108,14 @@ class _HealthInfoState extends State<HealthInfo> {
               }
             },
             child: Text("Submit"),
-          )
+          ),
+          // todo: remove button for debug
+          MaterialButton(
+              child: Text("debug"),
+              onPressed: () {
+                print(
+                    "returned list of survey: ${_key.currentState!.getElementList().elementAt(0).question}");
+              })
         ],
         leading: [Text("TITLE")],
       ),
