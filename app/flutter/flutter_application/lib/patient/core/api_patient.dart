@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_application/patient/model/petient_health_model.dart';
 import 'package:http/http.dart';
 
 import '../model/patient_model.dart';
@@ -85,5 +86,22 @@ class ApiClient {
     } else {
       throw Exception('Unable to fetch products from the REST API');
     }
+  }
+}
+
+// Method for patient updating health info
+Future<dynamic> updateHealthInfo(PatientHealthModel healthInfo) async {
+  try {
+    Response response = await http.post(
+        Uri.parse('http://localhost:8080/patient/updateHealthInfo'),
+        body: {healthInfo});
+    // todo: remove debug message
+    print("api_patient updating patient health info");
+
+    if (response.statusCode == 200) {
+      return response.body.toString();
+    }
+  } catch (e) {
+    throw Exception('Failed to sign up');
   }
 }
