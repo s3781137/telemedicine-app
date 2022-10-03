@@ -62,8 +62,7 @@ class Patient extends StatelessWidget {
               ),
               title: Text('Add Health Information'),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>
-                      PatientHealthInfo(username: username)))),
+                  builder: (context) => PatientHealthInfo(id: id)))),
           ListTile(
             leading: CircleAvatar(
               backgroundImage: AssetImage('assets/Appointments.png'),
