@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:conditional_questions/conditional_questions.dart';
+import 'package:flutter_application/patient/model/petient_health_model.dart';
+import '../core/api_patient.dart';
 import '../patient.dart';
 
 class PatientHealthInfo extends StatelessWidget {
@@ -46,15 +48,17 @@ class PatientHealthInfo extends StatelessWidget {
               )),
         ],
       ),
-      body: HealthInfo(),
+      body: HealthInfo(
+        id: id,
+      ),
     );
   }
 }
 
 class HealthInfo extends StatefulWidget {
-  HealthInfo({Key? key, this.title}) : super(key: key);
+  HealthInfo({Key? key, this.id}) : super(key: key);
 
-  final String? title;
+  int? id;
 
   @override
   _HealthInfoState createState() => _HealthInfoState();
@@ -62,6 +66,14 @@ class HealthInfo extends StatefulWidget {
 
 class _HealthInfoState extends State<HealthInfo> {
   final _key = GlobalKey<QuestionFormState>();
+  late PatientHealthModel healthInfo;
+  final ApiClient _apiClient = ApiClient();
+  int id = -1;
+  HealthInfo(int id) {
+    this.id = id;
+    // todo: debug message
+    print("healthinfo id healthstate: $id");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,38 +88,38 @@ class _HealthInfoState extends State<HealthInfo> {
             onPressed: () async {
               if (_key.currentState!.validate()) {
                 print("validated!");
-                await (Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                      builder: (_) => Scaffold(
-                            appBar: AppBar(
-                              leading: BackButton(color: Colors.black),
-                            ),
-                            body: SingleChildScrollView(
-                              child: Container(
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: _key.currentState!
-                                        .getElementList()
-                                        .map<Widget>((element) {
-                                      return Row(children: [
-                                        Text("${element.question}:"),
-                                        Text(element.answer == null
-                                            ? "null"
-                                            : element.answer)
-                                      ]);
-                                    }).toList(),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )),
-                ));
               }
             },
             child: Text("Submit"),
+          ),
+          MaterialButton(
+            color: Colors.deepOrange,
+            splashColor: Colors.orangeAccent,
+            // todo: too ugly, need another way
+            onPressed: () async {
+              healthInfo = PatientHealthModel(
+                  id: id,
+                  cancer:
+                      _key.currentState!.getElementList().elementAt(6).answer,
+                  diabetes:
+                      _key.currentState!.getElementList().elementAt(5).answer,
+                  heartDisease:
+                      _key.currentState!.getElementList().elementAt(4).answer,
+                  kidneyDisease:
+                      _key.currentState!.getElementList().elementAt(3).answer,
+                  liverDisease:
+                      _key.currentState!.getElementList().elementAt(2).answer,
+                  medicalProblems:
+                      _key.currentState!.getElementList().elementAt(7).answer,
+                  medication:
+                      _key.currentState!.getElementList().elementAt(0).answer,
+                  medicationDescription:
+                      _key.currentState!.getElementList().elementAt(1).answer,
+                  pastSurgeries:
+                      _key.currentState!.getElementList().elementAt(8).answer);
+              _apiClient.updateHealthInfo(healthInfo);
+            },
+            child: Text("Test Submit"),
           ),
           // todo: remove button for debug
           MaterialButton(
