@@ -96,6 +96,7 @@ class _HealthInfoState extends State<HealthInfo> {
             color: Colors.deepOrange,
             splashColor: Colors.orangeAccent,
             // todo: too ugly, need another way
+            //       and, need if else to check
             onPressed: () async {
               healthInfo = PatientHealthModel(
                   id: id,
