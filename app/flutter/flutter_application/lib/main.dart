@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application/doctor/doctorChat.dart';
 import 'package:flutter_application/firstScreen.dart';
@@ -27,7 +25,7 @@ void main() {
       '/patientsignup': (context) => const RegisterHomeScreen(),
       '/doctorsignin': (context) => const SignInScreen(),
       '/doctorsignup': (context) => const DoctorSignUpScreen(),
-      '/patient': (context) => const Patient(),
+      // '/patient': (context) => Patient( username:_usernameTextController.text),
       '/loginhome': (context) => const LoginHome(),
       '/patient/appointments': (context) => const AppointmentsScreen(),
       '/patient/appointments/book': (context) => const BookAppointment(),
