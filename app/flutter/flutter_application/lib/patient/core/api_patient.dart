@@ -87,21 +87,21 @@ class ApiClient {
       throw Exception('Unable to fetch products from the REST API');
     }
   }
-}
 
-// Method for patient updating health info
-Future<dynamic> updateHealthInfo(PatientHealthModel healthInfo) async {
-  try {
-    Response response = await http.post(
-        Uri.parse('http://localhost:8080/patient/updateHealthInfo'),
-        body: {healthInfo});
-    // todo: remove debug message
-    print("api_patient updating patient health info");
+  // Method for patient updating health info
+  Future<dynamic> updateHealthInfo(PatientHealthModel healthInfo) async {
+    try {
+      Response response = await http.post(
+          Uri.parse('http://localhost:8080/patient/updateHealthInfo'),
+          body: {healthInfo});
+      // todo: remove debug message
+      print("api_patient updating patient health info");
 
-    if (response.statusCode == 200) {
-      return response.body.toString();
+      if (response.statusCode == 200) {
+        return response.body.toString();
+      }
+    } catch (e) {
+      throw Exception('Failed to sign up');
     }
-  } catch (e) {
-    throw Exception('Failed to sign up');
   }
 }
