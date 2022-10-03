@@ -3,8 +3,8 @@ import 'package:conditional_questions/conditional_questions.dart';
 import '../patient.dart';
 
 class PatientHealthInfo extends StatelessWidget {
-  String username;
-  PatientHealthInfo({Key? key, required this.username}) : super(key: key);
+  int id;
+  PatientHealthInfo({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +38,9 @@ class PatientHealthInfo extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   // todo debug msg
-                  print("passed username: $username");
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Patient(username: username)));
+                  print("passed user id healthinfo: $id");
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => Patient(id: id)));
                 },
                 child: Icon(Icons.home),
               )),
