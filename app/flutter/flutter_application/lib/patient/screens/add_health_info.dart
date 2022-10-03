@@ -76,6 +76,35 @@ class _HealthInfoState extends State<HealthInfo> {
             onPressed: () async {
               if (_key.currentState!.validate()) {
                 print("validated!");
+                await (Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                      builder: (_) => Scaffold(
+                            appBar: AppBar(
+                              leading: BackButton(color: Colors.black),
+                            ),
+                            body: SingleChildScrollView(
+                              child: Container(
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: _key.currentState!
+                                        .getElementList()
+                                        .map<Widget>((element) {
+                                      return Row(children: [
+                                        Text("${element.question}:"),
+                                        Text(element.answer == null
+                                            ? "null"
+                                            : element.answer)
+                                      ]);
+                                    }).toList(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )),
+                ));
               }
             },
             child: Text("Submit"),
