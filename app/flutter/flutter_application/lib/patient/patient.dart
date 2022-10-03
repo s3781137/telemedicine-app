@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 
 class Patient extends StatelessWidget {
-  String username;
-  Patient({Key? key, required this.username}) : super(key: key);
+  int id;
+  Patient({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +38,9 @@ class Patient extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   // todo debug msg
-                  print("passed username: $username");
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Patient(username: username)));
+                  print("passed user_id: $id");
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => Patient(id: id)));
                 },
                 child: Icon(Icons.home),
               )),
