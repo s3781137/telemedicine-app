@@ -95,9 +95,7 @@ class _HealthInfoState extends State<HealthInfo> {
           MaterialButton(
             color: Colors.deepOrange,
             splashColor: Colors.orangeAccent,
-            // todo: too ugly, need another way
-            //       and, need if else to check
-            onPressed: () async {
+            onPressed: () {
               healthInfo = PatientHealthModel(
                   id: id,
                   cancer:
@@ -118,6 +116,17 @@ class _HealthInfoState extends State<HealthInfo> {
                       _key.currentState!.getElementList().elementAt(1).answer,
                   pastSurgeries:
                       _key.currentState!.getElementList().elementAt(8).answer);
+              print("object craeted");
+              print(healthInfo.cancer);
+            },
+            child: Text("craete object"),
+          ),
+          MaterialButton(
+            color: Colors.deepOrange,
+            splashColor: Colors.orangeAccent,
+            // todo: too ugly, need another way
+            //       and, need if else to check
+            onPressed: () {
               _apiClient.updateHealthInfo(healthInfo);
             },
             child: Text("Test Submit"),
