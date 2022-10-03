@@ -97,52 +97,23 @@ List<Question> questions() {
         return null;
       },
     ),
-    PolarQuestion(
-        question: "Have you made any donations in the past?",
-        answers: ["Yes", "No"],
-        isMandatory: true),
-    PolarQuestion(
-        question: "In the last 3 months have you had a vaccination?",
-        answers: ["Yes", "No"]),
-    PolarQuestion(
-        question: "Have you ever taken medication for HIV?",
-        answers: ["Yes", "No"]),
     NestedQuestion(
-      question: "The series will depend on your answer",
-      answers: ["Yes", "No"],
-      children: {
-        'Yes': [
-          PolarQuestion(
-              question: "Have you ever taken medication for H1n1?",
-              answers: ["Yes", "No"]),
-          PolarQuestion(
-              question: "Have you ever taken medication for Rabies?",
-              answers: ["Yes", "No"]),
-          Question(
-            question: "Comments",
-          ),
-        ],
-        'No': [
-          NestedQuestion(
-              question: "Have you sustained any injuries?",
-              answers: [
-                "Yes",
-                "No"
-              ],
-              children: {
-                'Yes': [
-                  PolarQuestion(
-                      question: "Did it result in a disability?",
-                      answers: ["Yes", "No", "I prefer not to say"]),
-                ],
-                'No': [
-                  PolarQuestion(
-                      question: "Have you ever been infected with chicken pox?",
-                      answers: ["Yes", "No"]),
-                ]
-              }),
-        ],
-      },
-    )
+        question: "Are you on any medications?",
+        answers: ["Yes", "No"],
+        children: {
+          'Yes': [
+            Question(
+              question: "Comments",
+            ),
+          ],
+        },
+        isMandatory: true),
+    PolarQuestion(question: "Liver disease?", answers: ["Yes", "No"]),
+    PolarQuestion(question: "Kidney Disease?", answers: ["Yes", "No"]),
+    PolarQuestion(question: "Heart Disease?", answers: ["Yes", "No"]),
+    PolarQuestion(question: "Diabetes?", answers: ["Yes", "No"]),
+    PolarQuestion(question: "Cancers?", answers: ["Yes", "No"]),
+    Question(question: "Any other medical problems or allergies?"),
+    Question(question: "Any past surgeries or hospitalisations?"),
   ];
 }
