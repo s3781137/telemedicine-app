@@ -39,8 +39,6 @@ class PatientHealthInfo extends StatelessWidget {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  // todo debug msg
-                  print("passed user id healthinfo: $id");
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => Patient(id: id)));
                 },

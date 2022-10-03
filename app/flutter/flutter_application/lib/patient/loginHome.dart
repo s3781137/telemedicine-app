@@ -49,7 +49,6 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   int id = -1;
-  // todo: id initialization
   final _usernameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
   final ApiClient _apiClient = ApiClient();

@@ -54,8 +54,6 @@ class ApiClient {
     Response response = await http
         .get(Uri.parse('http://localhost:8080/patient/getBy/$username'));
     if (response.statusCode == 200) {
-      // todo: remove debug message
-      print(PatientModel.fromJson(jsonDecode((response.body))).email);
       return PatientModel.fromJson(jsonDecode((response.body)));
     } else {
       throw Exception('Failed to load userdata');
@@ -67,8 +65,6 @@ class ApiClient {
     Response response = await http
         .get(Uri.parse('http://localhost:8080/patient/getBy/$username'));
     if (response.statusCode == 200) {
-      // todo: remove debug message
-      print(PatientModel.fromJson(jsonDecode((response.body))).email);
       return PatientModel.fromJson(jsonDecode((response.body))).id;
     } else {
       throw Exception('Failed to load userdata');
@@ -80,8 +76,6 @@ class ApiClient {
     final response =
         await http.get(Uri.parse('http://localhost:8080/patient/list'));
     if (response.statusCode == 200) {
-      print('response body ${response.body}');
-      // todo: remove debug msg
       return patientModelFromJson(response.body);
     } else {
       throw Exception('Unable to fetch products from the REST API');
@@ -95,10 +89,6 @@ class ApiClient {
         body: jsonEncode(healthInfo),
         headers: <String, String>{"Content-Type": "application/json"},
       );
-      // todo: remove debug message
-      print(
-          "api_patient updating patient health info: ${response.body.toString()}");
-
       if (response.statusCode == 200) {
         return response.body.toString();
       }
