@@ -61,6 +61,19 @@ class ApiClient {
     }
   }
 
+  // Get ID of User by username
+  Future<int?> getUserId(String username) async {
+    Response response = await http
+        .get(Uri.parse('http://localhost:8080/patient/getBy/$username'));
+    if (response.statusCode == 200) {
+      // todo: remove debug message
+      print(PatientModel.fromJson(jsonDecode((response.body))).email);
+      return PatientModel.fromJson(jsonDecode((response.body))).id;
+    } else {
+      throw Exception('Failed to load userdata');
+    }
+  }
+
   // Returns a list of users
   Future<List<PatientModel>> fetchUsers() async {
     final response =
