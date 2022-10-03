@@ -95,13 +95,14 @@ class ApiClient {
           Uri.parse('http://localhost:8080/patient/updateHealthInfo'),
           body: {healthInfo});
       // todo: remove debug message
-      print("api_patient updating patient health info");
+      print(
+          "api_patient updating patient health info: ${response.body.toString()}");
 
       if (response.statusCode == 200) {
         return response.body.toString();
       }
     } catch (e) {
-      throw Exception('Failed to sign up');
+      throw Exception('Failed to update health info');
     }
   }
 }
