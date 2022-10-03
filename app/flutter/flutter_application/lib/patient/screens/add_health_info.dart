@@ -58,7 +58,7 @@ class PatientHealthInfo extends StatelessWidget {
 class HealthInfo extends StatefulWidget {
   HealthInfo({Key? key, this.id}) : super(key: key);
 
-  int? id;
+  dynamic id;
 
   @override
   _HealthInfoState createState() => _HealthInfoState();
@@ -67,30 +67,82 @@ class HealthInfo extends StatefulWidget {
 class _HealthInfoState extends State<HealthInfo> {
   final _key = GlobalKey<QuestionFormState>();
   final ApiClient _apiClient = ApiClient();
-
-  Future<void> updateHealthInfo(int? id) async {
-    // todo: debug message
-    print("method id:$id");
-    // todo: condition missing
-
+  int lineCancer = 6;
+  int lineDiabetes = 5;
+  int lineHeartDisease = 4;
+  int lineKidneyDisease = 3;
+  int lineLiverDisease = 2;
+  int lineMedicalProblems = 7;
+  int lineMedication = 0;
+  int lineMedicationDescpt = 1;
+  int linePastSurgeries = 8;
+  Future<void> updateHealthInfo(dynamic id) async {
+    // check the first question is yes or no
+    if (!(_key.currentState!.getElementList().elementAt(1).question ==
+        "Comments")) {
+      lineCancer -= 1;
+      lineDiabetes -= 1;
+      lineHeartDisease -= 1;
+      lineKidneyDisease -= 1;
+      lineLiverDisease -= 1;
+      lineMedicalProblems -= 1;
+      linePastSurgeries -= 1;
+      lineMedicationDescpt = 0;
+    }
     PatientHealthModel healthInfo = PatientHealthModel(
         id: id,
-        cancer: _key.currentState!.getElementList().elementAt(6).answer,
-        diabetes: _key.currentState!.getElementList().elementAt(5).answer,
-        heartDisease: _key.currentState!.getElementList().elementAt(4).answer,
-        kidneyDisease: _key.currentState!.getElementList().elementAt(3).answer,
-        liverDisease: _key.currentState!.getElementList().elementAt(2).answer,
-        medicalProblems:
-            _key.currentState!.getElementList().elementAt(7).answer,
-        medication: _key.currentState!.getElementList().elementAt(0).answer,
-        medicationDescription:
-            _key.currentState!.getElementList().elementAt(1).answer,
-        pastSurgeries: _key.currentState!.getElementList().elementAt(8).answer);
+        cancer:
+            _key.currentState!.getElementList().elementAt(lineCancer).answer,
+        diabetes:
+            _key.currentState!.getElementList().elementAt(lineDiabetes).answer,
+        heartDisease: _key.currentState!
+            .getElementList()
+            .elementAt(lineHeartDisease)
+            .answer,
+        kidneyDisease: _key.currentState!
+            .getElementList()
+            .elementAt(lineKidneyDisease)
+            .answer,
+        liverDisease: _key.currentState!
+            .getElementList()
+            .elementAt(lineLiverDisease)
+            .answer,
+        medicalProblems: _key.currentState!
+            .getElementList()
+            .elementAt(lineMedicalProblems)
+            .answer,
+        medication: _key.currentState!
+            .getElementList()
+            .elementAt(lineMedication)
+            .answer,
+        medicationDescription: _key.currentState!
+            .getElementList()
+            .elementAt(lineMedication)
+            .answer,
+        pastSurgeries: _key.currentState!
+            .getElementList()
+            .elementAt(linePastSurgeries)
+            .answer);
     dynamic res = await _apiClient.updateHealthInfo(healthInfo);
     print(res);
     // todo: maybe need to fix condition
     if (res.toString().contains("health information registered")) {
       print("updated health info for :$id");
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                title: const Text('Update Success'),
+                content: const Text('Your health information has been updated'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => Patient(id: id))),
+                    child: const Text('OK'),
+                  ),
+                ]);
+          });
     } else {
       showDialog(
           context: context,
@@ -126,27 +178,6 @@ class _HealthInfoState extends State<HealthInfo> {
             },
             child: Text("Test Submit"),
           ),
-          // todo: remove button for debug
-          MaterialButton(
-              child: Text("debug"),
-              onPressed: () {
-                if (_key.currentState!.getElementList().elementAt(1).question ==
-                    "Comments") {
-                  for (int i = 0; i < 9; ++i) {
-                    print(
-                        "returned list of survey$i: ${_key.currentState!.getElementList().elementAt(i).question}");
-                    print(
-                        "returned list of survey$i: ${_key.currentState!.getElementList().elementAt(i).answer}");
-                  }
-                } else {
-                  for (int i = 0; i < 8; ++i) {
-                    print(
-                        "returned list of survey$i: ${_key.currentState!.getElementList().elementAt(i).question}");
-                    print(
-                        "returned list of survey$i: ${_key.currentState!.getElementList().elementAt(i).answer}");
-                  }
-                }
-              })
         ],
         leading: [Text("TITLE")],
       ),
