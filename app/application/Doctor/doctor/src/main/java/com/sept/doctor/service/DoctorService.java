@@ -2,12 +2,14 @@ package com.sept.doctor.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.util.Pair;
 import com.sept.doctor.model.Doctor;
 import com.sept.doctor.repository.DoctorRepository;
 
@@ -65,6 +67,27 @@ public class DoctorService {
 
         }
         return false;
+    }
+
+    public boolean doPasswordsMatch(String hashedPassword, String plainTextPassword) {
+        return bCryptPasswordEncoder.matches(plainTextPassword, hashedPassword);
+    }
+
+    public boolean comparePassword(String username, String plainTextPassword) {
+        Optional<Doctor> doctor = repo.findDoctorByUsername(username);
+        return (doctor.isPresent() && doPasswordsMatch(doctor.get().getPassword(), plainTextPassword));
+    }
+
+    public Pair<Optional<String>, Optional<Doctor>> login(String username, String plainTextPassword) {
+        Optional<Doctor> doctorOptional = repo.findDoctorByUsername(username);
+
+        Optional<String> token = Optional.empty();
+        if (comparePassword(username, plainTextPassword)) {
+            token = Optional.of(UUID.randomUUID().toString());
+            Doctor doctor = doctorOptional.get();
+            doctor.setToken(token.get());
+        }
+        return Pair.of(token, doctorOptional);
     }
 
 }
