@@ -136,20 +136,4 @@ public class PatientController {
         // http://localhost:8080/patient/login?username=Suga&password=Taehyung
     }
 
-    //This method is used to update a patient's health information
-    //the patient can go to http://localhost:8080/patient/updateHealthInfo and 
-    //specify their id to update their diseases.
-    @PutMapping("/updateHealthInfo")
-    public ResponseEntity<?> updateHealthInfo(@RequestBody PatientHealthInformation healthInfo) {
-        try {
-            service.updateHealthInfo(healthInfo);
-            Map<String, Object> response = new HashMap<>();
-            response.put("id", healthInfo.getId());
-            response.put("message", "health information registered");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-
-        } catch (Exception e) {
-            throw new PatientNotFound("Patient database error");
-        }
-    }
 }

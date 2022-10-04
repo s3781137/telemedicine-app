@@ -113,13 +113,5 @@ public class PatientService {
         return healthRepo.save(newInfo);
     }
 
-    //updating the patient health information in the repo
-    public void updateHealthInfo(PatientHealthInformation healthInfo) {
-        healthRepo.save(healthInfo);
 
-    }
-    //getting the patient healthinfo by id from the repo
-    public Optional<PatientHealthInformation> getHealthInfo(int id) {
-        return healthRepo.findById(id);
-    }
 }
