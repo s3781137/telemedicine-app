@@ -13,6 +13,9 @@ import com.sept.doctor.model.Doctor;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transaction;
+import javax.transaction.Transactional;
+
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
 
@@ -30,5 +33,10 @@ public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
     UserDetails findByUsername(String username);
 
     Doctor getById(Long id);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Doctor set token = ?1 where username = ?2")
+    void setToken(@Param("token") String token, @Param("username") String username);
 
 }

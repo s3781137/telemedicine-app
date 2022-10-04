@@ -71,48 +71,45 @@ public class DoctorController {
         }
     }
 
-    // @PostMapping("/register")
-    // public ResponseEntity<?> registerDoctor(@RequestParam String username,
-    // @RequestParam String password,
-    // @RequestParam String confirmPassword, @RequestParam String firstName,
-    // @RequestParam String lastName, @RequestParam String email) {
-
-    // Doctor doctor = new Doctor(username, password, firstName, lastName, email);
-
-    // if (service.checkIfUsernameIsFree(doctor)) {
-    // Map<String, Object> response = new HashMap<>();
-    // response.put("status", HttpStatus.NOT_ACCEPTABLE);
-    // response.put("errors", "Username is already taken");
-    // return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    // // the patient should have passwords that match to register
-    // } else if (!doctor.getPassword().equals(doctor.getConfirmPassword())) {
-    // Map<String, Object> response = new HashMap<>();
-    // response.put("status", HttpStatus.NOT_ACCEPTABLE);
-    // response.put("errors", "Your both passwords should be same.");
-    // return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    // } else {
-    // // the patient is getting created.
-    // Doctor currentDoctor = service.saveDoctor(doctor);
-    // Map<String, Object> response = new HashMap<>();
-    // response.put("id", currentDoctor.getId());
-    // response.put("username", currentDoctor.getUsername());
-    // return new ResponseEntity<>(true, HttpStatus.OK);
-    // }
-    // }
-
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody Doctor doctor, BindingResult result) {
-        // Validate passwords match
-        doctorValidator.validate(doctor, result);
+    public ResponseEntity<?> registerDoctor(@RequestBody Doctor doctor) {
 
-        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if (errorMap != null)
-            return errorMap;
-
-        Doctor newDoctor = service.saveDoctor(doctor);
-
-        return new ResponseEntity<Doctor>(newDoctor, HttpStatus.CREATED);
+        if (service.checkIfUsernameIsFree(doctor)) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", HttpStatus.NOT_ACCEPTABLE);
+            response.put("errors", "Username is already taken");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            // the patient should have passwords that match to register
+        } else if (!doctor.getPassword().equals(doctor.getConfirmPassword())) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", HttpStatus.NOT_ACCEPTABLE);
+            response.put("errors", "Your both passwords should be same.");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        } else {
+            // the patient is getting created.
+            Doctor currentDoctor = service.saveDoctor(doctor);
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", currentDoctor.getId());
+            response.put("username", currentDoctor.getUsername());
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
     }
+
+    // @PostMapping("/register")
+    // public ResponseEntity<?> registerUser(@Valid @RequestBody Doctor doctor,
+    // BindingResult result) {
+    // // Validate passwords match
+    // doctorValidator.validate(doctor, result);
+
+    // ResponseEntity<?> errorMap =
+    // mapValidationErrorService.MapValidationService(result);
+    // if (errorMap != null)
+    // return errorMap;
+
+    // Doctor newDoctor = service.saveDoctor(doctor);
+
+    // return new ResponseEntity<Doctor>(newDoctor, HttpStatus.CREATED);
+    // }
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result) {
@@ -126,7 +123,7 @@ public class DoctorController {
                         loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = TOKEN_PREFIX + tokenProvider.generateToken(authentication);
-
+        service.setDoctorToken(jwt, loginRequest.getUsername());
         return ResponseEntity.ok(new JWTLoginSuccessResponse(true, jwt));
     }
 
@@ -139,27 +136,5 @@ public class DoctorController {
             throw new DoctorNotFound("Doctor with that username not found");
         }
     }
-
-    // @PutMapping("/token")
-    // public ResponseEntity<Map> getToken(@RequestParam String username, String
-    // password) {
-    // Map<String, Object> response = new HashMap<>();
-    // response.put("username", username);
-    // Pair<Optional<String>, Optional<Doctor>> loginResult =
-    // service.login(username, password);
-    // if (loginResult.getFirst().isPresent()) {
-    // response.put("status", "successful");
-    // response.put("token", loginResult.getFirst().get());
-    // if (loginResult.getSecond().isPresent()) {
-    // response.put("user", loginResult.getSecond().get());
-    // }
-
-    // return new ResponseEntity<>(response, HttpStatus.OK);
-    // } else {
-    // response.put("status", "failed");
-    // response.put("token", null);
-    // return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    // }
-    // }
 
 }

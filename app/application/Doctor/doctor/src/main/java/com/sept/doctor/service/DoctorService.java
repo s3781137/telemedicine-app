@@ -90,4 +90,9 @@ public class DoctorService {
         return Pair.of(token, doctorOptional);
     }
 
+    public void setDoctorToken(String token, String username) {
+        repo.setToken(token, username);
+
+    }
+
 }
