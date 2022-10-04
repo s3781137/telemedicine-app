@@ -22,7 +22,7 @@ services:
   Patient:
     image: 'patient'
     build:
-      context: ./application/patient
+      context: ./application/Patient
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
