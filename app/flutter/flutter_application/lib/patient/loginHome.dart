@@ -48,6 +48,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  int id = -1;
   final _usernameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
   final ApiClient _apiClient = ApiClient();
@@ -81,9 +82,9 @@ class _LoginFormState extends State<LoginForm> {
       _passwordTextController.text,
     );
     if (res == 'true') {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) =>
-              Patient(username: _usernameTextController.text)));
+      id = (await _apiClient.getUserId(_usernameTextController.text))!;
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Patient(id: id)));
     } else {
       showDialog(
           context: context,
