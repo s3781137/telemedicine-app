@@ -3,21 +3,21 @@ services:
 
 
 
-  # Availabilitys:
-  #   image: 'Availability'
-  #   build:
-  #     context: ./application/Availabilitys
-  #     dockerfile: DockerfileBackEndapplication
-  #   ports:
-  #     - "8082:8082"
+  Availability:
+    image: 'availability'
+    build:
+      context: ./application/Availability
+      dockerfile: DockerfileBackEndapplication
+    ports:
+      - "8082:8082"
 
-  # Bookings:
-  #   image: 'Bookings'
-  #   build:
-  #     context: ./application/Bookings
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8085:8085"
+  Bookings:
+    image: 'bookings'
+    build:
+      context: ./application/Bookings
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8085"
 
   Patient:
     image: 'patient'
@@ -27,10 +27,19 @@ services:
     ports:
       - "8080:8080"
 
-  # Doctor:
-  #   image: 'Doctor'
-  #   build:
-  #     context: ./application/Doctor
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8081:8081"
+  Doctor:
+    image: 'doctor'
+    build:
+      context: ./application/Doctor
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+
+  Adminmicroservice:
+    image: 'adminmicroservice'
+    build:
+      context: ./application/Adminmicroservice
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+
