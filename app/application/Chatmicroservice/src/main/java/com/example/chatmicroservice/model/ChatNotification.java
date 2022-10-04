@@ -6,7 +6,15 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ChatNotification")
 public class ChatNotification {
-    private String id;
-    private String senderId;
+
+    private int id;
+    private int senderId;
     private String senderName;
+
+    public ChatNotification(int id, int senderId, String senderName){
+        this.id = id;
+        this.senderId = senderId;
+        this.senderName = senderName;
+    }
+
 }

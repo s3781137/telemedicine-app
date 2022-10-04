@@ -16,6 +16,7 @@ import com.example.chatmicroservice.repository.ChatMessageRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ChatMessageService {
@@ -34,9 +35,9 @@ public class ChatMessageService {
     }
 
     public List<ChatMessage> findChatMessages(int senderId, int recipientId) {
-        int chatId = chatRoomService.getChatId(senderId, recipientId, false);
+        Optional<Integer> chatId = chatRoomService.getChatId(senderId, recipientId, false);
 
-        String messages =
+        List messages =
                 chatId.map(cId -> repository.findByChatId(cId)).orElse(new ArrayList<>());
 
         if(messages.size() > 0) {

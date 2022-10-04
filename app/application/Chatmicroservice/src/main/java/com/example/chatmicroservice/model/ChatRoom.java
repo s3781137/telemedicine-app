@@ -11,6 +11,8 @@ import org.springframework.data.annotation.Id;
 @Table(name = "ChatRoom")
 public class ChatRoom {
 
+    
+
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,4 +20,14 @@ public class ChatRoom {
     private int chatId;
     private int senderId;
     private int recipientId;
+
+    public ChatRoom(int chatId, int senderId, int recipientId){
+        this.chatId = chatId;
+        this.senderId = senderId;
+        this.recipientId = recipientId;
+    }
+
+    public int getChatId(){
+        return chatId;
+    }
 }

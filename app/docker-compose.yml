@@ -11,13 +11,13 @@ services:
     ports:
       - "8082:8082"
 
-  Bookings:
-    image: 'bookings'
-    build:
-      context: ./application/Bookings
-      dockerfile: Dockerfile
-    ports:
-      - "8085:8085"
+  # Bookings:
+  #   image: 'bookings'
+  #   build:
+  #     context: ./application/Bookings
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8085:8085"
 
   Patient:
     image: 'patient'
