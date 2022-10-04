@@ -1,10 +1,12 @@
 package com.example.adminmicroservice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.adminmicroservice.exception.ResourceNotFoundException;
@@ -19,7 +21,6 @@ import java.util.List;
 public class ChatMessageService {
     @Autowired private ChatMessageRepository repository;
     @Autowired private ChatRoomService chatRoomService;
-    @Autowired private MongoOperations mongoOperations;
 
     public ChatMessage save(ChatMessage chatMessage) {
         chatMessage.setStatus(MessageStatus.RECEIVED);
@@ -27,15 +28,15 @@ public class ChatMessageService {
         return chatMessage;
     }
 
-    public long countNewMessages(String senderId, String recipientId) {
+    public long countNewMessages(int senderId, int recipientId) {
         return repository.countBySenderIdAndRecipientIdAndStatus(
                 senderId, recipientId, MessageStatus.RECEIVED);
     }
 
-    public List<ChatMessage> findChatMessages(String senderId, String recipientId) {
-        var chatId = chatRoomService.getChatId(senderId, recipientId, false);
+    public List<ChatMessage> findChatMessages(int senderId, int recipientId) {
+        int chatId = chatRoomService.getChatId(senderId, recipientId, false);
 
-        var messages =
+        String messages =
                 chatId.map(cId -> repository.findByChatId(cId)).orElse(new ArrayList<>());
 
         if(messages.size() > 0) {
@@ -45,7 +46,7 @@ public class ChatMessageService {
         return messages;
     }
 
-    public ChatMessage findById(String id) {
+    public ChatMessage findById(int id) {
         return repository
                 .findById(id)
                 .map(chatMessage -> {
@@ -56,12 +57,10 @@ public class ChatMessageService {
                         new ResourceNotFoundException("can't find message (" + id + ")"));
     }
 
-    public void updateStatuses(String senderId, String recipientId, MessageStatus status) {
-        Query query = new Query(
-                Criteria
-                        .where("senderId").is(senderId)
-                        .and("recipientId").is(recipientId));
-        Update update = Update.update("status", status);
-        mongoOperations.updateMulti(query, update, ChatMessage.class);
+    public void updateStatuses(int senderId, int recipientId, MessageStatus status) {
+        
+        repository.updateDetails(senderId, recipientId, status);
     }
+
+    
 }

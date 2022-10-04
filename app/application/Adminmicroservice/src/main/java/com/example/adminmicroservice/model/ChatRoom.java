@@ -1,21 +1,31 @@
 package com.example.adminmicroservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Table;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@Document
+// import lombok.AllArgsConstructor;
+// import lombok.Builder;
+// import lombok.Data;
+// import lombok.NoArgsConstructor;
+ import org.springframework.data.annotation.Id;
+// import org.springframework.data.mongodb.core.mapping.Document;
+
+// @Data
+// @AllArgsConstructor
+// @NoArgsConstructor
+// @Builder
+// @Document
+@Entity
+@Table(name = "ChatRoom")
 public class ChatRoom {
-    @Id
-    private String id;
-    private String chatId;
-    private String senderId;
-    private String recipientId;
+
+
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private int chatId;
+    private int senderId;
+    private int recipientId;
 }
