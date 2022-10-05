@@ -23,7 +23,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      working-directory: ./app/application/Bookings/bookings
+      working-directory: ./app/application/Doctor/doctor
       run: mvn -B package --file pom.xml
 
   patientBuild:
