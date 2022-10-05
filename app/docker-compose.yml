@@ -17,13 +17,23 @@ services:
     ports:
       - "8081:8081"
 
-  # Adminmicroservice:
-  #   image: 'adminmicroservice'
+
+  # Chatmicroservice:
+  #   image: 'chatmicroservice'
   #   build:
-  #     context: ./application/Adminmicroservice
+  #     context: ./application/Chatmicroservice
   #     dockerfile: Dockerfile
   #   ports:
-  #     - "8083:8083"
+  #     - "8084:8084"
+
+  
+  Adminmicroservice:
+    image: 'adminmicroservice'
+    build:
+      context: ./application/Adminmicroservice
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
 
   # Availability:
   #   image: 'availability'
