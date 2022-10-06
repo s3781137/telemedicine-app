@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_application/patient/model/petient_health_model.dart';
 import 'package:http/http.dart';
 
 import '../model/patient_model.dart';
@@ -53,9 +54,18 @@ class ApiClient {
     Response response = await http
         .get(Uri.parse('http://localhost:8080/patient/getBy/$username'));
     if (response.statusCode == 200) {
-      // todo: remove debug message
-      print(PatientModel.fromJson(jsonDecode((response.body))).email);
       return PatientModel.fromJson(jsonDecode((response.body)));
+    } else {
+      throw Exception('Failed to load userdata');
+    }
+  }
+
+  // Get ID of User by username
+  Future<int?> getUserId(String username) async {
+    Response response = await http
+        .get(Uri.parse('http://localhost:8080/patient/getBy/$username'));
+    if (response.statusCode == 200) {
+      return PatientModel.fromJson(jsonDecode((response.body))).id;
     } else {
       throw Exception('Failed to load userdata');
     }
@@ -66,11 +76,22 @@ class ApiClient {
     final response =
         await http.get(Uri.parse('http://localhost:8080/patient/list'));
     if (response.statusCode == 200) {
-      print('response body ${response.body}');
-      // todo: remove debug msg
       return patientModelFromJson(response.body);
     } else {
       throw Exception('Unable to fetch products from the REST API');
     }
+  }
+
+  Future<dynamic> updateHealthInfo(PatientHealthModel healthInfo) async {
+    try {
+      Response response = await http.put(
+        Uri.parse('http://localhost:8080/patient/updateHealthInfo'),
+        body: jsonEncode(healthInfo),
+        headers: <String, String>{"Content-Type": "application/json"},
+      );
+      if (response.statusCode == 200) {
+        return response.body.toString();
+      }
+    } catch (e) {}
   }
 }

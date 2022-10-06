@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/doctor/doctorChat.dart';
 import 'package:flutter_application/firstScreen.dart';
 import 'package:flutter_application/patient/appointments.dart';
 import 'package:flutter_application/patient/loginHome.dart';
@@ -24,13 +25,14 @@ void main() {
       '/patientsignup': (context) => const RegisterHomeScreen(),
       '/doctorsignin': (context) => const SignInScreen(),
       '/doctorsignup': (context) => const DoctorSignUpScreen(),
-      '/patient': (context) => const Patient(),
+      // '/patient': (context) => Patient( username:_usernameTextController.text),
       '/loginhome': (context) => const LoginHome(),
       '/patient/appointments': (context) => const AppointmentsScreen(),
       '/patient/appointments/book': (context) => const BookAppointment(),
       '/patent/appointments/cancel': (context) =>
           const CancelAppointmentScreen(),
       '/patient/appointments/view': (context) => const ViewAppointmentScreen(),
+      '/doctor/chat': (context) => const doctorChat(),
     },
   ));
 }
