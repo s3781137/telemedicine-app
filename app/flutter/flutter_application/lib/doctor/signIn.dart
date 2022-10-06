@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/main.dart';
 
 //TODO: connect backend with login and stop using the passwords dict
 //Test key, values for username and password
@@ -65,6 +66,10 @@ class _SignInFormState extends State<SignInForm> {
     //Checking if username and password match
     if (passwords[usernameString] == passwordString) {
       // TODO: sign in to doctor homepage
+      //Updates logged in user
+      currentLoggedInUser.update("username", (value) => usernameString);
+      currentLoggedInUser.update("userType", (value) => "doctor");
+      //Navigates to the welcome page
       Navigator.of(context).pushNamed('/welcome');
     } else {
       //If not show popup error
