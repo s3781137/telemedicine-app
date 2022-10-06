@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/main.dart';
 
 class firstScreen extends StatelessWidget {
   const firstScreen();
@@ -85,7 +86,12 @@ class firstScreenContent extends StatelessWidget {
                   ),
                   onPressed: () {
                     //Navigator
-                    Navigator.of(context).pushNamed('/doctorsignin');
+                    if (currentLoggedInUser["username"] != "" &&
+                        currentLoggedInUser["userType"] == "doctor") {
+                      Navigator.of(context).pushNamed('/welcome');
+                    } else {
+                      Navigator.of(context).pushNamed('/doctorsignin');
+                    }
                   },
                   child: const Text('Doctor Sign In'),
                 ),

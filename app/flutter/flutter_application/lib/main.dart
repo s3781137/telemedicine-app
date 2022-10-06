@@ -14,6 +14,9 @@ import 'patient/register.dart';
 import 'doctor/welcome.dart';
 import 'firstScreen.dart';
 
+//Tracks logged in users
+var currentLoggedInUser = {"username": "", "userType": ""};
+
 void main() {
   runApp(MaterialApp(
     title: 'ND TELEMEDICINE',
