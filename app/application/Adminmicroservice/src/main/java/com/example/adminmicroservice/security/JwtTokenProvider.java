@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import com.example.adminmicroservice.dto.Doctor;
+import com.example.adminmicroservice.model.Admin;
 
 @Component
 public class JwtTokenProvider {
@@ -15,16 +15,16 @@ public class JwtTokenProvider {
     // Generate the token
 
     public String generateToken(Authentication authentication) {
-        Doctor doctor = (Doctor) authentication.getPrincipal();
+        Admin admin = (Admin) authentication.getPrincipal();
         Date now = new Date(System.currentTimeMillis());
 
         Date expiryDate = new Date(now.getTime() + SecurityConstant.EXPIRATION_TIME);
 
-        String userId = Long.toString(doctor.getId());
+        String userId = Long.toString(admin.getId());
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("id", (Long.toString(doctor.getId())));
-        claims.put("username", doctor.getUsername());
+        claims.put("id", (Long.toString(admin.getId())));
+        claims.put("username", admin.getUsername());
 
         return Jwts.builder()
                 .setSubject(userId)

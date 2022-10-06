@@ -26,18 +26,16 @@ public class Admin implements UserDetails {
     @Transient
     @Column(name = "confirm_password")
     private String confirmPassword;
-    private String email;
     @JsonIgnore
     private String token;
 
     public Admin() {
     }
 
-    public Admin(String username, String password, String confirmPassword, String email) {
+    public Admin(String username, String password, String confirmPassword) {
         this.username = username;
         this.password = password;
         this.confirmPassword = confirmPassword;
-        this.email = email;
     }
 
     public int getId() {
@@ -62,14 +60,6 @@ public class Admin implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getConfirmPassword() {
