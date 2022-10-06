@@ -6,10 +6,12 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.example.adminmicroservice.model.Admin;
 import com.example.adminmicroservice.repository.AdminRepository;
 
+@Service
 public class AdminService {
 
     @Autowired
