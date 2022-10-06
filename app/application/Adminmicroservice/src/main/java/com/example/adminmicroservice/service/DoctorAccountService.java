@@ -75,4 +75,9 @@ public class DoctorAccountService {
         return (doctor.isPresent() && doPasswordsMatch(doctor.get().getPassword(), plainTextPassword));
     }
 
+    public void setDoctorToken(String token, String username) {
+        repo.setToken(token, username);
+
+    }
+
 }

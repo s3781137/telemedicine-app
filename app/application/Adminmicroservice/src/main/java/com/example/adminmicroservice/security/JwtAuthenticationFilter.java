@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.example.adminmicroservice.dto.Doctor;
+import com.example.adminmicroservice.model.Admin;
 import com.example.adminmicroservice.service.CustomUserDetailsService;
 
 import javax.servlet.FilterChain;
@@ -35,7 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
                 Long userId = tokenProvider.getUserIdFromJWT(jwt);
-                Doctor userDetails = customUserDetailsService.loadUserById(userId);
+                Admin userDetails = customUserDetailsService.loadUserById(userId);
 
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, Collections.emptyList());
