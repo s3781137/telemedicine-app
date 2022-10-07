@@ -99,5 +99,5 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      working-directory: ./app/application/Chatmicroservice
+      working-directory: ./app/application/Chat/chatmicroservice
       run: mvn -B package --file pom.xml
