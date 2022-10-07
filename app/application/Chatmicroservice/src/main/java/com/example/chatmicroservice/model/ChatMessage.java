@@ -15,7 +15,6 @@ public class ChatMessage {
    private String senderName;
    private String recipientName;
    private String content;
-   private Date timestamp;
    private MessageStatus status;
 
    public void setStatus(MessageStatus received) {
