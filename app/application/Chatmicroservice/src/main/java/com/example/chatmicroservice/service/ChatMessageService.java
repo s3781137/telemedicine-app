@@ -34,19 +34,20 @@ public class ChatMessageService {
     }
 
 
-    public long countNewMessages(int senderId, int recipientId) {
+    public long countNewMessages(int senderId, int recipientId, MessageStatus status) {
         return repository.countBySenderIdAndRecipientIdAndStatus(
                 senderId, recipientId, MessageStatus.RECEIVED);
     }
 
     public List<ChatMessage> findChatMessages(int senderId, int recipientId) {
-        Optional<Integer> chatId = chatRoomService.getChatId(senderId, recipientId, false);
+        //Optional<Integer> chatId = chatRoomService.getChatId(senderId, recipientId, false);
 
-        List messages =
-                chatId.map(cId -> repository.findByChatId(cId)).orElse(new ArrayList<>());
+        // List messages =
+        //         chatId.map(cId -> repository.findByChatId(senderId, recipientId)).orElse(new ArrayList<>());
 
+        List<ChatMessage> messages = repository.findChat(senderId, recipientId);
         if(messages.size() > 0) {
-            updateStatuses(senderId, recipientId, MessageStatus.DELIVERED);
+          //  updateStatuses(MessageStatus.DELIVERED, senderId, recipientId);
         }
 
         return messages;
@@ -63,9 +64,9 @@ public class ChatMessageService {
                         new ResourceNotFoundException("can't find message (" + id + ")"));
     }
 
-    public void updateStatuses(int senderId, int recipientId, MessageStatus status) {
+    public void updateStatuses(MessageStatus status, int senderId, int recipientId) {
         
-        repository.updateDetails(senderId, recipientId, status);
+        repository.updateDetails(status, senderId, recipientId);
     }
 
     

@@ -19,14 +19,15 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Intege
         @Param("status") MessageStatus status);
 
 
-        @Query("SELECT count(b) FROM ChatMessage b WHERE b.chatId = ?1")
-        List<ChatMessage> findByChatId(@Param("chatId") int chatId);
+        @Query("SELECT b FROM ChatMessage b WHERE b.senderId = ?1 and b.recipientId = ?2 ")
+        List<ChatMessage> findChat(@Param("senderId") int senderId, @Param("recipientId") int recipientId);
 
-        @Query("UPDATE ChatMessage SET senderId = ?1, recipientId = ?2, status = ?3 ")
+        @Query("UPDATE ChatMessage SET status = ?1 WHERE senderId = ?2 and recipientId = ?3" )
         void updateDetails(
+            @Param("status") MessageStatus status,
             @Param("senderId") int senderId,
-            @Param("recipientId") int recipientId,
-            @Param("status") MessageStatus status);
+            @Param("recipientId") int recipientId);
+            
 
         @Query("Select m FROM ChatMessage m")
         List<ChatMessage> findAll();

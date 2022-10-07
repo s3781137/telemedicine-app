@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.chatmicroservice.model.ChatMessage;
 import com.example.chatmicroservice.model.ChatNotification;
+import com.example.chatmicroservice.model.MessageStatus;
 import com.example.chatmicroservice.service.ChatMessageService;
 import com.example.chatmicroservice.service.ChatRoomService;
 
@@ -37,11 +38,11 @@ import com.example.chatmicroservice.service.ChatRoomService;
     @Autowired private ChatMessageService chatMessageService;
     @Autowired private ChatRoomService chatRoomService;
 
-    @PostMapping("/chat")
-    public ResponseEntity<?> processMessage(@RequestBody ChatMessage chatMessage) {
-        var chatId = chatRoomService
-                .getChatId(chatMessage.getSenderId(), chatMessage.getRecipientId(), true);
-        chatMessage.setChatId(chatId.get());
+    @PostMapping("/send")
+    public ResponseEntity<?> sendMessage(@RequestBody ChatMessage chatMessage) {
+        // var chatId = chatRoomService
+        //         .getChatId(chatMessage.getSenderId(), chatMessage.getRecipientId());
+        // chatMessage.setChatId(chatId.get());
 
         ChatMessage saved = chatMessageService.save(chatMessage);
         messagingTemplate.convertAndSendToUser(
@@ -59,42 +60,30 @@ import com.example.chatmicroservice.service.ChatRoomService;
         return chatMessageService.findAll();
     }
 
-    //for testing 
 
-//     {
-//         "chatId": 1,
-//         "senderId": 11,
-//         "recipientId": 12,
-//         "senderName": "firstName",
-//         "recipientName": "lastName",
-//         "content": "email",
-//         "timestamp": "01-01-2023",
-//         "MessageStatus": 0
-        
-//     }
-
-
-    @GetMapping("/messages/{senderId}/{recipientId}/count")
-    public ResponseEntity<Long> countNewMessages(
-            @PathVariable int senderId,
-            @PathVariable int recipientId) {
+    @GetMapping("/messageCount")
+    public ResponseEntity<Long> messageCount(
+            @RequestParam int senderId,
+            @RequestParam int recipientId,
+            @RequestParam MessageStatus status //RECEIVED
+            ) {
 
         return ResponseEntity
-                .ok(chatMessageService.countNewMessages(senderId, recipientId));
+                .ok(chatMessageService.countNewMessages(senderId, recipientId, status));
     }
 
-    @GetMapping("/findmessage/{senderId}/{recipientId}") //{senderId}/{recipientId}
-    public ResponseEntity<?> findChatMessages ( @RequestParam int senderId,
+    @GetMapping("/findMessages") //{senderId}/{recipientId}
+    public ResponseEntity<?> findMessage ( @RequestParam int senderId,
                                                 @RequestParam int recipientId) {
-        // return ResponseEntity
-        //         .ok(chatMessageService.findChatMessages(senderId, recipientId));
-
-        return new ResponseEntity<>("okay", HttpStatus.OK);
-    }
-
-    @GetMapping("/messages/{id}")
-    public ResponseEntity<?> findMessage ( @RequestParam int id) {
         return ResponseEntity
-                .ok(chatMessageService.findById(id));
+                .ok(chatMessageService.findChatMessages(senderId, recipientId));
+
+        //return new ResponseEntity<>("okay", HttpStatus.OK);
     }
+
+//     @GetMapping("/messages")
+//     public ResponseEntity<?> findMessage ( @RequestParam int id) {
+//         return ResponseEntity
+//                 .ok(chatMessageService.findById(id));
+//     }
  }

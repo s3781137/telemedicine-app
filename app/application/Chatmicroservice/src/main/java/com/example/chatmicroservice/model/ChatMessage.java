@@ -15,20 +15,32 @@ public class ChatMessage {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private int id;
-   //@Column(name = "chatId")
    private int chatId;
-   //@Column(name = "senderId")
    private int senderId;
-   //@Column(name = "recipientId")
    private int recipientId;
-  // @Column(name = "senderName")
    private String senderName;
-   @Column(name = "recipientName")
+   //@Column(name = "recipientName")
    private String recipientName;
-   @Column(name = "message")
+   //@Column(name = "message")
    private String message;
-   @Column(name = "status")
+   //@Column(name = "status")
    private MessageStatus status;
+
+   public ChatMessage(int chatId, int senderId, int recipientId, String senderName,
+   String recipientName, String message, MessageStatus status )
+   {
+      this.chatId = chatId;
+      this.senderId = senderId;
+      this.recipientId = recipientId;
+      this.senderName = senderName;
+      this.recipientName = recipientName;
+      this.message = message;
+      this.status = status;
+   }
+
+   public ChatMessage(){
+
+   }
 
    public void setStatus(MessageStatus received) {
       this.status = received;
@@ -36,6 +48,18 @@ public class ChatMessage {
 
    public int getId() {
       return id;
+   }
+
+   public String getRecipientName(){
+      return recipientName;
+   }
+
+   public String getMessage(){
+      return message;
+   }
+
+   public int getChatId(){
+      return chatId;
    }
 
    public String getSenderName() {
@@ -53,5 +77,11 @@ public class ChatMessage {
    public void setChatId(int chatId) {
       this.chatId = chatId;
    }
+
+   public MessageStatus getStatus(){
+      return status;
+   } 
+
+
 
 }
