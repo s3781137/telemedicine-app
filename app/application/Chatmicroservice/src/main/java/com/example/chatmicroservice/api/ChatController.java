@@ -83,7 +83,7 @@ import com.example.chatmicroservice.service.ChatRoomService;
                 .ok(chatMessageService.countNewMessages(senderId, recipientId));
     }
 
-    @GetMapping("/findmessage") //{senderId}/{recipientId}
+    @GetMapping("/findmessage/{senderId}/{recipientId}") //{senderId}/{recipientId}
     public ResponseEntity<?> findChatMessages ( @RequestParam int senderId,
                                                 @RequestParam int recipientId) {
         // return ResponseEntity
