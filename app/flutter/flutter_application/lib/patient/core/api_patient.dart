@@ -85,7 +85,7 @@ class ApiClient {
   Future<dynamic> updateHealthInfo(PatientHealthModel healthInfo) async {
     try {
       Response response = await http.put(
-        Uri.parse('http://localhost:8080/patient/updateHealthInfo'),
+        Uri.parse('http://localhost:8084/healthinfo/updateHealthInfo'),
         body: jsonEncode(healthInfo),
         headers: <String, String>{"Content-Type": "application/json"},
       );

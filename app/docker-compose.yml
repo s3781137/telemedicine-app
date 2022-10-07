@@ -35,6 +35,14 @@ services:
     ports:
       - "8083:8083"
 
+  HealthInfo:
+    image: 'healthinfo'
+    build:
+      context: ./application/HealthInformation/healthinformation
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8084"
+
   # Availability:
   #   image: 'availability'
   #   build:
