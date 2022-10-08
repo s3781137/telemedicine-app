@@ -1,6 +1,8 @@
 package com.sept.bookings.repo;
 
 @Repository
-public class BookingRepo {
+public interface BookingRepo extends JpaRepository<Booking, Integer> {
+
+
     
 }
