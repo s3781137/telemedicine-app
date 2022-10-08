@@ -18,8 +18,8 @@ public class BookingService {
 
     }
 
-    public List<Booking> getBookingList(String usernamePatient) {
-        return brepo.findByUsernamePatient(usernamePatient);
-    }
+    // public List<Booking> getBookingList(String usernamePatient) {
+    //     return brepo.findByUsernamePatient(usernamePatient);
+    // }
 
 }

@@ -21,8 +21,8 @@ import javax.persistence.Table;
 @Repository
 public interface BookingRepo extends JpaRepository<Booking, Integer> {
 
-    @Query("select * from booking where usernamePatient = ?1")
-    List<Booking> findByUsernamePatient(@Param("usernamePatient") String usernamePatient);
+    // @Query("select b from booking b where b.usernamePatient = ?1")
+    // List<Booking> findByUsernamePatient(@Param("usernamePatient") String usernamePatient);
 
     // @Query("select b from BookingEntity b where (" +
     // "not (:startDateTime < b.startDateTime and :endDateTime < b.startDateTime)" +
