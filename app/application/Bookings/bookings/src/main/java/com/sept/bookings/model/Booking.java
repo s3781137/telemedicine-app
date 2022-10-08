@@ -16,10 +16,6 @@ public class Booking {
     private String startTime;
     private String endTime;
 
-    public Booking(){
-
-    }
-
     public Booking(String doctorUsername, String patientUsername, 
     String doctorName, String patientName, String String bDate, 
     String startTime, String endTime){
