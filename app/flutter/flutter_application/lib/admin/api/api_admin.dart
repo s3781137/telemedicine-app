@@ -12,8 +12,6 @@ class ApiAdmin {
   // }
 
   Future<int> signUp(AdminModel admin) async {
-    // todo debug msg
-    print("im registering");
     var res = await http.post(
       Uri.parse("http://localhost:8083/admin/createAdmin"),
       body: jsonEncode(admin),
