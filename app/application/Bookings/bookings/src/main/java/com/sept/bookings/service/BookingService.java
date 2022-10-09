@@ -60,4 +60,4 @@ public class BookingService {
         Availrepo.save(a);
     }
   
-}
+    }

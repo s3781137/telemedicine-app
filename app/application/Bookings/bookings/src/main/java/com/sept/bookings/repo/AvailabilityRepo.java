@@ -12,7 +12,7 @@ import com.sept.bookings.model.DoctorAvailability;
 public interface AvailabilityRepo extends JpaRepository<DoctorAvailability, Integer> {
 
 
-    @Query("Delet from DoctorAvailability where doctorUsername=?1 and availability=?2")
+    @Query("Delete from DoctorAvailability where doctorUsername=?1 and availability=?2")
     void deleteAvailability(String doctorName, String dateTime);
     
 }
