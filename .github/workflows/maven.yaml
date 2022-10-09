@@ -87,6 +87,7 @@ jobs:
       working-directory: ./app/application/Chat/chatmicroservice
       run: mvn -B package --file pom.xml
 
+
   HealthInfoBuild:
     runs-on: ubuntu-latest
 
