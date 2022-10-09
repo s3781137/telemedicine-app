@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_application/admin/model/admin_model.dart';
+import 'package:flutter_application/admin/model/doctor_model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiAdmin {
@@ -19,6 +20,17 @@ class ApiAdmin {
       body: jsonEncode(admin),
       headers: <String, String>{"Content-Type": "application/json"},
     );
+    return res.statusCode;
+  }
+
+  Future<int> createDoctor(DoctorModel doctor) async {
+    var res = await http.post(
+      Uri.parse("http://localhost:8083/admin/createDoctor"),
+      body: jsonEncode(doctor),
+      headers: <String, String>{"Content-Type": "application/json"},
+    );
+    // tood remove debug msg
+    print(res.body.toString());
     return res.statusCode;
   }
 }
