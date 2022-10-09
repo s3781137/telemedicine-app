@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.naming.Binding;
 
 @RestController
 @RequestMapping("/patient") //all the patient queries will have to be followed bythe /patient in the url
@@ -58,18 +57,12 @@ public class PatientController {
     //the id for each patient is automatically generated in the database. 
     // to register a patient http://localhost:8080/patient/registerPatient 
     @PostMapping("/registerPatient")
-    public ResponseEntity<?> addPatient( @RequestParam String username,
-            @RequestParam String password,
-            @RequestParam String confirmPassword, @RequestParam String firstName,
-            @RequestParam String lastName, @RequestParam String email) {
-        // @RequestBody Patient patient
+    public ResponseEntity<?> addPatient(@RequestBody Patient patient, BindingResult result) {
+        userValidator.validate(patient, result);
 
-        Patient patient = new Patient(username, password, confirmPassword, firstName, lastName, email);
-        // userValidator.validate(patient, result);
-
-        // ResponseEntity<?> errorMap =
-        // mapValidationErrorService.MapValidationService(result);
-        // if(errorMap != null)return errorMap;
+        ResponseEntity<?> errorMap =
+        mapValidationErrorService.MapValidationService(result);
+        if(errorMap != null)return errorMap;
 
 
         //a patient should have a unique username to be registered
@@ -91,7 +84,7 @@ public class PatientController {
             Map<String, Object> response = new HashMap<>();
             response.put("id", currentPatient.getId());
             response.put("username", currentPatient.getUsername());
-            return new ResponseEntity<>(true, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
 
     }

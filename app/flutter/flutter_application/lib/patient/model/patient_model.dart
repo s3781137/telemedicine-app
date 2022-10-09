@@ -9,7 +9,7 @@ String patientModelToJson(List<PatientModel> data) =>
 
 class PatientModel {
   PatientModel(
-      {required this.id,
+      {this.id,
       required this.username,
       required this.password,
       required this.confirmPassword,
