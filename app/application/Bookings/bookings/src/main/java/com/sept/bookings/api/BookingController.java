@@ -69,8 +69,11 @@ public class BookingController {
     }
 
     @PostMapping("/addAvailability")
-    public void addAvailability(String doctorUsername,String availability){
+    public ResponseEntity<?> addAvailability(@RequestParam String doctorUsername, @RequestParam String availability){
         service.addAvailability(doctorUsername,availability);
+        Map<String, Object> response = new HashMap<>();
+            response.put("message", "added availability");
+            return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

@@ -44,7 +44,7 @@ public class BookingService {
     }
 
     public void addAvailability(String doctorUsername, String availability) {
-        DoctorAvailability a=new DoctorAvailability(doctorUsername,availability);
+        DoctorAvailability a=new DoctorAvailability(doctorUsername, availability);
         Availrepo.save(a);
     }
   
