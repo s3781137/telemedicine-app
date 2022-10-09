@@ -28,7 +28,7 @@ void main() {
       '/patientsignup': (context) => const RegisterHomeScreen(),
       '/doctorsignin': (context) => const SignInScreen(),
       '/doctorsignup': (context) => const DoctorSignUpScreen(),
-      // '/patient': (context) => Patient( username:_usernameTextController.text),
+      '/patient': (context) => Patient(),
       '/loginhome': (context) => const LoginHome(),
       '/patient/appointments': (context) => const AppointmentsScreen(),
       '/patient/appointments/book': (context) => const BookAppointment(),

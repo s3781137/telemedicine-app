@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/patient/screens/add_health_info.dart';
 
 class Patient extends StatelessWidget {
-  int id;
-  Patient({Key? key, required this.id}) : super(key: key);
+  Patient({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +37,8 @@ class Patient extends StatelessWidget {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => Patient(id: id)));
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Patient()));
                 },
                 child: Icon(Icons.home),
               )),
@@ -60,7 +59,7 @@ class Patient extends StatelessWidget {
               ),
               title: Text('Add Health Information'),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => PatientHealthInfo(id: id)))),
+                  builder: (context) => PatientHealthInfo()))),
           ListTile(
             leading: CircleAvatar(
               backgroundImage: AssetImage('assets/Appointments.png'),

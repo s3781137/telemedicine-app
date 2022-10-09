@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application/main.dart';
 import 'package:flutter_application/patient/patient.dart';
 
 import 'core/api_patient.dart';
@@ -48,7 +49,6 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  int id = -1;
   final _usernameTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
   final ApiClient _apiClient = ApiClient();
@@ -82,9 +82,11 @@ class _LoginFormState extends State<LoginForm> {
       _passwordTextController.text,
     );
     if (res == 'true') {
-      id = (await _apiClient.getUserId(_usernameTextController.text))!;
+      currentLoggedInUser.update(
+          "username", (value) => _usernameTextController.text);
+      currentLoggedInUser.update("userType", (value) => "patient");
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Patient(id: id)));
+          .push(MaterialPageRoute(builder: (context) => Patient()));
     } else {
       showDialog(
           context: context,

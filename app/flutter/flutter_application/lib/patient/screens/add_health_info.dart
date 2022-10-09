@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:conditional_questions/conditional_questions.dart';
 import 'package:flutter_application/patient/model/petient_health_model.dart';
+import '../../main.dart';
 import '../core/api_patient.dart';
 import '../patient.dart';
 
 class PatientHealthInfo extends StatelessWidget {
-  int id;
-  PatientHealthInfo({Key? key, required this.id}) : super(key: key);
+  PatientHealthInfo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,24 +39,22 @@ class PatientHealthInfo extends StatelessWidget {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => Patient(id: id)));
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Patient()));
                 },
                 child: Icon(Icons.home),
               )),
         ],
       ),
-      body: HealthInfo(
-        id: id,
-      ),
+      body: HealthInfo(),
     );
   }
 }
 
 class HealthInfo extends StatefulWidget {
-  HealthInfo({Key? key, this.id}) : super(key: key);
-
-  dynamic id;
+  HealthInfo({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _HealthInfoState createState() => _HealthInfoState();
@@ -74,7 +72,11 @@ class _HealthInfoState extends State<HealthInfo> {
   int lineMedication = 0;
   int lineMedicationDescpt = 1;
   int linePastSurgeries = 8;
-  Future<void> updateHealthInfo(dynamic id) async {
+  int? id = -1;
+  Future<void> updateHealthInfo(dynamic username) async {
+    id = await _apiClient.getUserId(username);
+    // todo: debug message
+    print(id);
     // check the first question is yes or no
     if (!(_key.currentState!.getElementList().elementAt(1).question ==
         "Comments")) {
@@ -88,7 +90,7 @@ class _HealthInfoState extends State<HealthInfo> {
       lineMedicationDescpt = 0;
     }
     PatientHealthModel healthInfo = PatientHealthModel(
-        id: id,
+        id: id as int?,
         cancer:
             _key.currentState!.getElementList().elementAt(lineCancer).answer,
         diabetes:
@@ -125,7 +127,7 @@ class _HealthInfoState extends State<HealthInfo> {
     print(res);
     // todo: maybe need to fix condition
     if (res.toString().contains("health information registered")) {
-      print("updated health info for :$id");
+      print("updated health info for :${id}");
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -135,8 +137,7 @@ class _HealthInfoState extends State<HealthInfo> {
                 actions: <Widget>[
                   TextButton(
                     onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => Patient(id: id))),
+                        MaterialPageRoute(builder: (context) => Patient())),
                     child: const Text('OK'),
                   ),
                 ]);
@@ -172,9 +173,9 @@ class _HealthInfoState extends State<HealthInfo> {
               if (_key.currentState!.validate()) {
                 print("validated!");
               }
-              updateHealthInfo(widget.id);
+              updateHealthInfo(currentLoggedInUser["username"]);
             },
-            child: Text("Test Submit"),
+            child: Text("Submit"),
           ),
         ],
         leading: [Text("TITLE")],
