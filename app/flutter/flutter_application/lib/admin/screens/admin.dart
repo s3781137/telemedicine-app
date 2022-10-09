@@ -1,8 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_application/patient/screens/add_health_info.dart';
 
 class Admin extends StatelessWidget {
-  Admin({Key? key}) : super(key: key);
+  Admin(this.jwt, this.payload);
+
+  factory Admin.fromBase64(String jwt) => Admin(
+      jwt,
+      json.decode(
+          ascii.decode(base64.decode(base64.normalize(jwt.split(".")[1])))));
+
+  final String jwt;
+  final Map<String, dynamic> payload;
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +23,8 @@ class Admin extends StatelessWidget {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Admin()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Admin.fromBase64(jwt)));
                 },
                 child: Icon(Icons.home),
               )),
