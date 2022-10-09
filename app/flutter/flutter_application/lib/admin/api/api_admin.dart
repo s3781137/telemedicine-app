@@ -8,8 +8,6 @@ class ApiAdmin {
   Future<String?> logIn(String username, String password) async {
     var res = await http.post(Uri.parse("http://localhost:8083/admin/login"),
         body: {"username": username, "password": password});
-    // todo: debug message
-    print("res: ${res.body.toString()}");
     if (res.statusCode == 200) return res.body;
     return null;
   }
@@ -29,8 +27,6 @@ class ApiAdmin {
       body: jsonEncode(doctor),
       headers: <String, String>{"Content-Type": "application/json"},
     );
-    // tood remove debug msg
-    print(res.body.toString());
     return res.statusCode;
   }
 }
