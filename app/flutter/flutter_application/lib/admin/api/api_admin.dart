@@ -17,7 +17,6 @@ class ApiAdmin {
       body: jsonEncode(admin),
       headers: <String, String>{"Content-Type": "application/json"},
     );
-    print(res.toString());
     return res.statusCode;
   }
 }
