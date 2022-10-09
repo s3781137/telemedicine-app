@@ -51,7 +51,7 @@ class Patient extends StatelessWidget {
               backgroundImage: AssetImage('assets/ManageProfile.png'),
             ),
             title: Text('Manage Profile'),
-            onTap: () => Navigator.of(context).pushNamed('/welcome'),
+            onTap: () => Navigator.of(context).pushNamed('/patient/profile'),
           ),
           ListTile(
               leading: CircleAvatar(
