@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_application/patient/model/patient_profile_model.dart';
 import 'package:flutter_application/patient/model/petient_health_model.dart';
 import 'package:http/http.dart';
 
@@ -87,6 +88,19 @@ class ApiClient {
       Response response = await http.put(
         Uri.parse('http://localhost:8084/healthinfo/updateHealthInfo'),
         body: jsonEncode(healthInfo),
+        headers: <String, String>{"Content-Type": "application/json"},
+      );
+      if (response.statusCode == 200) {
+        return response.body.toString();
+      }
+    } catch (e) {}
+  }
+
+  Future<dynamic> updateProfile(PatientProfileModel profile) async {
+    try {
+      Response response = await http.put(
+        Uri.parse('http://localhost:8084/healthinfo/updateHealthInfo'),
+        body: jsonEncode(profile),
         headers: <String, String>{"Content-Type": "application/json"},
       );
       if (response.statusCode == 200) {
