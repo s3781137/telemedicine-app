@@ -17,4 +17,16 @@ public class DoctorAvailability {
         this.doctorUsername=username;
         this.availability=avail;
     }
+
+    public int getId(){
+        return id;
+    }
+
+    public String getDoctorName(){
+        return doctorUsername;
+    }
+
+    public String getAvailability(){
+        return availability;
+    }
 }

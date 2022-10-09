@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sept.bookings.model.Booking;
+import com.sept.bookings.model.DoctorAvailability;
 import com.sept.bookings.service.BookingService;
 
 @RestController
@@ -75,5 +76,10 @@ public class BookingController {
             response.put("message", "added availability");
             return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/getAvailability")
+    public List<DoctorAvailability> getAvailability() {
+        return service.getAvailability();
+}
 
 }

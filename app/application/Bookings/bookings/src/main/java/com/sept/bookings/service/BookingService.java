@@ -43,6 +43,9 @@ public class BookingService {
         return repo.getBookingByDoctorUsername(DoctorUsername);
     }
 
+    public List<DoctorAvailability> getAvailability(){
+        return Availrepo.getAvailability();
+    }
     public void addAvailability(String doctorUsername, String availability) {
         DoctorAvailability a=new DoctorAvailability(doctorUsername, availability);
         Availrepo.save(a);
