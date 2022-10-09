@@ -175,7 +175,7 @@ class _HealthInfoState extends State<HealthInfo> {
               }
               updateHealthInfo(currentLoggedInUser["username"]);
             },
-            child: Text("Test Submit"),
+            child: Text("Submit"),
           ),
         ],
         leading: [Text("TITLE")],
