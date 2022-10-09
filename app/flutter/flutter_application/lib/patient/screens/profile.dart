@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application/patient/model/patient_profile_model.dart';
 
 import '../../main.dart';
@@ -130,6 +131,10 @@ class _ProfileState extends State<Profile> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'(^-?\d*\.?\d*)'))
+                    ],
                     controller: weightController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -140,6 +145,10 @@ class _ProfileState extends State<Profile> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'(^-?\d*\.?\d*)'))
+                    ],
                     controller: heightController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
