@@ -6,6 +6,7 @@ import 'package:flutter_application/patient/loginHome.dart';
 import 'package:flutter_application/patient/register.dart';
 import 'package:flutter_application/patient/screens/book_slots.dart';
 import 'package:flutter_application/patient/screens/cancel_appointment.dart';
+import 'package:flutter_application/patient/screens/profile.dart';
 import 'package:flutter_application/patient/screens/view_appointment.dart';
 import 'doctor/doctorSignUp.dart';
 import 'patient/patient.dart';
@@ -35,6 +36,7 @@ void main() {
       '/patent/appointments/cancel': (context) =>
           const CancelAppointmentScreen(),
       '/patient/appointments/view': (context) => const ViewAppointmentScreen(),
+      '/patient/profile': (context) => const Profile(),
       '/doctor/chat': (context) => const doctorChat(),
     },
   ));
