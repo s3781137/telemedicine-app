@@ -1,21 +1,29 @@
 version: '3'
 services:
 
-  Patient:
-    image: 'patient'
-    build:
-      context: ./application/Patient
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
+  # Patient:
+  #   image: 'patient'
+  #   build:
+  #     context: ./application/Patient
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8080:8080"
 
-  Doctor:
-    image: 'doctor'
+  # Doctor:
+  #   image: 'doctor'
+  #   build:
+  #     context: ./application/Doctor/doctor
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8081:8081"
+
+  Medicine:
+    image: 'medication'
     build:
-      context: ./application/Doctor/doctor
+      context: ./application/Medication/medicine
       dockerfile: Dockerfile
     ports:
-      - "8081:8081"
+      - "8082:8082"
 
 
   # Chatmicroservice:
@@ -27,21 +35,21 @@ services:
   #     - "8089:8089"
 
   
-  Adminmicroservice:
-    image: 'adminmicroservice'
-    build:
-      context: ./application/Adminmicroservice
-      dockerfile: Dockerfile
-    ports:
-      - "8083:8083"
+  # Adminmicroservice:
+  #   image: 'adminmicroservice'
+  #   build:
+  #     context: ./application/Adminmicroservice
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8083:8083"
 
-  HealthInfo:
-    image: 'healthinfo'
-    build:
-      context: ./application/HealthInformation/healthinformation
-      dockerfile: Dockerfile
-    ports:
-      - "8084:8084"
+  # HealthInfo:
+  #   image: 'healthinfo'
+  #   build:
+  #     context: ./application/HealthInformation/healthinformation
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8084:8084"
     
   # Bookings:
   #   image: 'bookings'
