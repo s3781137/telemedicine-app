@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application/patient/model/patient_profile_model.dart';
 
 import '../../main.dart';
@@ -32,8 +33,11 @@ class _ProfileState extends State<Profile> {
     dynamic res = await _apiClient.updateProfile(profile);
     // todo debug msg
     print(res);
-    if (res.toString().contains("health information registered")) {
-      print("updated health info for :${id}");
+    // todo: condition check fix
+    // currently the returned res is like:
+    // {"id":58,"username":"runhuizhou","password":"blahblah","confirmPassword":"blahblah","firstName":"runhui","lastName":"zhou","status":null,"email":"123141@gg.com","gender":"test","weight":100.0,"height":10000.0,"contactNo":"110","contactName":"family"}
+    // I don't know how to check
+    if (res.toString().contains("id")) {
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -127,6 +131,10 @@ class _ProfileState extends State<Profile> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'(^-?\d*\.?\d*)'))
+                    ],
                     controller: weightController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -137,6 +145,10 @@ class _ProfileState extends State<Profile> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'(^-?\d*\.?\d*)'))
+                    ],
                     controller: heightController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),

@@ -99,7 +99,7 @@ class ApiClient {
   Future<dynamic> updateProfile(PatientProfileModel profile) async {
     try {
       Response response = await http.put(
-        Uri.parse('http://localhost:8084/healthinfo/updateHealthInfo'),
+        Uri.parse('http://localhost:8080/patient/update'),
         body: jsonEncode(profile),
         headers: <String, String>{"Content-Type": "application/json"},
       );
