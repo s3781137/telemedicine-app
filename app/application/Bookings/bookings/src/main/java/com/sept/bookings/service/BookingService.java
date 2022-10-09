@@ -21,7 +21,8 @@ public class BookingService {
 
 
     public Booking saveBooking(Booking b) {
-        repo.deleteAvailability(b.getDoctorName(),b.getDateTime());
+        DoctorAvailability d = Availrepo.getAvailabilityByUsername(b.getDoctorUsername(), b.getDateTime());
+        Availrepo.delete(d);
         return repo.save(b);
     }
 
@@ -32,7 +33,8 @@ public class BookingService {
     public void cancelBooking(int bookingId){
         Booking b=repo.getBookingById(bookingId);
         addAvailability(b.getDoctorUsername(),b.getDateTime());
-        repo.deleteBooking(bookingId);
+        //repo.deleteBooking(bookingId);
+        repo.delete(b);
     }
 
     public List<Booking> viewPatientBookings(String patientUsername) {
