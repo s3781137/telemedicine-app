@@ -38,7 +38,7 @@ class Admin extends StatelessWidget {
             //   backgroundImage: AssetImage('assets/ManageProfile.png'),
             // ),
             title: Text('Create Doctor Profile'),
-            onTap: () => Navigator.of(context).pushNamed('/admin/profile'),
+            onTap: () => Navigator.of(context).pushNamed('/admincreatedoctor'),
           ),
         ],
       ),
