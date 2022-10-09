@@ -29,9 +29,13 @@ class firstScreenContent extends StatelessWidget {
             child: Column(
               children: [
                 TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
+                    ),
                     onPressed: () =>
-                        Navigator.of(context).pushNamed("/adminsignup"),
-                    child: const Text("test admin sign up")),
+                        Navigator.of(context).pushNamed("/adminsignin"),
+                    child: const Text("Admin sign in")),
                 Text(
                   "TD Telemedicine For Patients",
                   style: Theme.of(context).textTheme.headline4,
