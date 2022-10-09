@@ -10,7 +10,7 @@ import 'package:flutter_application/patient/screens/book_slots.dart';
 import 'package:flutter_application/patient/screens/cancel_appointment.dart';
 import 'package:flutter_application/patient/screens/profile.dart';
 import 'package:flutter_application/patient/screens/view_appointment.dart';
-import 'admin/screens/create_doctor_profile.dart';
+import 'admin/screens/create_doctor.dart';
 import 'doctor/doctorSignUp.dart';
 import 'patient/patient.dart';
 import 'doctor/signIn.dart';
@@ -42,7 +42,7 @@ void main() {
       '/patient/profile': (context) => const Profile(),
       '/doctor/chat': (context) => const doctorChat(),
       '/adminsignup': (context) => const AdminRegister(),
-      '/admincreatedoctorprofile': (context) => AdminCreateDoctorProfile(),
+      '/admincreatedoctor': (context) => const CreateDoctor(),
       '/adminsignin': (context) => AdminLogin(),
     },
   ));
