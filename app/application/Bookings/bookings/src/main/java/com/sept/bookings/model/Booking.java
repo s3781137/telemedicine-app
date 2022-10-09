@@ -12,24 +12,25 @@ public class Booking {
     private String patientUsername;
     private String doctorName;
     private String patientName;
-    private String bDate;
-    private String startTime;
-    private String endTime;
+    private String dateTime;
+    // private String bDate;
+    // private String startTime;
+    // private String endTime;
 
     public Booking(){
 
     }
 
     public Booking(String doctorUsername, String patientUsername, 
-    String doctorName, String patientName, String bDate, 
-    String startTime, String endTime){
+    String doctorName, String patientName, String dateTime){
         this.doctorUsername = doctorUsername;
         this.patientUsername = patientUsername;
         this.doctorName = doctorName;
         this.patientName = patientName;
-        this.bDate = bDate;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.dateTime=dateTime;
+        // this.bDate = bDate;
+        // this.startTime = startTime;
+        // this.endTime = endTime;
     }
 
     public int getId(){
@@ -51,17 +52,20 @@ public class Booking {
     public String getPatientName(){
         return patientName;
     }
-
-    public String getbDate(){
-        return bDate;
+    public String getDateTime(){
+        return dateTime;
     }
 
-    public String getStartTime(){
-        return startTime;
-    }
+    // public String getbDate(){
+    //     return bDate;
+    // }
 
-    public String getEndTime(){
-        return endTime;
-    }
+    // public String getStartTime(){
+    //     return startTime;
+    // }
+
+    // public String getEndTime(){
+    //     return endTime;
+    // }
 
 }

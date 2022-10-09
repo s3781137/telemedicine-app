@@ -17,13 +17,13 @@ services:
   #   ports:
   #     - "8081:8081"
 
-  Medicine:
-    image: 'medication'
-    build:
-      context: ./application/Medication/medicine
-      dockerfile: Dockerfile
-    ports:
-      - "8082:8082"
+  # Medicine:
+  #   image: 'medication'
+  #   build:
+  #     context: ./application/Medication/medicine
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8082:8082"
 
 
   # Chatmicroservice:

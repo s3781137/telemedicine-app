@@ -20,14 +20,8 @@ public class BookingService {
     
 
 
-    // public Booking saveBooking(Booking b) {
-    //     repo.deleteAvailability(b.getDoctorName(),b.getDateTime());
-    //     return repo.save(b);
-    // }
-
-    
     public Booking saveBooking(Booking b) {
-        repo.deleteAvailability(b.getDoctorName(),b.getStartTime());
+        repo.deleteAvailability(b.getDoctorName(),b.getDateTime());
         return repo.save(b);
     }
 
@@ -35,15 +29,9 @@ public class BookingService {
         return repo.findAll();
     }
 
-    // public void cancelBooking(int bookingId){
-    //     Booking b=repo.getBookingById(bookingId);
-    //     addAvailability(b.getDoctorUsername(),b.getDateTime());
-    //     repo.deleteBooking(bookingId);
-    // }
-
     public void cancelBooking(int bookingId){
         Booking b=repo.getBookingById(bookingId);
-        addAvailability(b.getDoctorUsername(),b.getStartTime());
+        addAvailability(b.getDoctorUsername(),b.getDateTime());
         repo.deleteBooking(bookingId);
     }
 
@@ -60,4 +48,4 @@ public class BookingService {
         Availrepo.save(a);
     }
   
-    }
+}
