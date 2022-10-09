@@ -32,8 +32,11 @@ class _ProfileState extends State<Profile> {
     dynamic res = await _apiClient.updateProfile(profile);
     // todo debug msg
     print(res);
-    if (res.toString().contains("health information registered")) {
-      print("updated health info for :${id}");
+    // todo: condition check fix
+    // currently the returned res is like:
+    // {"id":58,"username":"runhuizhou","password":"blahblah","confirmPassword":"blahblah","firstName":"runhui","lastName":"zhou","status":null,"email":"123141@gg.com","gender":"test","weight":100.0,"height":10000.0,"contactNo":"110","contactName":"family"}
+    // I don't know how to check
+    if (res.toString().contains("id")) {
       showDialog(
           context: context,
           builder: (BuildContext context) {
