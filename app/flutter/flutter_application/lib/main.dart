@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/admin/screens/login.dart';
+import 'package:flutter_application/admin/screens/register.dart';
 import 'package:flutter_application/doctor/doctorChat.dart';
 import 'package:flutter_application/firstScreen.dart';
 import 'package:flutter_application/patient/appointments.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_application/patient/screens/book_slots.dart';
 import 'package:flutter_application/patient/screens/cancel_appointment.dart';
 import 'package:flutter_application/patient/screens/profile.dart';
 import 'package:flutter_application/patient/screens/view_appointment.dart';
+import 'admin/screens/create_doctor.dart';
 import 'doctor/doctorSignUp.dart';
 import 'patient/patient.dart';
 import 'doctor/signIn.dart';
@@ -38,6 +41,9 @@ void main() {
       '/patient/appointments/view': (context) => const ViewAppointmentScreen(),
       '/patient/profile': (context) => const Profile(),
       '/doctor/chat': (context) => const doctorChat(),
+      '/adminsignup': (context) => const AdminRegister(),
+      '/admincreatedoctor': (context) => const CreateDoctor(),
+      '/adminsignin': (context) => AdminLogin(),
     },
   ));
 }
