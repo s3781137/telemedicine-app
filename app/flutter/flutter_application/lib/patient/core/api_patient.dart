@@ -154,4 +154,15 @@ class ApiClient {
       throw Exception('Failed to load userdata');
     }
   }
+
+  // return a list of bookings
+  Future<List<PatientBookingModel>> fetchBookings(String username) async {
+    final response = await http.get(Uri.parse(
+        'http://localhost:8085/booking/viewPatientBookings?patientUsername=$username'));
+    if (response.statusCode == 200) {
+      return patientBookingModelFromJson(response.body);
+    } else {
+      throw Exception('Unable to fetch products from the REST API');
+    }
+  }
 }
