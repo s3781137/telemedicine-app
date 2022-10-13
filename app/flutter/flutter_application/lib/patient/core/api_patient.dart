@@ -181,11 +181,10 @@ class ApiClient {
     }
   }
 
-  // return a list of medicines
-  // todo change after backend fix
+  // return a list of medicines of current patient
   Future<List<PatientMedicineModel>> fetchMedicines(String username) async {
-    final response =
-        await http.get(Uri.parse('http://localhost:8082/prescription/list'));
+    final response = await http.get(Uri.parse(
+        'http://localhost:8082/prescription/view?patientUsername=$username'));
     if (response.statusCode == 200) {
       return patientMedicineModelFromJson(response.body);
     } else {
