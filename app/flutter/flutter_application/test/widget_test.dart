@@ -67,7 +67,12 @@ void main() {
         confirmPassword: "test",
         firstName: "test",
         lastName: "test",
-        email: "email@email.com");
+        email: "email@email.com",
+        gender: null,
+        weight: null,
+        height: null,
+        contactNo: null,
+        contactName: null);
     //The user "test" should be in the database for this to work
     var res = await api.register(patient);
     expect(res, null);

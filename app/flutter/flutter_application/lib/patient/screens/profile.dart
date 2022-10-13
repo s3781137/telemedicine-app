@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application/patient/model/patient_model.dart';
 import 'package:flutter_application/patient/model/patient_profile_model.dart';
 
 import '../../main.dart';
@@ -67,6 +68,27 @@ class _ProfileState extends State<Profile> {
                 ]);
           });
     }
+  }
+
+  Future<void> checkProfile(dynamic username) async {
+    id = await _apiClient.getUserId(username);
+    PatientModel patient = await _apiClient.getUser(username);
+    // todo condition check
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: const Text('Current profile'),
+              content: Text(
+                  "Gender: ${patient.gender}\nWeight: ${patient.weight}\nHeight: ${patient.height}\nContact Number: ${patient.contactNo}\nContact Name: ${patient.contactName}"),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Patient())),
+                  child: const Text('OK'),
+                ),
+              ]);
+        });
   }
 
   @override
@@ -189,6 +211,15 @@ class _ProfileState extends State<Profile> {
                         print(heightController.text);
                         print(contactNoController.text);
                         print(contactNameController.text);
+                      },
+                    )),
+                Container(
+                    height: 50,
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: ElevatedButton(
+                      child: const Text('Check current profile'),
+                      onPressed: () {
+                        checkProfile(currentLoggedInUser["username"]);
                       },
                     )),
               ],
