@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application/patient/screens/add_health_info.dart';
+import 'package:flutter_application/patient/widgets/appbar.dart';
 
 class Patient extends StatelessWidget {
   Patient({Key? key}) : super(key: key);
@@ -9,41 +10,7 @@ class Patient extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ND TELEMEDICINE'),
-        actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: PopupMenuButton(
-                child: Icon(Icons.account_circle),
-                itemBuilder: (context) {
-                  return [
-                    PopupMenuItem(
-                      value: 'logout',
-                      child: Text('Log out'),
-                    ),
-                    PopupMenuItem(
-                      value: 'changePW',
-                      child: Text('Change Password'),
-                    ),
-                    PopupMenuItem(
-                      value: 'rmAccount',
-                      child: Text('Delete account'),
-                    ),
-                  ];
-                },
-              )),
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Patient()));
-                },
-                child: Icon(Icons.home),
-              )),
-        ],
-      ),
+      appBar: makeAppBar(context),
       body: ListView(
         children: <Widget>[
           ListTile(

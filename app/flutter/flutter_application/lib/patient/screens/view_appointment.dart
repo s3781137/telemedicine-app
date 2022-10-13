@@ -4,6 +4,7 @@ import 'package:flutter_application/patient/model/patient_booking_model.dart';
 
 import '../core/api_patient.dart';
 import '../patient.dart';
+import '../widgets/appbar.dart';
 
 class ViewBookingScreen extends StatefulWidget {
   const ViewBookingScreen({Key? key}) : super(key: key);
@@ -36,41 +37,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ND TELEMEDICINE'),
-        actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: PopupMenuButton(
-                child: Icon(Icons.account_circle),
-                itemBuilder: (context) {
-                  return [
-                    const PopupMenuItem(
-                      value: 'logout',
-                      child: Text('Log out'),
-                    ),
-                    const PopupMenuItem(
-                      value: 'changePW',
-                      child: Text('Change Password'),
-                    ),
-                    const PopupMenuItem(
-                      value: 'rmAccount',
-                      child: Text('Delete account'),
-                    ),
-                  ];
-                },
-              )),
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Patient()));
-                },
-                child: Icon(Icons.home),
-              )),
-        ],
-      ),
+      appBar: makeAppBar(context),
       body: ListView.builder(
         itemCount: _bookings.length,
         itemBuilder: (BuildContext ctxt, int i) {

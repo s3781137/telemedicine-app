@@ -39,6 +39,20 @@ class ApiClient {
     }
   }
 
+  // Method for patient deletion
+  Future<dynamic> deleteUser(String username) async {
+    try {
+      Response response = await http.delete(
+          Uri.parse('http://localhost:8080/patient/detele/$username'),
+          headers: <String, String>{"Content-Type": "application/json"});
+      if (response.statusCode == 200) {
+        return response.statusCode;
+      }
+    } catch (e) {
+      throw Exception('Failed to delete patient');
+    }
+  }
+
   // Return an instance of PatientModel
   Future<PatientModel> getUser(String username) async {
     Response response = await http

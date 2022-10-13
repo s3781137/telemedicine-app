@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/patient/widgets/appbar.dart';
 
 class AppointmentsScreen extends StatelessWidget {
   const AppointmentsScreen();
@@ -6,10 +7,7 @@ class AppointmentsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Appointments'),
-        centerTitle: true,
-      ),
+      appBar: makeAppBar(context),
       body: _myListView(context),
     );
   }
