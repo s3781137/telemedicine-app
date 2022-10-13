@@ -16,7 +16,7 @@ class BookingSlotScreen extends StatefulWidget {
 
 class _BookingSlotScreenState extends State<BookingSlotScreen> {
   final ApiClient _apiClient = ApiClient();
-  int? id = -1;
+  // int? id = -1;
   List<AvailabilityModel> _availDoctors = [];
   @override
   void initState() {
@@ -33,9 +33,7 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
   void addBooking(
     int i,
   ) async {
-    id = await _apiClient.getUserId(currentLoggedInUser["username"].toString());
     PatientBookingModel booking = PatientBookingModel(
-        id: id,
         doctorUsername: _availDoctors[i].doctorUsername.toString(),
         patientUsername: currentLoggedInUser["username"].toString(),
         doctorName: _apiClient
@@ -44,7 +42,7 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
         patientName: _apiClient
             .getUserName(currentLoggedInUser["username"].toString())
             .toString(),
-        dateTime: "today");
+        dateTime: _availDoctors[i].availability.toString());
     _apiClient.addBooking(booking);
   }
 
