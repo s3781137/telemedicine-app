@@ -1,15 +1,16 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 class chatModel {
   chatModel();
-  chatModel.fromJson(String chatModelJson) {
-    json
-        .decode(chatModelJson)
-        .map((x) => addChatMessage(chatBubble.fromMap(x)));
-  }
-
   List<chatBubble> chats = [];
+
+  chatModel.fromJson(String chatModelJson) {
+    print(chatModelJson);
+    List<dynamic> decodedChatModel = json.decode(chatModelJson);
+    decodedChatModel
+        .forEach((element) => {addChatMessage(chatBubble.fromMap(element))});
+    print(chatToJson());
+  }
 
   void addChatMessage(chatBubble chat) {
     chats.add(chat);
@@ -27,19 +28,27 @@ class chatModel {
 class chatBubble {
   chatBubble({
     required this.message,
-    required this.senderName,
+    required this.id,
   });
 
   factory chatBubble.fromMap(Map<String, dynamic> input) => chatBubble(
         message: input["message"],
-        senderName: input["senderName"],
+        id: input["id"].toString(),
       );
 
   String message;
-  String senderName;
+  String id;
 
   Map<String, dynamic> toJson() => {
         "message": message,
-        "senderName": senderName,
+        "id": id,
       };
+
+  String getMessage() {
+    return message;
+  }
+
+  String getID() {
+    return id;
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/doctor/core/api_chat.dart';
 
-const List<String> testPatients = <String>["Hellen", "Dave", "John", "Rose"];
+import 'model/chatModel.dart';
 
 class doctorChat extends StatelessWidget {
   const doctorChat();
@@ -20,9 +21,16 @@ class doctorChatContent extends StatefulWidget {
 
 class _doctorChatContentState extends State<doctorChatContent> {
   //For testing
+  var testPatients = {"Hellen": 23, "Dave": 22, "John": 21, "Rose": 25};
 
-  String _dropdownValue = testPatients.first;
+  final chatApiClient _apiClient = chatApiClient();
+  String? _dropdownValue;
+  int senderId = 24;
+  List<Widget> chatMessagesWidget = [];
 
+  _doctorChatContentState() {
+    _dropdownValue = testPatients.values.first.toString();
+  }
   //Gets a list of the patients
   List<DropdownMenuItem<String>> retrievePatients() {
     //This is dummy code that needs to be implemented with db items
@@ -37,49 +45,72 @@ class _doctorChatContentState extends State<doctorChatContent> {
       returnVal.add(newItem);
     }
     */
+    List<DropdownMenuItem<String>> returnVal = [];
+    testPatients.entries.forEach((element) => {
+          returnVal.add(
+            DropdownMenuItem<String>(
+              value: element.value.toString(),
+              child: Center(
+                child: Text(
+                  textAlign: TextAlign.center,
+                  element.key,
+                ),
+              ),
+            ),
+          )
+        });
 
-    return testPatients.map<DropdownMenuItem<String>>((String value) {
-      return DropdownMenuItem<String>(
-        value: value,
-        child: Center(
-          child: Text(
-            textAlign: TextAlign.center,
-            value,
-          ),
-        ),
-      );
-    }).toList();
+    return returnVal;
   }
 
-  void onDropdownChange(String? value) {
+  void onDropdownChange(String? value) async {
     setState(() {
       _dropdownValue = value!;
     });
+    try {
+      List<Widget> data = await chatBoxes(senderId, int.parse(value!));
+      setState(() {
+        chatMessagesWidget = data;
+      });
+    } catch (ex) {
+      print("ERROR:");
+      print(ex);
+    }
   }
 
-  List<Widget> chatBoxes() {
-    //Styling for text box from https://www.freecodecamp.org/news/build-a-chat-app-ui-with-flutter/
-    return ([
-      Container(
-        padding:
-            const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
-        child: Align(
-          alignment: (Alignment.topLeft),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.black, width: 0.5),
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.grey.shade300,
-            ),
-            padding: const EdgeInsets.all(16),
-            child: const Text(
-              "Test Message",
-              style: TextStyle(fontSize: 15),
-            ),
+  Widget generateChatMessage(String message, bool received) {
+    return Container(
+      padding: EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+      child: Align(
+        alignment: (received ? Alignment.topLeft : Alignment.topRight),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: (received ? Colors.grey.shade200 : Colors.blue[200]),
+          ),
+          padding: EdgeInsets.all(16),
+          child: Text(
+            message,
+            style: TextStyle(fontSize: 15),
           ),
         ),
       ),
-    ]);
+    );
+  }
+
+  Future<List<Widget>> chatBoxes(
+      int senderIdNumber, int receiverIdNumber) async {
+    //Styling for text box from https://www.freecodecamp.org/news/build-a-chat-app-ui-with-flutter/
+    chatModel chatModelResult =
+        await _apiClient.getChats(senderIdNumber, receiverIdNumber);
+
+    List<Widget> returnVal = [];
+
+    chatModelResult.getChats().forEach((result) =>
+        {returnVal.add(generateChatMessage(result.getMessage(), false))});
+
+    print("returning chat boxes of length: " + returnVal.length.toString());
+    return returnVal;
   }
 
   @override
@@ -118,16 +149,21 @@ class _doctorChatContentState extends State<doctorChatContent> {
                     //Sets the width to 80% of screen width
                     width: MediaQuery.of(context).size.width * 0.8,
                     //Sets height to 60% of screen height
-                    height: MediaQuery.of(context).size.height * 0.6,
+                    height: MediaQuery.of(context).size.height * 0.7,
                     decoration:
                         BoxDecoration(border: Border.all(color: Colors.black)),
                     child: Column(
                       children: [
                         //Received/sent messages
-                        SingleChildScrollView(
-                            child: Column(
-                          children: chatBoxes(),
-                        )),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          child: SingleChildScrollView(
+                              child: Column(
+                            children: chatMessagesWidget,
+                          )),
+                        ),
+                        const Spacer(),
+
                         //Input box to send messages
                         Column(
                           children: [

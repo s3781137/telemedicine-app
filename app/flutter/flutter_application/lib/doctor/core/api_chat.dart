@@ -1,16 +1,23 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter_application/doctor/model/chatModel.dart';
 import 'package:http/http.dart';
 
 import 'package:http/http.dart' as http;
 
+//
 class chatApiClient {
   // Return an instance of PatientModel
-  Future<chatModel> getChats(Int senderID, Int recipientID) async {
-    Response response = await http.get(Uri.parse(
-        'http://localhost:8089/chat/findMessages?senderId=${senderID}&recipientId=${recipientID}'));
+  Future<chatModel> getChats(int senderID, int recipientID) async {
+    print("Sender ID: " +
+        senderID.toString() +
+        ". Recipient ID: " +
+        recipientID.toString());
+    Response response = await http.get(
+        Uri.parse(
+            'http://localhost:8089/chat/findMessages?senderId=$senderID&recipientId=$recipientID'),
+        headers: <String, String>{"Content-Type": "application/json"});
+    print(response.body);
     if (response.statusCode == 200) {
       return chatModel.fromJson(response.body);
     } else {
