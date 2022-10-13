@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
+import '../../main.dart';
+
 class Admin extends StatelessWidget {
   Admin(this.jwt, this.payload);
 
@@ -19,6 +21,25 @@ class Admin extends StatelessWidget {
       appBar: AppBar(
         title: Text('ND TELEMEDICINE'),
         actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: PopupMenuButton(
+                child: Icon(Icons.account_circle),
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      onTap: () => {
+                        currentLoggedInUser.update("username", (value) => ""),
+                        currentLoggedInUser.update("userType", (value) => ""),
+                        Navigator.of(context)
+                            .popUntil(ModalRoute.withName("/adminsignin")),
+                      },
+                      value: 'logout',
+                      child: Text('Log out'),
+                    ),
+                  ];
+                },
+              )),
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
