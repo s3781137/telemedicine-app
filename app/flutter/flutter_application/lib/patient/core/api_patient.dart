@@ -7,6 +7,7 @@ import 'package:flutter_application/patient/model/petient_health_model.dart';
 import 'package:http/http.dart';
 
 import '../model/patient_booking_model.dart';
+import '../model/patient_medicine_model.dart';
 import '../model/patient_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -175,6 +176,18 @@ class ApiClient {
         'http://localhost:8085/booking/viewPatientBookings?patientUsername=$username'));
     if (response.statusCode == 200) {
       return patientBookingModelFromJson(response.body);
+    } else {
+      throw Exception('Unable to fetch products from the REST API');
+    }
+  }
+
+  // return a list of medicines
+  // todo change after backend fix
+  Future<List<PatientMedicineModel>> fetchMedicines(String username) async {
+    final response =
+        await http.get(Uri.parse('http://localhost:8082/prescription/list'));
+    if (response.statusCode == 200) {
+      return patientMedicineModelFromJson(response.body);
     } else {
       throw Exception('Unable to fetch products from the REST API');
     }
