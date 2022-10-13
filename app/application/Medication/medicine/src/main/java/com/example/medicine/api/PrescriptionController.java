@@ -25,10 +25,10 @@ public class PrescriptionController {
     @Autowired
     private PrescriptionService service;
 
-    // @GetMapping("/view")
-    //     public List<Prescription> getPrescription(String patientUsername) {
-    //         return service.findAll(patientUsername);
-    // }
+    @GetMapping("/view")
+        public List<Prescription> getPrescriptionByPer(String patientUsername) {
+            return service.findAllByName(patientUsername);
+    }
 
     @GetMapping("/list")
     public List<Prescription> getPrescription(String patientUsername) {
