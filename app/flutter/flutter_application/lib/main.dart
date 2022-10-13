@@ -39,7 +39,7 @@ void main() {
       '/patient/appointments/book': (context) => const BookingSlotScreen(),
       '/patent/appointments/cancel': (context) =>
           const CancelAppointmentScreen(),
-      '/patient/appointments/view': (context) => const ViewAppointmentScreen(),
+      '/patient/appointments/view': (context) => const ViewBookingScreen(),
       '/patient/profile': (context) => const Profile(),
       '/doctor/chat': (context) => const doctorChat(),
       '/adminsignup': (context) => const AdminRegister(),
