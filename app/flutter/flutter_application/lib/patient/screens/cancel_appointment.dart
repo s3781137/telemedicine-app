@@ -34,8 +34,41 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
     setState(() => _bookings = bookings);
   }
 
-  void cancelBooking(int i) {
-    _apiClient.cancelBooking(_bookings[i].id ?? 0);
+  void cancelBooking(int i) async {
+    dynamic res = await _apiClient.cancelBooking(_bookings[i].id ?? 0);
+    if (res == 200) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                title: const Text('Cancel Success'),
+                content: const Text('Your booking has been cancelled'),
+                actions: <Widget>[
+                  TextButton(
+                    // onPressed: () => Navigator.of(context).push(
+                    //     MaterialPageRoute(builder: (context) => Admin.fromBase64(jwt))),
+                    // todo: need fix routing because of jwt implementation
+                    onPressed: () => Navigator.of(context)
+                        .pushNamed('/patient/appointments'),
+                    child: const Text('OK'),
+                  ),
+                ]);
+          });
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                title: const Text('Cancel Failure'),
+                content: const Text('Cannot cancel this booking'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('OK'),
+                  ),
+                ]);
+          });
+    }
   }
 
   @override

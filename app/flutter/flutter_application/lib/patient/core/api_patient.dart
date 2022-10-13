@@ -201,7 +201,7 @@ class ApiClient {
     print("cancelling booking");
     print(response.statusCode);
     if (response.statusCode == 200) {
-      return patientBookingModelFromJson(response.body);
+      return response.statusCode;
     } else {
       throw Exception('Unable to fetch products from the REST API');
     }
