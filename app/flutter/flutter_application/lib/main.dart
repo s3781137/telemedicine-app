@@ -38,8 +38,7 @@ void main() {
       '/loginhome': (context) => const LoginHome(),
       '/patient/appointments': (context) => const AppointmentsScreen(),
       '/patient/appointments/book': (context) => const BookingSlotScreen(),
-      '/patent/appointments/cancel': (context) =>
-          const CancelAppointmentScreen(),
+      '/patent/appointments/cancel': (context) => const CancelBookingScreen(),
       '/patient/appointments/view': (context) => const ViewBookingScreen(),
       '/patient/profile': (context) => const Profile(),
       '/patient/medicine': (context) => const ViewMedicineScreen(),
