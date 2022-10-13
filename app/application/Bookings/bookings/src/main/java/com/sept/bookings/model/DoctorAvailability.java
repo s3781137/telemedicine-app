@@ -22,7 +22,7 @@ public class DoctorAvailability {
         return id;
     }
 
-    public String getDoctorName(){
+    public String getDoctorUsername(){
         return doctorUsername;
     }
 
