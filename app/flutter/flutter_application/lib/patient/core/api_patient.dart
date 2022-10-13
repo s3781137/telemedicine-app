@@ -132,7 +132,7 @@ class ApiClient {
         headers: <String, String>{"Content-Type": "application/json"},
       );
       if (response.statusCode == 200) {
-        return response.body.toString();
+        return response.statusCode;
       }
     } catch (e) {}
   }

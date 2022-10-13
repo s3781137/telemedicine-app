@@ -43,7 +43,40 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
             .getUserName(currentLoggedInUser["username"].toString())
             .toString(),
         dateTime: _availDoctors[i].availability.toString());
-    _apiClient.addBooking(booking);
+    dynamic res = await _apiClient.addBooking(booking);
+    if (res == 200) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                title: const Text('Booking Success'),
+                content: const Text('Your booking has been added'),
+                actions: <Widget>[
+                  TextButton(
+                    // onPressed: () => Navigator.of(context).push(
+                    //     MaterialPageRoute(builder: (context) => Admin.fromBase64(jwt))),
+                    // todo: need fix routing because of jwt implementation
+                    onPressed: () => Navigator.of(context)
+                        .pushNamed('/patient/appointments'),
+                    child: const Text('OK'),
+                  ),
+                ]);
+          });
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                title: const Text('Booking Failure'),
+                content: const Text('Cannot add this booking'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('OK'),
+                  ),
+                ]);
+          });
+    }
   }
 
   @override
