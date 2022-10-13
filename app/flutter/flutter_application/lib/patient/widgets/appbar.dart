@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../main.dart';
 import '../patient.dart';
 
 makeAppBar(BuildContext context) {
@@ -13,6 +14,12 @@ makeAppBar(BuildContext context) {
             itemBuilder: (context) {
               return [
                 PopupMenuItem(
+                  onTap: () => {
+                    currentLoggedInUser.update("username", (value) => ""),
+                    currentLoggedInUser.update("userType", (value) => ""),
+                    Navigator.of(context)
+                        .popUntil(ModalRoute.withName("/loginhome")),
+                  },
                   value: 'logout',
                   child: Text('Log out'),
                 ),
