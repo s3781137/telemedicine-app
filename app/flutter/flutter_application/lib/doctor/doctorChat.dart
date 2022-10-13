@@ -21,7 +21,7 @@ class doctorChatContent extends StatefulWidget {
 
 class _doctorChatContentState extends State<doctorChatContent> {
   //For testing
-  var testPatients = {"Hellen": 23, "Dave": 22, "John": 21, "Rose": 25};
+  var testPatients = {"Hellen": 23, "Dave": 22, "John": 21, "Rose": 30};
   final _messageTextController = TextEditingController();
   final chatApiClient _apiClient = chatApiClient();
   String? _dropdownValue;
@@ -117,7 +117,7 @@ class _doctorChatContentState extends State<doctorChatContent> {
 
     combinedChats.forEach((result) => {
           returnVal.add(generateChatMessage(result.getMessage(),
-              result.getSenderId() == senderIdNumber.toString()))
+              result.getSenderId() != senderIdNumber.toString()))
         });
 
     print("returning chat boxes of length: " + returnVal.length.toString());

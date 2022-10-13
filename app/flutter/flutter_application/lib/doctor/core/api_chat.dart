@@ -30,7 +30,7 @@ class chatApiClient {
     Response response =
         await http.post(Uri.parse('http://localhost:8089/chat/send'),
             headers: <String, String>{
-              'Content-Type': 'application/json; charset=UTF-8',
+              'Content-Type': 'application/json',
             },
             body: jsonEncode(<String, dynamic>{
               "chatId": 99,
@@ -39,7 +39,7 @@ class chatApiClient {
               "senderName": "sender",
               "recipientName": "recipient",
               "message": message,
-              "status": "SENT"
+              "status": "RECEIVED"
             }));
     if (response.statusCode == 200) {
       print("Sent!");
