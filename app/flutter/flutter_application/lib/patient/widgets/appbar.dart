@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/patient/core/api_patient.dart';
 
 import '../../main.dart';
 import '../patient.dart';
@@ -28,6 +29,12 @@ makeAppBar(BuildContext context) {
                   child: Text('Change Password'),
                 ),
                 PopupMenuItem(
+                  onTap: () => {
+                    ApiClient()
+                        .deleteUser(currentLoggedInUser["username"].toString()),
+                    Navigator.of(context)
+                        .popUntil(ModalRoute.withName("/loginhome")),
+                  },
                   value: 'rmAccount',
                   child: Text('Delete account'),
                 ),
