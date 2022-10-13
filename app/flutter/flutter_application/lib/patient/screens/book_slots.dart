@@ -1,218 +1,104 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/main.dart';
 
-class BookAppointment extends StatefulWidget {
-  const BookAppointment({Key? key}) : super(key: key);
+import '../core/api_patient.dart';
+import '../model/availability_model.dart';
+import '../model/patient_booking_model.dart';
+import '../patient.dart';
+
+class BookingSlotScreen extends StatefulWidget {
+  const BookingSlotScreen({Key? key}) : super(key: key);
 
   @override
-  State<BookAppointment> createState() => _BookAppointmentState();
+  State<BookingSlotScreen> createState() => _BookingSlotScreenState();
 }
 
-class _BookAppointmentState extends State<BookAppointment> {
-  // define a list of options for the dropdown
-  final List<String> _categories = [
-    "Periodic health examination",
-    "Type B",
-    "Type C",
-    "Type D"
-  ];
-  final List<String> _locations = ["USA", "Australia", "Japan", "UK"];
-  final List<String> _doctors = ["Justin Bieber", "ABC", "Jack", "Paul"];
-  final List<String> _datetime = ["01/01/1970", "123", "345", "567"];
+class _BookingSlotScreenState extends State<BookingSlotScreen> {
+  final ApiClient _apiClient = ApiClient();
+  int? id = -1;
+  List<AvailabilityModel> _availDoctors = [];
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
 
-  // the selected value
-  String? _selectedCategory;
-  String? _selectedLocation;
-  String? _selectedDoctor;
-  String? _selectedDateTime;
+  void _load() async {
+    List<AvailabilityModel> availDoctors = await _apiClient
+        .fetchAvailDoctors(); // load the availabilities on Widget init
+    setState(() => _availDoctors = availDoctors);
+  }
+
+  void addBooking(
+    int i,
+  ) async {
+    id = await _apiClient.getUserId(currentLoggedInUser["username"].toString());
+    PatientBookingModel booking = PatientBookingModel(
+        id: id,
+        doctorUsername: _availDoctors[i].doctorUsername.toString(),
+        patientUsername: currentLoggedInUser["username"].toString(),
+        doctorName: _apiClient
+            .getDoctorName(_availDoctors[i].doctorUsername.toString())
+            .toString(),
+        patientName: _apiClient
+            .getUserName(currentLoggedInUser["username"].toString())
+            .toString(),
+        dateTime: "today");
+    _apiClient.addBooking(booking);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Book An Appointments'),
-        centerTitle: true,
+        title: Text('ND TELEMEDICINE'),
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: PopupMenuButton(
+                child: Icon(Icons.account_circle),
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      value: 'logout',
+                      child: Text('Log out'),
+                    ),
+                    PopupMenuItem(
+                      value: 'changePW',
+                      child: Text('Change Password'),
+                    ),
+                    PopupMenuItem(
+                      value: 'rmAccount',
+                      child: Text('Delete account'),
+                    ),
+                  ];
+                },
+              )),
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Patient()));
+                },
+                child: Icon(Icons.home),
+              )),
+        ],
       ),
-      body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(padding: EdgeInsets.all(20)),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-              width: 300,
-              decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(30)),
-              child: DropdownButton<String>(
-                value: _selectedCategory,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedCategory = value;
-                  });
-                },
-                hint: const Center(
-                    child: Text(
-                  'Appointment Type',
-                  style: TextStyle(color: Colors.white),
-                )),
-                // Hide the default underline
-                underline: Container(),
-                // set the color of the dropdown menu
-                dropdownColor: Colors.amber,
-                icon: const Icon(
-                  Icons.arrow_downward,
-                  color: Colors.yellow,
-                ),
-                isExpanded: true,
-
-                // The list of options
-                items: _categories
-                    .map((e) => DropdownMenuItem(
-                          value: e,
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              e,
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ))
-                    .toList(),
-              ),
+      body: ListView.builder(
+        itemCount: _availDoctors.length,
+        itemBuilder: (BuildContext ctxt, int i) {
+          return GestureDetector(
+            onTap: () => {addBooking(i)},
+            child: Column(
+              children: [
+                Text("Doctor: ${_availDoctors[i].doctorUsername} "),
+                Text("Available at: ${_availDoctors[i].availability}")
+              ],
             ),
-            Padding(padding: EdgeInsets.all(20)),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-              width: 300,
-              decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(30)),
-              child: DropdownButton<String>(
-                value: _selectedLocation,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedLocation = value;
-                  });
-                },
-                hint: const Center(
-                    child: Text(
-                  'Select a Location',
-                  style: TextStyle(color: Colors.white),
-                )),
-                // Hide the default underline
-                underline: Container(),
-                // set the color of the dropdown menu
-                dropdownColor: Colors.amber,
-                icon: const Icon(
-                  Icons.arrow_downward,
-                  color: Colors.yellow,
-                ),
-                isExpanded: true,
-
-                // The list of options
-                items: _locations
-                    .map((e) => DropdownMenuItem(
-                          value: e,
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              e,
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ))
-                    .toList(),
-              ),
-            ),
-            Padding(padding: EdgeInsets.all(20)),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-              width: 300,
-              decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(30)),
-              child: DropdownButton<String>(
-                value: _selectedDoctor,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedDoctor = value;
-                  });
-                },
-                hint: const Center(
-                    child: Text(
-                  'Select a Doctor',
-                  style: TextStyle(color: Colors.white),
-                )),
-                // Hide the default underline
-                underline: Container(),
-                // set the color of the dropdown menu
-                dropdownColor: Colors.amber,
-                icon: const Icon(
-                  Icons.arrow_downward,
-                  color: Colors.yellow,
-                ),
-                isExpanded: true,
-
-                // The list of options
-                items: _doctors
-                    .map((e) => DropdownMenuItem(
-                          value: e,
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              e,
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ))
-                    .toList(),
-              ),
-            ),
-            Padding(padding: EdgeInsets.all(20)),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-              width: 300,
-              decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(30)),
-              child: DropdownButton<String>(
-                value: _selectedDateTime,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedDateTime = value;
-                  });
-                },
-                hint: const Center(
-                    child: Text(
-                  'Please select an available date and time',
-                  style: TextStyle(color: Colors.white),
-                )),
-                // Hide the default underline
-                underline: Container(),
-                // set the color of the dropdown menu
-                dropdownColor: Colors.amber,
-                icon: const Icon(
-                  Icons.arrow_downward,
-                  color: Colors.yellow,
-                ),
-                isExpanded: true,
-
-                // The list of options
-                items: _datetime
-                    .map((e) => DropdownMenuItem(
-                          value: e,
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              e,
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ))
-                    .toList(),
-              ),
-            ),
-          ]),
+          );
+        },
+      ),
     );
   }
 }

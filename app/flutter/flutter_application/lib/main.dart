@@ -5,6 +5,7 @@ import 'package:flutter_application/doctor/doctorChat.dart';
 import 'package:flutter_application/firstScreen.dart';
 import 'package:flutter_application/patient/appointments.dart';
 import 'package:flutter_application/patient/loginHome.dart';
+import 'package:flutter_application/patient/model/patient_booking_model.dart';
 import 'package:flutter_application/patient/register.dart';
 import 'package:flutter_application/patient/screens/book_slots.dart';
 import 'package:flutter_application/patient/screens/cancel_appointment.dart';
@@ -35,10 +36,10 @@ void main() {
       '/patient': (context) => Patient(),
       '/loginhome': (context) => const LoginHome(),
       '/patient/appointments': (context) => const AppointmentsScreen(),
-      '/patient/appointments/book': (context) => const BookAppointment(),
+      '/patient/appointments/book': (context) => const BookingSlotScreen(),
       '/patent/appointments/cancel': (context) =>
           const CancelAppointmentScreen(),
-      '/patient/appointments/view': (context) => const ViewAppointmentScreen(),
+      '/patient/appointments/view': (context) => const ViewBookingScreen(),
       '/patient/profile': (context) => const Profile(),
       '/doctor/chat': (context) => const doctorChat(),
       '/adminsignup': (context) => const AdminRegister(),
