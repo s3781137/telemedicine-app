@@ -126,8 +126,8 @@ class ApiClient {
 
   Future<dynamic> addBooking(PatientBookingModel booking) async {
     try {
-      Response response = await http.put(
-        Uri.parse('http://localhost:8080/booking/addBooking'),
+      Response response = await http.post(
+        Uri.parse('http://localhost:8085/booking/addBooking'),
         body: jsonEncode(booking),
         headers: <String, String>{"Content-Type": "application/json"},
       );
@@ -163,6 +163,7 @@ class ApiClient {
   Future<String?> getDoctorName(String username) async {
     Response response = await http
         .get(Uri.parse('http://localhost:8081/doctor/getBy/$username'));
+    print("response status code${response.statusCode}");
     if (response.statusCode == 200) {
       return DoctorModel.fromJson(jsonDecode((response.body))).firstName;
     } else {
@@ -187,6 +188,20 @@ class ApiClient {
         'http://localhost:8082/prescription/view?patientUsername=$username'));
     if (response.statusCode == 200) {
       return patientMedicineModelFromJson(response.body);
+    } else {
+      throw Exception('Unable to fetch products from the REST API');
+    }
+  }
+
+  // Method for cancelling booking
+  Future<dynamic> cancelBooking(int bookingId) async {
+    final response = await http.get(Uri.parse(
+        'http://localhost:8085/booking/cancelBooking?bookingId=$bookingId'));
+    // todo debug msg
+    print("cancelling booking");
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      return patientBookingModelFromJson(response.body);
     } else {
       throw Exception('Unable to fetch products from the REST API');
     }
