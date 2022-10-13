@@ -24,16 +24,28 @@ class chatApiClient {
       throw Exception('Failed to load chats');
     }
   }
-  /*
-  Future<chatModel> postChat(Int senderID, Int recipientID, String senderName,
-      String recipientName) async {
-    Response response = await http.get(Uri.parse(
-        'http://localhost:8089/chat/findMessages?senderId=${senderID}&recipientId=${recipientID}'));
+
+  Future<bool> postChat(int senderID, int recipientID, String message) async {
+    print("Sending message: " + message);
+    Response response =
+        await http.post(Uri.parse('http://localhost:8089/chat/send'),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, dynamic>{
+              "chatId": 99,
+              "senderId": senderID,
+              "recipientId": recipientID,
+              "senderName": "sender",
+              "recipientName": "recipient",
+              "message": message,
+              "status": "SENT"
+            }));
     if (response.statusCode == 200) {
-      return chatModel.fromJson(response.body);
+      print("Sent!");
+      return true;
     } else {
-      throw Exception('Failed to load chats');
+      return false;
     }
   }
-  */
 }

@@ -84,7 +84,7 @@ import com.example.chatmicroservice.service.ChatRoomService;
 //     @GetMapping("/messages")
 //     public ResponseEntity<?> findMessage ( @RequestParam int id) {
 //         return ResponseEntity
-//                 .ok(chatMessageService.findById(id));
+//                 .ok(chatMessageService.findById(id));    
 //     }
  }
 

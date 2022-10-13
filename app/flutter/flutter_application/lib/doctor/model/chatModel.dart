@@ -29,19 +29,23 @@ class chatBubble {
   chatBubble({
     required this.message,
     required this.id,
+    required this.senderId,
   });
 
   factory chatBubble.fromMap(Map<String, dynamic> input) => chatBubble(
         message: input["message"],
         id: input["id"].toString(),
+        senderId: input["senderId"].toString(),
       );
 
   String message;
   String id;
+  String senderId;
 
   Map<String, dynamic> toJson() => {
         "message": message,
         "id": id,
+        "senderId": senderId,
       };
 
   String getMessage() {
@@ -50,5 +54,9 @@ class chatBubble {
 
   String getID() {
     return id;
+  }
+
+  String getSenderId() {
+    return senderId;
   }
 }

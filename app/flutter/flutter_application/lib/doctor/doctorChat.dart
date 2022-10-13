@@ -22,7 +22,7 @@ class doctorChatContent extends StatefulWidget {
 class _doctorChatContentState extends State<doctorChatContent> {
   //For testing
   var testPatients = {"Hellen": 23, "Dave": 22, "John": 21, "Rose": 25};
-
+  final _messageTextController = TextEditingController();
   final chatApiClient _apiClient = chatApiClient();
   String? _dropdownValue;
   int senderId = 24;
@@ -30,6 +30,8 @@ class _doctorChatContentState extends State<doctorChatContent> {
 
   _doctorChatContentState() {
     _dropdownValue = testPatients.values.first.toString();
+    chatBoxes(senderId, int.parse(_dropdownValue!))
+        .then((value) => onDropdownChange(_dropdownValue));
   }
   //Gets a list of the patients
   List<DropdownMenuItem<String>> retrievePatients() {
@@ -86,7 +88,7 @@ class _doctorChatContentState extends State<doctorChatContent> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: (received ? Colors.grey.shade200 : Colors.blue[200]),
+            color: (received ? Colors.grey.shade400 : Colors.blue[200]),
           ),
           padding: EdgeInsets.all(16),
           child: Text(
@@ -101,16 +103,33 @@ class _doctorChatContentState extends State<doctorChatContent> {
   Future<List<Widget>> chatBoxes(
       int senderIdNumber, int receiverIdNumber) async {
     //Styling for text box from https://www.freecodecamp.org/news/build-a-chat-app-ui-with-flutter/
-    chatModel chatModelResult =
+    chatModel chatModelResultSender =
         await _apiClient.getChats(senderIdNumber, receiverIdNumber);
+    chatModel chatModelResultReceiver =
+        await _apiClient.getChats(receiverIdNumber, senderIdNumber);
+
+    List<chatBubble> combinedChats = chatModelResultReceiver.getChats();
+    combinedChats..addAll(chatModelResultSender.getChats());
+    combinedChats
+        .sort(((a, b) => int.parse(a.getID()).compareTo(int.parse(b.getID()))));
 
     List<Widget> returnVal = [];
 
-    chatModelResult.getChats().forEach((result) =>
-        {returnVal.add(generateChatMessage(result.getMessage(), false))});
+    combinedChats.forEach((result) => {
+          returnVal.add(generateChatMessage(result.getMessage(),
+              result.getSenderId() == senderIdNumber.toString()))
+        });
 
     print("returning chat boxes of length: " + returnVal.length.toString());
     return returnVal;
+  }
+
+  void onSend() async {
+    _apiClient
+        .postChat(
+            senderId, int.parse(_dropdownValue!), _messageTextController.text)
+        .then((value) => onDropdownChange(_dropdownValue!));
+    _messageTextController.text = "";
   }
 
   @override
@@ -167,10 +186,11 @@ class _doctorChatContentState extends State<doctorChatContent> {
                         //Input box to send messages
                         Column(
                           children: [
-                            const Padding(
-                              padding: EdgeInsets.all(10),
+                            Padding(
+                              padding: const EdgeInsets.all(10),
                               child: TextField(
-                                  decoration: InputDecoration(
+                                  controller: _messageTextController,
+                                  decoration: const InputDecoration(
                                       border: OutlineInputBorder(),
                                       labelText: 'Enter Message:'),
                                   keyboardType: TextInputType.multiline,
@@ -179,7 +199,7 @@ class _doctorChatContentState extends State<doctorChatContent> {
                             ),
                             //Button to submit (onpressed needs to be implemented)
                             TextButton(
-                                onPressed: () => {null},
+                                onPressed: () => {onSend()},
                                 child: const Text("Submit"))
                           ],
                         ),
