@@ -6,6 +6,7 @@ import 'package:flutter_application/patient/model/patient_profile_model.dart';
 import '../../main.dart';
 import '../core/api_patient.dart';
 import '../patient.dart';
+import '../widgets/appbar.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -94,41 +95,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('ND TELEMEDICINE'),
-          actions: <Widget>[
-            Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: PopupMenuButton(
-                  child: Icon(Icons.account_circle),
-                  itemBuilder: (context) {
-                    return [
-                      const PopupMenuItem(
-                        value: 'logout',
-                        child: Text('Log out'),
-                      ),
-                      const PopupMenuItem(
-                        value: 'changePW',
-                        child: Text('Change Password'),
-                      ),
-                      const PopupMenuItem(
-                        value: 'rmAccount',
-                        child: Text('Delete account'),
-                      ),
-                    ];
-                  },
-                )),
-            Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Patient()));
-                  },
-                  child: const Icon(Icons.home),
-                )),
-          ],
-        ),
+        appBar: makeAppBar(context),
         body: Padding(
             padding: const EdgeInsets.all(10),
             child: ListView(

@@ -5,6 +5,7 @@ import '../core/api_patient.dart';
 import '../model/availability_model.dart';
 import '../model/patient_booking_model.dart';
 import '../patient.dart';
+import '../widgets/appbar.dart';
 
 class BookingSlotScreen extends StatefulWidget {
   const BookingSlotScreen({Key? key}) : super(key: key);
@@ -50,41 +51,7 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ND TELEMEDICINE'),
-        actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: PopupMenuButton(
-                child: Icon(Icons.account_circle),
-                itemBuilder: (context) {
-                  return [
-                    PopupMenuItem(
-                      value: 'logout',
-                      child: Text('Log out'),
-                    ),
-                    PopupMenuItem(
-                      value: 'changePW',
-                      child: Text('Change Password'),
-                    ),
-                    PopupMenuItem(
-                      value: 'rmAccount',
-                      child: Text('Delete account'),
-                    ),
-                  ];
-                },
-              )),
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Patient()));
-                },
-                child: Icon(Icons.home),
-              )),
-        ],
-      ),
+      appBar: makeAppBar(context),
       body: ListView.builder(
         itemCount: _availDoctors.length,
         itemBuilder: (BuildContext ctxt, int i) {
