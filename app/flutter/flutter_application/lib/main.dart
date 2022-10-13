@@ -9,6 +9,7 @@ import 'package:flutter_application/patient/model/patient_booking_model.dart';
 import 'package:flutter_application/patient/register.dart';
 import 'package:flutter_application/patient/screens/book_slots.dart';
 import 'package:flutter_application/patient/screens/cancel_appointment.dart';
+import 'package:flutter_application/patient/screens/medicine.dart';
 import 'package:flutter_application/patient/screens/profile.dart';
 import 'package:flutter_application/patient/screens/view_appointment.dart';
 import 'admin/screens/create_doctor.dart';
@@ -41,6 +42,7 @@ void main() {
           const CancelAppointmentScreen(),
       '/patient/appointments/view': (context) => const ViewBookingScreen(),
       '/patient/profile': (context) => const Profile(),
+      '/patient/medicine': (context) => const ViewMedicineScreen(),
       '/doctor/chat': (context) => const doctorChat(),
       '/adminsignup': (context) => const AdminRegister(),
       '/admincreatedoctor': (context) => const CreateDoctor(),

@@ -40,7 +40,7 @@ class Patient extends StatelessWidget {
               backgroundImage: AssetImage('assets/Medications.png'),
             ),
             title: Text('Medications'),
-            onTap: () => Navigator.of(context).pushNamed('/welcome'),
+            onTap: () => Navigator.of(context).pushNamed('/patient/medicine'),
           ),
           ListTile(
             leading: CircleAvatar(
