@@ -28,7 +28,12 @@ class _RegisterHomeScreenState extends State<RegisterHomeScreen> {
         confirmPassword: confirmController.text,
         firstName: firstNameController.text,
         lastName: lastNameController.text,
-        email: emailController.text);
+        email: emailController.text,
+        gender: null,
+        weight: null,
+        height: null,
+        contactNo: null,
+        contactName: null);
     dynamic res = await _apiClient.register(patient);
     if (res == 200) {
       showDialog(
