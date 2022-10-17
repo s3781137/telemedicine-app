@@ -100,9 +100,9 @@ public class AdminController {
             response.put("status", HttpStatus.NOT_ACCEPTABLE);
             response.put("errors", "Username is already taken");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-            // the patient should have passwords that match to register
+
         } else {
-            // the patient is getting created.
+
             Doctor currentDoctor = dService.saveDoctor(doctor);
             Map<String, Object> response = new HashMap<>();
             response.put("id", currentDoctor.getId());
@@ -119,9 +119,9 @@ public class AdminController {
             response.put("status", HttpStatus.NOT_ACCEPTABLE);
             response.put("errors", "Username is already taken");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-            // the patient should have passwords that match to register
+
         } else {
-            // the patient is getting created.
+
             Patient currentPatient = pService.savePatient(patient);
             Map<String, Object> response = new HashMap<>();
             response.put("id", currentPatient.getId());
@@ -137,9 +137,9 @@ public class AdminController {
             response.put("status", HttpStatus.NOT_ACCEPTABLE);
             response.put("errors", "Username is already taken");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-            // the patient should have passwords that match to register
+
         } else {
-            // the patient is getting created.
+
             Admin currentAdmin = aService.saveAdmin(admin);
             Map<String, Object> response = new HashMap<>();
             response.put("id", currentAdmin.getId());
