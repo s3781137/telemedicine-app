@@ -1,12 +1,18 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application/main.dart';
+import 'package:flutter_application/patient/model/patient_profile_model.dart';
 import 'package:flutter_application/patient/screens/add_health_info.dart';
+import 'package:flutter_application/patient/screens/profile.dart';
 import 'package:flutter_application/patient/widgets/appbar.dart';
+
+import 'core/api_patient.dart';
+import 'model/patient_model.dart';
 
 class Patient extends StatelessWidget {
   Patient({Key? key}) : super(key: key);
-
+  final ApiClient _apiClient = ApiClient();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +24,14 @@ class Patient extends StatelessWidget {
               backgroundImage: AssetImage('assets/ManageProfile.png'),
             ),
             title: Text('Manage Profile'),
-            onTap: () => Navigator.of(context).pushNamed('/patient/profile'),
+            onTap: () async {
+              PatientModel patient =
+                  await _apiClient.getUser(currentLoggedInUser["username"]!);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => Profile(
+                        patient: patient,
+                      )));
+            },
           ),
           ListTile(
               leading: CircleAvatar(
