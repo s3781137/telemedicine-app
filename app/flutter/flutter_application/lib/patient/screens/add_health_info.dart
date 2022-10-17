@@ -41,8 +41,10 @@ class _HealthInfoState extends State<HealthInfo> {
   int linePastSurgeries = 8;
   int? id = -1;
   Future<void> updateHealthInfo(dynamic username) async {
+    // get id from api
     id = await _apiClient.getUserId(username);
     // check the first question is yes or no
+    // to decide indexes
     if (!(_key.currentState!.getElementList().elementAt(1).question ==
         "Comments")) {
       lineCancer -= 1;
@@ -54,6 +56,7 @@ class _HealthInfoState extends State<HealthInfo> {
       linePastSurgeries -= 1;
       lineMedicationDescpt = 0;
     }
+    // Create healthinfo object
     PatientHealthModel healthInfo = PatientHealthModel(
         id: id,
         cancer:
@@ -88,6 +91,7 @@ class _HealthInfoState extends State<HealthInfo> {
             .getElementList()
             .elementAt(linePastSurgeries)
             .answer);
+    // get response status code
     dynamic res = await _apiClient.updateHealthInfo(healthInfo);
     if (res == 200) {
       showDialog(

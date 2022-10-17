@@ -15,7 +15,6 @@ class BookingSlotScreen extends StatefulWidget {
 
 class _BookingSlotScreenState extends State<BookingSlotScreen> {
   final ApiClient _apiClient = ApiClient();
-  // int? id = -1;
   List<AvailabilityModel> _availDoctors = [];
   @override
   void initState() {
@@ -23,15 +22,14 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
     _load();
   }
 
+  // load the availabilities on Widget init
   void _load() async {
-    List<AvailabilityModel> availDoctors = await _apiClient
-        .fetchAvailDoctors(); // load the availabilities on Widget init
+    List<AvailabilityModel> availDoctors = await _apiClient.fetchAvailDoctors();
     setState(() => _availDoctors = availDoctors);
   }
 
-  void addBooking(
-    int i,
-  ) async {
+  void addBooking(int i) async {
+    // Create booking object
     PatientBookingModel booking = PatientBookingModel(
         doctorUsername: _availDoctors[i].doctorUsername.toString(),
         patientUsername: currentLoggedInUser["username"].toString(),
@@ -42,6 +40,7 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
             .getUserName(currentLoggedInUser["username"].toString())
             .toString(),
         dateTime: _availDoctors[i].availability.toString());
+    // Get response status code
     dynamic res = await _apiClient.addBooking(booking);
     if (res == 200) {
       showDialog(
