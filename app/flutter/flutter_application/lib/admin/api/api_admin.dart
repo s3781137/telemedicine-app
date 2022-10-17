@@ -54,4 +54,18 @@ class ApiAdmin {
       }
     } catch (e) {}
   }
+
+  // Method for doctor deletion
+  Future<dynamic> deleteDoctor(String? username) async {
+    try {
+      Response response = await http.delete(
+          Uri.parse('http://localhost:8083/admin/deleteDoctor/$username'),
+          headers: <String, String>{"Content-Type": "application/json"});
+      if (response.statusCode == 200) {
+        return response.statusCode;
+      }
+    } catch (e) {
+      throw Exception('Failed to delete patient');
+    }
+  }
 }
