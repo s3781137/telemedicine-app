@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
+import '../widgets/appBar.dart';
 
 class Admin extends StatelessWidget {
   Admin(this.jwt, this.payload);
@@ -18,39 +19,7 @@ class Admin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ND TELEMEDICINE'),
-        actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: PopupMenuButton(
-                child: Icon(Icons.account_circle),
-                itemBuilder: (context) {
-                  return [
-                    PopupMenuItem(
-                      onTap: () => {
-                        currentLoggedInUser.update("username", (value) => ""),
-                        currentLoggedInUser.update("userType", (value) => ""),
-                        Navigator.of(context)
-                            .popUntil(ModalRoute.withName("/adminsignin")),
-                      },
-                      value: 'logout',
-                      child: Text('Log out'),
-                    ),
-                  ];
-                },
-              )),
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Admin.fromBase64(jwt)));
-                },
-                child: Icon(Icons.home),
-              )),
-        ],
-      ),
+      appBar: makeAppBar(context, jwt),
       body: ListView(
         children: <Widget>[
           ListTile(
@@ -59,6 +28,22 @@ class Admin extends StatelessWidget {
             //   backgroundImage: AssetImage('assets/ManageProfile.png'),
             // ),
             title: Text('Create Doctor'),
+            onTap: () => Navigator.of(context).pushNamed('/admincreatedoctor'),
+          ),
+          ListTile(
+            // todo: icon
+            // leading: CircleAvatar(
+            //   backgroundImage: AssetImage('assets/ManageProfile.png'),
+            // ),
+            title: Text('Update Doctor'),
+            onTap: () => Navigator.of(context).pushNamed('/admincreatedoctor'),
+          ),
+          ListTile(
+            // todo: icon
+            // leading: CircleAvatar(
+            //   backgroundImage: AssetImage('assets/ManageProfile.png'),
+            // ),
+            title: Text('Delete Doctor'),
             onTap: () => Navigator.of(context).pushNamed('/admincreatedoctor'),
           ),
         ],
