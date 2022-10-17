@@ -27,9 +27,10 @@ public class PrescriptionService {
         return repo.save(p);
     }
 
-    public void removePrescription(Prescription p) {
+    public boolean removePrescription(Prescription p) {
         Prescription pre=repo.findPrescription(p.getdoctorUsername(),p.getpatientUsername(),p.getMedicine());
         repo.delete(pre);
+        return true;
     }
     
 }

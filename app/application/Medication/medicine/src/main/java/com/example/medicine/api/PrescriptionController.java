@@ -35,10 +35,10 @@ public class PrescriptionController {
             }
     }
 
-    @GetMapping("/list")
-    public List<Prescription> getPrescription(String patientUsername) {
-        return service.findAll();
-}
+//     @GetMapping("/list")
+//     public List<Prescription> getPrescription(String patientUsername) {
+//         return service.findAll();
+// }
 
     @PostMapping("/addPrescription")
     public ResponseEntity<?> addPrescription(@RequestBody Prescription p) {
