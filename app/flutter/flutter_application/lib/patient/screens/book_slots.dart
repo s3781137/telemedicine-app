@@ -87,8 +87,20 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
             onTap: () => {addBooking(i)},
             child: Column(
               children: [
-                Text("Doctor: ${_availDoctors[i].doctorUsername} "),
-                Text("Available at: ${_availDoctors[i].availability}")
+                Text(
+                  "Doctor: ${_availDoctors[i].doctorUsername} ",
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  "Available at: ${_availDoctors[i].availability}",
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
               ],
             ),
           );

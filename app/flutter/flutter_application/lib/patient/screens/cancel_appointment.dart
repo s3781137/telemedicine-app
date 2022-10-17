@@ -75,8 +75,20 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
             onTap: () => {cancelBooking(i)},
             child: Column(
               children: [
-                Text("Doctor: ${_bookings[i].doctorUsername} "),
-                Text("Date and Time: ${_bookings[i].dateTime}")
+                Text(
+                  "Doctor: ${_bookings[i].doctorUsername} ",
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  "Date and Time: ${_bookings[i].dateTime}",
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
               ],
             ),
           );

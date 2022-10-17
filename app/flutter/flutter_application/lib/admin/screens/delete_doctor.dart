@@ -86,7 +86,12 @@ class _DeleteDoctorScreenState extends State<DeleteDoctorScreen> {
             child: Column(
               children: [
                 Text(
-                    "Doctor: ${_doctors[i].firstName} ${_doctors[i].lastName}"),
+                  "Doctor: ${_doctors[i].firstName} ${_doctors[i].lastName}",
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ],
             ),
           );

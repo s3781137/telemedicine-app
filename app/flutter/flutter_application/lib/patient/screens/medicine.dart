@@ -43,8 +43,20 @@ class _ViewMedicineScreenState extends State<ViewMedicineScreen> {
             onTap: () => {},
             child: Column(
               children: [
-                Text("Doctor: ${_medicines[i].doctorUsername} "),
-                Text("Date and Time: ${_medicines[i].medicine}")
+                Text(
+                  "Doctor: ${_medicines[i].doctorUsername} ",
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  "Date and Time: ${_medicines[i].medicine}",
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
               ],
             ),
           );
