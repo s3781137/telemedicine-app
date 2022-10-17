@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application/admin/screens/create_doctor.dart';
+import 'package:flutter_application/admin/screens/delete_doctor.dart';
 import 'package:flutter_application/admin/screens/update_doctor.dart';
-
-import '../../main.dart';
 import '../widgets/appBar.dart';
 
 class Admin extends StatelessWidget {
@@ -29,7 +27,7 @@ class Admin extends StatelessWidget {
             // leading: CircleAvatar(
             //   backgroundImage: AssetImage('assets/ManageProfile.png'),
             // ),
-            title: Text('Create Doctor'),
+            title: const Text('Create Doctor'),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => CreateDoctor.fromBase64(jwt)));
@@ -40,7 +38,7 @@ class Admin extends StatelessWidget {
             // leading: CircleAvatar(
             //   backgroundImage: AssetImage('assets/ManageProfile.png'),
             // ),
-            title: Text('Update Doctor'),
+            title: const Text('Update Doctor'),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => UpdateDoctorScreen.fromBase64(jwt)));
@@ -51,8 +49,11 @@ class Admin extends StatelessWidget {
             // leading: CircleAvatar(
             //   backgroundImage: AssetImage('assets/ManageProfile.png'),
             // ),
-            title: Text('Delete Doctor'),
-            onTap: () => Navigator.of(context).pushNamed('/admincreatedoctor'),
+            title: const Text('Delete Doctor'),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => DeleteDoctorScreen.fromBase64(jwt)));
+            },
           ),
         ],
       ),
