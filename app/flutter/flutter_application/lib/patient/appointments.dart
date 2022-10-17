@@ -20,17 +20,17 @@ Widget _myListView(BuildContext context) {
       context: context,
       tiles: [
         ListTile(
-          title: Text('Book An Appointment'),
+          title: const Text('Book An Appointment'),
           onTap: () =>
               Navigator.of(context).pushNamed('/patient/appointments/book'),
         ),
         ListTile(
-          title: Text('Cancel An Appointment'),
+          title: const Text('Cancel An Appointment'),
           onTap: () =>
               Navigator.of(context).pushNamed('/patent/appointments/cancel'),
         ),
         ListTile(
-          title: Text('View Current Bookings'),
+          title: const Text('View Current Bookings'),
           onTap: () =>
               Navigator.of(context).pushNamed('/patient/appointments/view'),
         ),

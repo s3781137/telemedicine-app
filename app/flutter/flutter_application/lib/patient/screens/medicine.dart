@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/main.dart';
-import 'package:flutter_application/patient/model/patient_booking_model.dart';
-
 import '../core/api_patient.dart';
 import '../model/patient_medicine_model.dart';
-import '../patient.dart';
 import '../widgets/appbar.dart';
 
 class ViewMedicineScreen extends StatefulWidget {

@@ -4,7 +4,6 @@ import 'package:flutter_application/main.dart';
 import '../core/api_patient.dart';
 import '../model/availability_model.dart';
 import '../model/patient_booking_model.dart';
-import '../patient.dart';
 import '../widgets/appbar.dart';
 
 class BookingSlotScreen extends StatefulWidget {

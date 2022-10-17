@@ -6,12 +6,12 @@ import '../patient.dart';
 
 makeAppBar(BuildContext context) {
   return AppBar(
-    title: Text('ND TELEMEDICINE'),
+    title: const Text('ND TELEMEDICINE'),
     actions: <Widget>[
       Padding(
-          padding: EdgeInsets.only(right: 20.0),
+          padding: const EdgeInsets.only(right: 20.0),
           child: PopupMenuButton(
-            child: Icon(Icons.account_circle),
+            child: const Icon(Icons.account_circle),
             itemBuilder: (context) {
               return [
                 PopupMenuItem(
@@ -22,9 +22,9 @@ makeAppBar(BuildContext context) {
                         .popUntil(ModalRoute.withName("/loginhome")),
                   },
                   value: 'logout',
-                  child: Text('Log out'),
+                  child: const Text('Log out'),
                 ),
-                PopupMenuItem(
+                const PopupMenuItem(
                   value: 'changePW',
                   child: Text('Change Password'),
                 ),
@@ -36,19 +36,19 @@ makeAppBar(BuildContext context) {
                         .popUntil(ModalRoute.withName("/loginhome")),
                   },
                   value: 'rmAccount',
-                  child: Text('Delete account'),
+                  child: const Text('Delete account'),
                 ),
               ];
             },
           )),
       Padding(
-          padding: EdgeInsets.only(right: 20.0),
+          padding: const EdgeInsets.only(right: 20.0),
           child: GestureDetector(
             onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => Patient()));
             },
-            child: Icon(Icons.home),
+            child: const Icon(Icons.home),
           )),
     ],
   );

@@ -149,7 +149,7 @@ class _LoginFormState extends State<LoginForm> {
               onPressed: () => {login()},
               child: const Text('         Sign            In          '),
             ),
-            Padding(padding: EdgeInsets.all(20)),
+            const Padding(padding: EdgeInsets.all(20)),
             TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.resolveWith(
@@ -170,7 +170,7 @@ class _LoginFormState extends State<LoginForm> {
               // redirect to the sign up page
               child: const Text('New Member? Sign Up! '),
             ),
-            Padding(padding: EdgeInsets.all(20)),
+            const Padding(padding: EdgeInsets.all(20)),
           ],
         ),
       ),
