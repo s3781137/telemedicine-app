@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application/admin/screens/create_doctor.dart';
+import 'package:flutter_application/admin/screens/update_doctor.dart';
 
 import '../../main.dart';
 import '../widgets/appBar.dart';
@@ -28,7 +30,10 @@ class Admin extends StatelessWidget {
             //   backgroundImage: AssetImage('assets/ManageProfile.png'),
             // ),
             title: Text('Create Doctor'),
-            onTap: () => Navigator.of(context).pushNamed('/admincreatedoctor'),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => CreateDoctor.fromBase64(jwt)));
+            },
           ),
           ListTile(
             // todo: icon
@@ -36,7 +41,10 @@ class Admin extends StatelessWidget {
             //   backgroundImage: AssetImage('assets/ManageProfile.png'),
             // ),
             title: Text('Update Doctor'),
-            onTap: () => Navigator.of(context).pushNamed('/admincreatedoctor'),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => UpdateDoctorScreen.fromBase64(jwt)));
+            },
           ),
           ListTile(
             // todo: icon
