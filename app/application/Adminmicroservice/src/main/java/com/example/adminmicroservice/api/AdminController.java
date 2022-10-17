@@ -3,6 +3,7 @@ package com.example.adminmicroservice.api;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -25,7 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.adminmicroservice.dto.Doctor;
 import com.example.adminmicroservice.dto.DoctorDetails;
+import com.example.adminmicroservice.dto.Patient;
+import com.example.adminmicroservice.dto.PatientDetails;
 import com.example.adminmicroservice.exceptions.DoctorNotFound;
+import com.example.adminmicroservice.exceptions.PatientNotFound;
 import com.example.adminmicroservice.model.Admin;
 import com.example.adminmicroservice.payload.JWTLoginSuccessResponse;
 import com.example.adminmicroservice.payload.LoginRequest;
@@ -33,6 +37,7 @@ import com.example.adminmicroservice.security.JwtTokenProvider;
 import com.example.adminmicroservice.service.AdminService;
 import com.example.adminmicroservice.service.DoctorAccountService;
 import com.example.adminmicroservice.service.MapValidationErrorService;
+import com.example.adminmicroservice.service.PatientService;
 
 import static com.example.adminmicroservice.security.SecurityConstant.TOKEN_PREFIX;
 
@@ -45,6 +50,9 @@ public class AdminController {
 
     @Autowired
     private AdminService aService;
+
+    @Autowired
+    private PatientService pService;
 
     @Autowired
     private JwtTokenProvider tokenProvider;
@@ -60,6 +68,11 @@ public class AdminController {
         return dService.findAll();
     }
 
+    @GetMapping("/listPatients")
+    public List<Patient> getPatients() {
+        return pService.findAll();
+    }
+
     @GetMapping("/getDoctor/{username}")
     public ResponseEntity<?> getDoctorByUsername(@PathVariable(name = "username") String username) {
         try {
@@ -67,6 +80,16 @@ public class AdminController {
             return new ResponseEntity<>(doctor, HttpStatus.OK);
         } catch (Exception e) {
             throw new DoctorNotFound("Doctor with that username not found");
+        }
+    }
+
+    @GetMapping("/getPatient/{username}")
+    public ResponseEntity<?> getPatientByUsername(@PathVariable(name = "username") String username) {
+        try {
+            Patient patient = pService.getPatientByUsername(username);
+            return new ResponseEntity<>(patient, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new PatientNotFound("Patient with that username not found");
         }
     }
 
@@ -87,6 +110,24 @@ public class AdminController {
             return new ResponseEntity<>(true, HttpStatus.OK);
         }
 
+    }
+
+    @PostMapping("/createPatient")
+    public ResponseEntity<?> createPatientAccount(@RequestBody Patient patient) {
+        if (pService.checkIfUsernameIsFree(patient)) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", HttpStatus.NOT_ACCEPTABLE);
+            response.put("errors", "Username is already taken");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            // the patient should have passwords that match to register
+        } else {
+            // the patient is getting created.
+            Patient currentPatient = pService.savePatient(patient);
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", currentPatient.getId());
+            response.put("username", currentPatient.getUsername());
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
     }
 
     @PostMapping("/createAdmin")
@@ -125,7 +166,7 @@ public class AdminController {
 
     }
 
-    @PutMapping("updateDoctor/{id}")
+    @PutMapping("/updateDoctor/{id}")
     public ResponseEntity<?> updateDoctor(@PathVariable int id, @RequestBody DoctorDetails doctorDetails) {
         Doctor updateDoctor = dService.getDoctorById(doctorDetails.getId());
         updateDoctor.setFirstName(doctorDetails.getFirstName());
@@ -138,6 +179,19 @@ public class AdminController {
         return ResponseEntity.ok(updateDoctor);
     }
 
+    @PutMapping("/updatePatient/{id}")
+    public ResponseEntity<?> updatePatient(@PathVariable int id, @RequestBody PatientDetails patientDetails) {
+        Patient updatePatient = pService.findById(patientDetails.getId());
+        updatePatient.setFirstName(patientDetails.getFirstName());
+        updatePatient.setLastName(patientDetails.getLastName());
+        updatePatient.setEmail(patientDetails.getEmail());
+        updatePatient.setUsername(patientDetails.getUsername());
+
+        pService.savePatient(updatePatient);
+
+        return ResponseEntity.ok(updatePatient);
+    }
+
     @DeleteMapping("/deleteDoctor/{username}")
     public ResponseEntity<?> deleteDoctor(@PathVariable(name = "username") String username) {
         try {
@@ -148,4 +202,13 @@ public class AdminController {
         }
     }
 
+    @DeleteMapping("/deletePatient/{username}")
+    public ResponseEntity<?> deletePatient(@PathVariable(name = "username") String username) {
+        try {
+            pService.deletePatient(username);
+            return new ResponseEntity<>("Patient deleted", HttpStatus.OK);
+        } catch (Exception e) {
+            throw new DoctorNotFound("Patient with that username not found");
+        }
+    }
 }
