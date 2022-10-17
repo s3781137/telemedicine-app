@@ -1,14 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_application/admin/api/api_admin.dart';
-import 'package:flutter_application/patient/model/patient_model.dart';
-import 'package:flutter_application/patient/model/patient_profile_model.dart';
 
-import '../../main.dart';
 import '../model/doctor_model.dart';
-import '../model/doctor_profile_model.dart';
 import '../widgets/appBar.dart';
 import 'admin.dart';
 
@@ -160,11 +155,6 @@ class _DoctorProfileState extends State<DoctorProfile> {
                       child: const Text('Update'),
                       onPressed: () {
                         updateProfile(widget.doctor.id);
-                        // todo debug message
-                        print(usernameController.text);
-                        print(firstNameController.text);
-                        print(lastNameController.text);
-                        print(emailController.text);
                       },
                     )),
               ],
