@@ -3,7 +3,6 @@ import 'package:flutter_application/main.dart';
 import 'package:flutter_application/patient/model/patient_booking_model.dart';
 
 import '../core/api_patient.dart';
-import '../patient.dart';
 import '../widgets/appbar.dart';
 
 class ViewBookingScreen extends StatefulWidget {
@@ -15,7 +14,6 @@ class ViewBookingScreen extends StatefulWidget {
 
 class _ViewBookingScreenState extends State<ViewBookingScreen> {
   final ApiClient _apiClient = ApiClient();
-  int? id = -1;
   List<PatientBookingModel> _bookings = [];
   @override
   void initState() {

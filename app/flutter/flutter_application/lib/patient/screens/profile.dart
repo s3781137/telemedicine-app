@@ -86,7 +86,6 @@ class _ProfileState extends State<Profile> {
   }
 
   void _fetchUserData() async {
-    // do something
     setState(() {
       _genderController.text = widget.patient.gender!;
       _weightController.text = widget.patient.weight!.toString();

@@ -29,6 +29,7 @@ class _CreateDoctorState extends State<CreateDoctor> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  bool _validate = false;
   final ApiAdmin _apiAdmin = ApiAdmin();
 
   Future<void> createDoctor() async {
@@ -38,42 +39,61 @@ class _CreateDoctorState extends State<CreateDoctor> {
         firstName: firstNameController.text,
         lastName: lastNameController.text,
         email: emailController.text);
-    dynamic res = await _apiAdmin.createDoctor(doctor);
-    if (res == 200) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-                title: const Text('Create Success'),
-                content: const Text('Doctor has been created'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Admin.fromBase64(widget.jwt)));
-                    },
-                    child: const Text('OK'),
-                  ),
-                ]);
-          });
-    } else {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-                title: const Text('Create Failure'),
-                content: const Text('Cannot create doctor'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Admin.fromBase64(widget.jwt)));
-                    },
-                    child: const Text('OK'),
-                  ),
-                ]);
-          });
+    if (_validate == false) {
+      dynamic res = await _apiAdmin.createDoctor(doctor);
+      if (res == 200) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                  title: const Text('Create Success'),
+                  content: const Text('Doctor has been created'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                Admin.fromBase64(widget.jwt)));
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ]);
+            });
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                  title: const Text('Create Failure'),
+                  content: const Text('Cannot create doctor'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                Admin.fromBase64(widget.jwt)));
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ]);
+            });
+      }
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    super.dispose();
   }
 
   @override
@@ -95,9 +115,10 @@ class _CreateDoctorState extends State<CreateDoctor> {
                   padding: const EdgeInsets.all(10),
                   child: TextField(
                     controller: usernameController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Username',
+                      errorText: _validate ? 'Username Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
@@ -106,9 +127,10 @@ class _CreateDoctorState extends State<CreateDoctor> {
                   child: TextField(
                     controller: passwordController,
                     obscureText: true,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Password',
+                      errorText: _validate ? 'Passsword Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
@@ -116,9 +138,11 @@ class _CreateDoctorState extends State<CreateDoctor> {
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
                     controller: firstNameController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'First Name',
+                      errorText:
+                          _validate ? 'First Name Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
@@ -126,9 +150,10 @@ class _CreateDoctorState extends State<CreateDoctor> {
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
                     controller: lastNameController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Last Name',
+                      errorText: _validate ? 'Last Name Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
@@ -136,9 +161,10 @@ class _CreateDoctorState extends State<CreateDoctor> {
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
                     controller: emailController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Email',
+                      errorText: _validate ? 'Email Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
@@ -148,6 +174,17 @@ class _CreateDoctorState extends State<CreateDoctor> {
                     child: ElevatedButton(
                       child: const Text('Register'),
                       onPressed: () {
+                        setState(() {
+                          if (usernameController.text.isEmpty |
+                              passwordController.text.isEmpty |
+                              firstNameController.text.isEmpty |
+                              lastNameController.text.isEmpty |
+                              emailController.text.isEmpty) {
+                            _validate = true;
+                          } else {
+                            _validate = false;
+                          }
+                        });
                         createDoctor();
                       },
                     )),
