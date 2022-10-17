@@ -90,6 +90,9 @@ class _AdminLoginState extends State<AdminLogin> {
                     ),
                   ),
                 ),
+                const Padding(
+                  padding: EdgeInsets.all(10),
+                ),
                 Container(
                   height: 50,
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -104,21 +107,9 @@ class _AdminLoginState extends State<AdminLogin> {
                   padding: EdgeInsets.all(10),
                 ),
                 Container(
-                  child: TextButton(
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.resolveWith(
-                          (Set<MaterialState> states) {
-                        return states.contains(MaterialState.disabled)
-                            ? null
-                            : Colors.white;
-                      }),
-                      backgroundColor: MaterialStateProperty.resolveWith(
-                          (Set<MaterialState> states) {
-                        return states.contains(MaterialState.disabled)
-                            ? null
-                            : Colors.blue;
-                      }),
-                    ),
+                  height: 50,
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: ElevatedButton(
                     onPressed: () =>
                         Navigator.of(context).pushNamed('/adminsignup'),
                     // redirect to the sign up page
