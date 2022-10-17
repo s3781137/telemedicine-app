@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/admin/api/api_admin.dart';
 import 'package:flutter_application/admin/screens/admin.dart';
+import 'package:flutter_application/main.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AdminLogin extends StatefulWidget {
@@ -17,12 +18,13 @@ class _AdminLoginState extends State<AdminLogin> {
     var username = usernameController.text;
     var password = passwordController.text;
     var jwt = await _apiAdmin.logIn(username, password);
-    // todo: debug msg
-    print(jwt);
     if (jwt != null) {
       const FlutterSecureStorage().write(key: "jwt", value: jwt);
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => Admin.fromBase64(jwt)));
+      currentLoggedInUser.update(
+          "username", (value) => usernameController.text);
+      currentLoggedInUser.update("userType", (value) => "admin");
     } else {
       showDialog(
           context: context,
