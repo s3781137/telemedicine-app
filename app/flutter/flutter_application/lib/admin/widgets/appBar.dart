@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/patient/core/api_patient.dart';
-
 import '../../main.dart';
 import '../screens/admin.dart';
 
