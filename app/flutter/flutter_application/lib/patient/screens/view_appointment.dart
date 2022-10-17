@@ -24,9 +24,6 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
   }
 
   void _load() async {
-    // todo: debug msg
-    print(
-        "_load async: current user: ${currentLoggedInUser["username"].toString()}");
     List<PatientBookingModel> bookings = await _apiClient.fetchBookings(
         currentLoggedInUser["username"]
             .toString()); // load the availabilities on Widget init
@@ -38,7 +35,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: makeAppBar(context),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: _bookings.length,
         itemBuilder: (BuildContext ctxt, int i) {
           return GestureDetector(
@@ -46,11 +43,26 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
             onTap: () => {},
             child: Column(
               children: [
-                Text("Doctor: ${_bookings[i].doctorUsername} "),
-                Text("Date and Time: ${_bookings[i].dateTime}")
+                Text(
+                  "Doctor: ${_bookings[i].doctorUsername} ",
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  "Date and Time: ${_bookings[i].dateTime}",
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
               ],
             ),
           );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider();
         },
       ),
     );

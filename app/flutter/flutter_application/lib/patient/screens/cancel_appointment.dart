@@ -3,7 +3,6 @@ import 'package:flutter_application/main.dart';
 import 'package:flutter_application/patient/model/patient_booking_model.dart';
 
 import '../core/api_patient.dart';
-import '../patient.dart';
 import '../widgets/appbar.dart';
 
 class CancelBookingScreen extends StatefulWidget {
@@ -24,9 +23,6 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
   }
 
   void _load() async {
-    // todo: debug msg
-    print(
-        "_load async: current user: ${currentLoggedInUser["username"].toString()}");
     List<PatientBookingModel> bookings = await _apiClient.fetchBookings(
         currentLoggedInUser["username"]
             .toString()); // load the availabilities on Widget init
@@ -45,9 +41,6 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
                 content: const Text('Your booking has been cancelled'),
                 actions: <Widget>[
                   TextButton(
-                    // onPressed: () => Navigator.of(context).push(
-                    //     MaterialPageRoute(builder: (context) => Admin.fromBase64(jwt))),
-                    // todo: need fix routing because of jwt implementation
                     onPressed: () => Navigator.of(context)
                         .pushNamed('/patient/appointments'),
                     child: const Text('OK'),
@@ -75,19 +68,33 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: makeAppBar(context),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: _bookings.length,
         itemBuilder: (BuildContext ctxt, int i) {
           return GestureDetector(
-            // todo on tap
             onTap: () => {cancelBooking(i)},
             child: Column(
               children: [
-                Text("Doctor: ${_bookings[i].doctorUsername} "),
-                Text("Date and Time: ${_bookings[i].dateTime}")
+                Text(
+                  "Doctor: ${_bookings[i].doctorUsername} ",
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  "Date and Time: ${_bookings[i].dateTime}",
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
               ],
             ),
           );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider();
         },
       ),
     );

@@ -64,9 +64,7 @@ class _AdminRegisterState extends State<AdminRegister> {
                 padding: const EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
                   onTap: () {
-                    // Navigator.of(context).push(
-                    //   // todo fix routing
-                    //     MaterialPageRoute(builder: (context) => Patient()));
+                    Navigator.of(context).pushNamed('/');
                   },
                   child: const Icon(Icons.home),
                 )),

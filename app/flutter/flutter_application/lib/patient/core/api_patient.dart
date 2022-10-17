@@ -106,7 +106,7 @@ class ApiClient {
         headers: <String, String>{"Content-Type": "application/json"},
       );
       if (response.statusCode == 200) {
-        return response.body.toString();
+        return response.statusCode;
       }
     } catch (e) {}
   }
@@ -119,7 +119,7 @@ class ApiClient {
         headers: <String, String>{"Content-Type": "application/json"},
       );
       if (response.statusCode == 200) {
-        return response.body.toString();
+        return response.statusCode;
       }
     } catch (e) {}
   }
@@ -163,7 +163,6 @@ class ApiClient {
   Future<String?> getDoctorName(String username) async {
     Response response = await http
         .get(Uri.parse('http://localhost:8081/doctor/getBy/$username'));
-    print("response status code${response.statusCode}");
     if (response.statusCode == 200) {
       return DoctorModel.fromJson(jsonDecode((response.body))).firstName;
     } else {
@@ -197,9 +196,6 @@ class ApiClient {
   Future<dynamic> cancelBooking(int bookingId) async {
     final response = await http.get(Uri.parse(
         'http://localhost:8085/booking/cancelBooking?bookingId=$bookingId'));
-    // todo debug msg
-    print("cancelling booking");
-    print(response.statusCode);
     if (response.statusCode == 200) {
       return response.statusCode;
     } else {

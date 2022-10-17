@@ -9,87 +9,91 @@ import '../patient.dart';
 import '../widgets/appbar.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
-
+  const Profile({required this.patient});
+  final PatientModel patient;
   @override
   State<Profile> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-  TextEditingController genderController = TextEditingController();
-  TextEditingController weightController = TextEditingController();
-  TextEditingController heightController = TextEditingController();
-  TextEditingController contactNoController = TextEditingController();
-  TextEditingController contactNameController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _contactNoController = TextEditingController();
+  final TextEditingController _contactNameController = TextEditingController();
+  bool _validate = false;
   final ApiClient _apiClient = ApiClient();
   int? id = -1;
   Future<void> updateProfile(dynamic username) async {
     id = await _apiClient.getUserId(username);
     PatientProfileModel profile = PatientProfileModel(
+        // todo fix id
         id: id,
-        gender: genderController.text,
-        weight: double.parse(weightController.text),
-        height: double.parse(heightController.text),
-        contactNo: contactNoController.text,
-        contactName: contactNameController.text);
-    dynamic res = await _apiClient.updateProfile(profile);
-    // todo debug msg
-    print(res);
-    // todo: condition check fix
-    // currently the returned res is like:
-    // {"id":58,"username":"runhuizhou","password":"blahblah","confirmPassword":"blahblah","firstName":"runhui","lastName":"zhou","status":null,"email":"123141@gg.com","gender":"test","weight":100.0,"height":10000.0,"contactNo":"110","contactName":"family"}
-    // I don't know how to check
-    if (res.toString().contains("id")) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-                title: const Text('Update Success'),
-                content: const Text('Your Profile has been updated'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Patient())),
-                    child: const Text('OK'),
-                  ),
-                ]);
-          });
-    } else {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-                title: const Text('Update Failure'),
-                content: const Text('Cannot update profile'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('OK'),
-                  ),
-                ]);
-          });
+        gender: _genderController.text,
+        weight: double.parse(_weightController.text),
+        height: double.parse(_heightController.text),
+        contactNo: _contactNoController.text,
+        contactName: _contactNameController.text);
+    if (_validate == false) {
+      dynamic res = await _apiClient.updateProfile(profile);
+      if (res == 200) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                  title: const Text('Update Success'),
+                  content: const Text('Your Profile has been updated'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Patient())),
+                      child: const Text('OK'),
+                    ),
+                  ]);
+            });
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                  title: const Text('Update Failure'),
+                  content: const Text('Cannot update profile'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('OK'),
+                    ),
+                  ]);
+            });
+      }
     }
   }
 
-  Future<void> checkProfile(dynamic username) async {
-    id = await _apiClient.getUserId(username);
-    PatientModel patient = await _apiClient.getUser(username);
-    // todo condition check
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              title: const Text('Current profile'),
-              content: Text(
-                  "Gender: ${patient.gender}\nWeight: ${patient.weight}\nHeight: ${patient.height}\nContact Number: ${patient.contactNo}\nContact Name: ${patient.contactName}"),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Patient())),
-                  child: const Text('OK'),
-                ),
-              ]);
-        });
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
+
+  @override
+  void dispose() {
+    _genderController.dispose();
+    _weightController.dispose();
+    _heightController.dispose();
+    _contactNoController.dispose();
+    _contactNameController.dispose();
+    super.dispose();
+  }
+
+  void _fetchUserData() async {
+    // do something
+    setState(() {
+      _genderController.text = widget.patient.gender!;
+      _weightController.text = widget.patient.weight!.toString();
+      _heightController.text = widget.patient.height!.toString();
+      _contactNoController.text = widget.patient.contactNo!;
+      _contactNameController.text = widget.patient.contactName!;
+    });
   }
 
   @override
@@ -110,10 +114,11 @@ class _ProfileState extends State<Profile> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
-                    controller: genderController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    controller: _genderController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Gender',
+                      errorText: _validate ? 'Gender Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
@@ -124,10 +129,11 @@ class _ProfileState extends State<Profile> {
                       FilteringTextInputFormatter.allow(
                           RegExp(r'(^-?\d*\.?\d*)'))
                     ],
-                    controller: weightController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    controller: _weightController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Weight',
+                      errorText: _validate ? 'Weight Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
@@ -138,30 +144,35 @@ class _ProfileState extends State<Profile> {
                       FilteringTextInputFormatter.allow(
                           RegExp(r'(^-?\d*\.?\d*)'))
                     ],
-                    controller: heightController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    controller: _heightController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Height',
+                      errorText: _validate ? 'Height Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
-                    controller: contactNoController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    controller: _contactNoController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Contact Number',
+                      errorText:
+                          _validate ? 'Contact Number Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
-                    controller: contactNameController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    controller: _contactNameController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Contact Name',
+                      errorText:
+                          _validate ? 'Concat Name Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
@@ -171,22 +182,18 @@ class _ProfileState extends State<Profile> {
                     child: ElevatedButton(
                       child: const Text('Update'),
                       onPressed: () {
+                        setState(() {
+                          if (_genderController.text.isEmpty |
+                              _heightController.text.isEmpty |
+                              _weightController.text.isEmpty |
+                              _contactNoController.text.isEmpty |
+                              _contactNameController.text.isEmpty) {
+                            _validate = true;
+                          } else {
+                            _validate = false;
+                          }
+                        });
                         updateProfile(currentLoggedInUser["username"]);
-                        // todo debug message
-                        print(genderController.text);
-                        print(weightController.text);
-                        print(heightController.text);
-                        print(contactNoController.text);
-                        print(contactNameController.text);
-                      },
-                    )),
-                Container(
-                    height: 50,
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: ElevatedButton(
-                      child: const Text('Check current profile'),
-                      onPressed: () {
-                        checkProfile(currentLoggedInUser["username"]);
                       },
                     )),
               ],

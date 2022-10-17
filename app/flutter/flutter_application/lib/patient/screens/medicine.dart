@@ -25,13 +25,9 @@ class _ViewMedicineScreenState extends State<ViewMedicineScreen> {
   }
 
   void _load() async {
-    // todo: debug msg
-    print(
-        "_load async: current user: ${currentLoggedInUser["username"].toString()}");
     List<PatientMedicineModel> medicines = await _apiClient.fetchMedicines(
         currentLoggedInUser["username"]
             .toString()); // load the availabilities on Widget init
-
     setState(() => _medicines = medicines);
   }
 
@@ -39,7 +35,7 @@ class _ViewMedicineScreenState extends State<ViewMedicineScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: makeAppBar(context),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: _medicines.length,
         itemBuilder: (BuildContext ctxt, int i) {
           return GestureDetector(
@@ -47,11 +43,26 @@ class _ViewMedicineScreenState extends State<ViewMedicineScreen> {
             onTap: () => {},
             child: Column(
               children: [
-                Text("Doctor: ${_medicines[i].doctorUsername} "),
-                Text("Date and Time: ${_medicines[i].medicine}")
+                Text(
+                  "Doctor: ${_medicines[i].doctorUsername} ",
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  "Date and Time: ${_medicines[i].medicine}",
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
               ],
             ),
           );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider();
         },
       ),
     );

@@ -53,9 +53,6 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
                 content: const Text('Your booking has been added'),
                 actions: <Widget>[
                   TextButton(
-                    // onPressed: () => Navigator.of(context).push(
-                    //     MaterialPageRoute(builder: (context) => Admin.fromBase64(jwt))),
-                    // todo: need fix routing because of jwt implementation
                     onPressed: () => Navigator.of(context)
                         .pushNamed('/patient/appointments'),
                     child: const Text('OK'),
@@ -83,18 +80,33 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: makeAppBar(context),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: _availDoctors.length,
         itemBuilder: (BuildContext ctxt, int i) {
           return GestureDetector(
             onTap: () => {addBooking(i)},
             child: Column(
               children: [
-                Text("Doctor: ${_availDoctors[i].doctorUsername} "),
-                Text("Available at: ${_availDoctors[i].availability}")
+                Text(
+                  "Doctor: ${_availDoctors[i].doctorUsername} ",
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  "Available at: ${_availDoctors[i].availability}",
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
               ],
             ),
           );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider();
         },
       ),
     );

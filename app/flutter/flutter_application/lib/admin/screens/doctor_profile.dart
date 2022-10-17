@@ -41,8 +41,6 @@ class _DoctorProfileState extends State<DoctorProfile> {
       email: emailController.text,
     );
     dynamic res = await _apiAdmin.updateDoctor(doctorNew);
-    // todo debug msg
-    print("status code: $res");
     if (res == 200) {
       showDialog(
           context: context,

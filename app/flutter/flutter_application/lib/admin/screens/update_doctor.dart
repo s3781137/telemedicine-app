@@ -41,11 +41,10 @@ class _UpdateDoctorScreenState extends State<UpdateDoctorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: makeAppBar(context, widget.jwt),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: _doctors.length,
         itemBuilder: (BuildContext ctxt, int i) {
           return GestureDetector(
-            // todo on tap
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) =>
@@ -54,10 +53,18 @@ class _UpdateDoctorScreenState extends State<UpdateDoctorScreen> {
             child: Column(
               children: [
                 Text(
-                    "Doctor: ${_doctors[i].firstName} ${_doctors[i].lastName}"),
+                  "Doctor: ${_doctors[i].firstName} ${_doctors[i].lastName}",
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ],
             ),
           );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider();
         },
       ),
     );
