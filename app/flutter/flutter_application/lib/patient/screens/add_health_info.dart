@@ -55,7 +55,7 @@ class _HealthInfoState extends State<HealthInfo> {
       lineMedicationDescpt = 0;
     }
     PatientHealthModel healthInfo = PatientHealthModel(
-        id: id as int?,
+        id: id,
         cancer:
             _key.currentState!.getElementList().elementAt(lineCancer).answer,
         diabetes:
@@ -89,10 +89,8 @@ class _HealthInfoState extends State<HealthInfo> {
             .elementAt(linePastSurgeries)
             .answer);
     dynamic res = await _apiClient.updateHealthInfo(healthInfo);
-    print(res);
     // todo: maybe need to fix condition
-    if (res.toString().contains("health information registered")) {
-      print("updated health info for :${id}");
+    if (res == 200) {
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -136,14 +134,13 @@ class _HealthInfoState extends State<HealthInfo> {
             splashColor: Colors.orangeAccent,
             onPressed: () async {
               if (_key.currentState!.validate()) {
-                print("validated!");
+                updateHealthInfo(currentLoggedInUser["username"]);
               }
-              updateHealthInfo(currentLoggedInUser["username"]);
             },
-            child: Text("Submit"),
+            child: const Text("Submit"),
           ),
         ],
-        leading: [Text("TITLE")],
+        leading: const [Text("TITLE")],
       ),
     );
   }
@@ -157,7 +154,7 @@ List<Question> questions() {
         children: {
           'Yes': [
             Question(
-              question: "Comments",
+              question: "Please state the medications.",
               validate: (field) {
                 if (field.isEmpty) return "Field cannot be empty";
                 return null;
