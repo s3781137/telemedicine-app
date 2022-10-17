@@ -76,7 +76,7 @@ class _DeleteDoctorScreenState extends State<DeleteDoctorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: makeAppBar(context, widget.jwt),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: _doctors.length,
         itemBuilder: (BuildContext ctxt, int i) {
           return GestureDetector(
@@ -90,6 +90,9 @@ class _DeleteDoctorScreenState extends State<DeleteDoctorScreen> {
               ],
             ),
           );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider();
         },
       ),
     );

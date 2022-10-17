@@ -41,7 +41,7 @@ class _UpdateDoctorScreenState extends State<UpdateDoctorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: makeAppBar(context, widget.jwt),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: _doctors.length,
         itemBuilder: (BuildContext ctxt, int i) {
           return GestureDetector(
@@ -57,6 +57,9 @@ class _UpdateDoctorScreenState extends State<UpdateDoctorScreen> {
               ],
             ),
           );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider();
         },
       ),
     );
