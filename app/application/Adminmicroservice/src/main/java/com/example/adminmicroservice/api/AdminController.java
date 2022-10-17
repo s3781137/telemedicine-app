@@ -14,14 +14,18 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.adminmicroservice.dto.Doctor;
+import com.example.adminmicroservice.dto.DoctorDetails;
+import com.example.adminmicroservice.exceptions.DoctorNotFound;
 import com.example.adminmicroservice.model.Admin;
 import com.example.adminmicroservice.payload.JWTLoginSuccessResponse;
 import com.example.adminmicroservice.payload.LoginRequest;
@@ -54,6 +58,16 @@ public class AdminController {
     @GetMapping("/listDoctors")
     public List<Doctor> getDoctors() {
         return dService.findAll();
+    }
+
+    @GetMapping("/getDoctor/{username}")
+    public ResponseEntity<?> getDoctorByUsername(@PathVariable(name = "username") String username) {
+        try {
+            Doctor doctor = dService.getDoctorByUsername(username);
+            return new ResponseEntity<>(doctor, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new DoctorNotFound("Doctor with that username not found");
+        }
     }
 
     @PostMapping("/createDoctor")
@@ -108,6 +122,30 @@ public class AdminController {
         String jwt = TOKEN_PREFIX + tokenProvider.generateToken(authentication);
         aService.setAdminToken(jwt, loginRequest.getUsername());
         return ResponseEntity.ok(new JWTLoginSuccessResponse(true, jwt));
+
+    }
+
+    @PutMapping("updateDoctor/{id}")
+    public ResponseEntity<?> updateDoctor(@PathVariable int id, @RequestBody DoctorDetails doctorDetails) {
+        Doctor updateDoctor = dService.getDoctorById(doctorDetails.getId());
+        updateDoctor.setFirstName(doctorDetails.getFirstName());
+        updateDoctor.setLastName(doctorDetails.getLastName());
+        updateDoctor.setEmail(doctorDetails.getEmail());
+        updateDoctor.setUsername(doctorDetails.getUsername());
+
+        dService.saveDoctor(updateDoctor);
+
+        return ResponseEntity.ok(updateDoctor);
+    }
+
+    @DeleteMapping("/deleteDoctor/{username}")
+    public ResponseEntity<?> deleteDoctor(@PathVariable(name = "username") String username) {
+        try {
+            dService.deleteDoctor(username);
+            return new ResponseEntity<>("Doctor deleted", HttpStatus.OK);
+        } catch (Exception e) {
+            throw new DoctorNotFound("Doctor with that username not found");
+        }
     }
 
 }
