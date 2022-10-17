@@ -48,9 +48,6 @@ class _CreateDoctorState extends State<CreateDoctor> {
                 content: const Text('Doctor has been created'),
                 actions: <Widget>[
                   TextButton(
-                    // onPressed: () => Navigator.of(context).push(
-                    //     MaterialPageRoute(builder: (context) => Admin.fromBase64(jwt))),
-                    // todo: need fix routing because of jwt implementation
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Admin.fromBase64(widget.jwt)));

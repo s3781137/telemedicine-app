@@ -52,9 +52,7 @@ class _AdminLoginState extends State<AdminLogin> {
                 padding: const EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
                   onTap: () {
-                    // Navigator.of(context).push(
-                    //   // todo fix routing
-                    //     MaterialPageRoute(builder: (context) => Patient()));
+                    Navigator.of(context).pushNamed('/');
                   },
                   child: const Icon(Icons.home),
                 )),

@@ -25,13 +25,9 @@ class _ViewMedicineScreenState extends State<ViewMedicineScreen> {
   }
 
   void _load() async {
-    // todo: debug msg
-    print(
-        "_load async: current user: ${currentLoggedInUser["username"].toString()}");
     List<PatientMedicineModel> medicines = await _apiClient.fetchMedicines(
         currentLoggedInUser["username"]
             .toString()); // load the availabilities on Widget init
-
     setState(() => _medicines = medicines);
   }
 

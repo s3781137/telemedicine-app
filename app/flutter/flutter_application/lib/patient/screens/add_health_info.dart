@@ -42,8 +42,6 @@ class _HealthInfoState extends State<HealthInfo> {
   int? id = -1;
   Future<void> updateHealthInfo(dynamic username) async {
     id = await _apiClient.getUserId(username);
-    // todo: debug message
-    print(id);
     // check the first question is yes or no
     if (!(_key.currentState!.getElementList().elementAt(1).question ==
         "Comments")) {

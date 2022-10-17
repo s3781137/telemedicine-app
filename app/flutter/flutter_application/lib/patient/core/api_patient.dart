@@ -197,8 +197,6 @@ class ApiClient {
   Future<dynamic> cancelBooking(int bookingId) async {
     final response = await http.get(Uri.parse(
         'http://localhost:8085/booking/cancelBooking?bookingId=$bookingId'));
-    // todo debug msg
-    print("cancelling booking");
     print(response.statusCode);
     if (response.statusCode == 200) {
       return response.statusCode;

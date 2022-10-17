@@ -24,9 +24,6 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
   }
 
   void _load() async {
-    // todo: debug msg
-    print(
-        "_load async: current user: ${currentLoggedInUser["username"].toString()}");
     List<PatientBookingModel> bookings = await _apiClient.fetchBookings(
         currentLoggedInUser["username"]
             .toString()); // load the availabilities on Widget init

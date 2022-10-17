@@ -33,8 +33,6 @@ class _ProfileState extends State<Profile> {
         contactNo: contactNoController.text,
         contactName: contactNameController.text);
     dynamic res = await _apiClient.updateProfile(profile);
-    // todo debug msg
-    print(res);
     // todo: condition check fix
     // currently the returned res is like:
     // {"id":58,"username":"runhuizhou","password":"blahblah","confirmPassword":"blahblah","firstName":"runhui","lastName":"zhou","status":null,"email":"123141@gg.com","gender":"test","weight":100.0,"height":10000.0,"contactNo":"110","contactName":"family"}
@@ -172,12 +170,6 @@ class _ProfileState extends State<Profile> {
                       child: const Text('Update'),
                       onPressed: () {
                         updateProfile(currentLoggedInUser["username"]);
-                        // todo debug message
-                        print(genderController.text);
-                        print(weightController.text);
-                        print(heightController.text);
-                        print(contactNoController.text);
-                        print(contactNameController.text);
                       },
                     )),
                 Container(

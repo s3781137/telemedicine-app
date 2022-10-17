@@ -53,9 +53,6 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
                 content: const Text('Your booking has been added'),
                 actions: <Widget>[
                   TextButton(
-                    // onPressed: () => Navigator.of(context).push(
-                    //     MaterialPageRoute(builder: (context) => Admin.fromBase64(jwt))),
-                    // todo: need fix routing because of jwt implementation
                     onPressed: () => Navigator.of(context)
                         .pushNamed('/patient/appointments'),
                     child: const Text('OK'),

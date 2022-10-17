@@ -45,7 +45,6 @@ class _UpdateDoctorScreenState extends State<UpdateDoctorScreen> {
         itemCount: _doctors.length,
         itemBuilder: (BuildContext ctxt, int i) {
           return GestureDetector(
-            // todo on tap
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) =>
