@@ -89,7 +89,6 @@ class _HealthInfoState extends State<HealthInfo> {
             .elementAt(linePastSurgeries)
             .answer);
     dynamic res = await _apiClient.updateHealthInfo(healthInfo);
-    // todo: maybe need to fix condition
     if (res == 200) {
       showDialog(
           context: context,
