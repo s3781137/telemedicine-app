@@ -29,4 +29,15 @@ class ApiAdmin {
     );
     return res.statusCode;
   }
+
+  // return a list of doctors
+  Future<List<DoctorModel>> fetchDoctors() async {
+    final response =
+        await http.get(Uri.parse('http://localhost:8083/admin/listDoctors'));
+    if (response.statusCode == 200) {
+      return doctorModelFromJson(response.body);
+    } else {
+      throw Exception('Unable to fetch products from the REST API');
+    }
+  }
 }
