@@ -16,11 +16,12 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  TextEditingController genderController = TextEditingController();
-  TextEditingController weightController = TextEditingController();
-  TextEditingController heightController = TextEditingController();
-  TextEditingController contactNoController = TextEditingController();
-  TextEditingController contactNameController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _contactNoController = TextEditingController();
+  final TextEditingController _contactNameController = TextEditingController();
+  bool _validate = false;
   final ApiClient _apiClient = ApiClient();
   int? id = -1;
   Future<void> updateProfile(dynamic username) async {
@@ -28,41 +29,43 @@ class _ProfileState extends State<Profile> {
     PatientProfileModel profile = PatientProfileModel(
         // todo fix id
         id: id,
-        gender: genderController.text,
-        weight: double.parse(weightController.text),
-        height: double.parse(heightController.text),
-        contactNo: contactNoController.text,
-        contactName: contactNameController.text);
-    dynamic res = await _apiClient.updateProfile(profile);
-    if (res == 200) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-                title: const Text('Update Success'),
-                content: const Text('Your Profile has been updated'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Patient())),
-                    child: const Text('OK'),
-                  ),
-                ]);
-          });
-    } else {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-                title: const Text('Update Failure'),
-                content: const Text('Cannot update profile'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('OK'),
-                  ),
-                ]);
-          });
+        gender: _genderController.text,
+        weight: double.parse(_weightController.text),
+        height: double.parse(_heightController.text),
+        contactNo: _contactNoController.text,
+        contactName: _contactNameController.text);
+    if (_validate == false) {
+      dynamic res = await _apiClient.updateProfile(profile);
+      if (res == 200) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                  title: const Text('Update Success'),
+                  content: const Text('Your Profile has been updated'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Patient())),
+                      child: const Text('OK'),
+                    ),
+                  ]);
+            });
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                  title: const Text('Update Failure'),
+                  content: const Text('Cannot update profile'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('OK'),
+                    ),
+                  ]);
+            });
+      }
     }
   }
 
@@ -72,14 +75,24 @@ class _ProfileState extends State<Profile> {
     _fetchUserData();
   }
 
+  @override
+  void dispose() {
+    _genderController.dispose();
+    _weightController.dispose();
+    _heightController.dispose();
+    _contactNoController.dispose();
+    _contactNameController.dispose();
+    super.dispose();
+  }
+
   void _fetchUserData() async {
     // do something
     setState(() {
-      genderController.text = widget.patient.gender!;
-      weightController.text = widget.patient.weight!.toString();
-      heightController.text = widget.patient.height!.toString();
-      contactNoController.text = widget.patient.contactNo!;
-      contactNameController.text = widget.patient.contactName!;
+      _genderController.text = widget.patient.gender!;
+      _weightController.text = widget.patient.weight!.toString();
+      _heightController.text = widget.patient.height!.toString();
+      _contactNoController.text = widget.patient.contactNo!;
+      _contactNameController.text = widget.patient.contactName!;
     });
   }
 
@@ -101,10 +114,11 @@ class _ProfileState extends State<Profile> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
-                    controller: genderController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    controller: _genderController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Gender',
+                      errorText: _validate ? 'Gender Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
@@ -115,10 +129,11 @@ class _ProfileState extends State<Profile> {
                       FilteringTextInputFormatter.allow(
                           RegExp(r'(^-?\d*\.?\d*)'))
                     ],
-                    controller: weightController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    controller: _weightController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Weight',
+                      errorText: _validate ? 'Weight Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
@@ -129,30 +144,35 @@ class _ProfileState extends State<Profile> {
                       FilteringTextInputFormatter.allow(
                           RegExp(r'(^-?\d*\.?\d*)'))
                     ],
-                    controller: heightController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    controller: _heightController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Height',
+                      errorText: _validate ? 'Height Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
-                    controller: contactNoController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    controller: _contactNoController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Contact Number',
+                      errorText:
+                          _validate ? 'Contact Number Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
-                    controller: contactNameController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    controller: _contactNameController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Contact Name',
+                      errorText:
+                          _validate ? 'Concat Name Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
@@ -162,6 +182,17 @@ class _ProfileState extends State<Profile> {
                     child: ElevatedButton(
                       child: const Text('Update'),
                       onPressed: () {
+                        setState(() {
+                          if (_genderController.text.isEmpty |
+                              _heightController.text.isEmpty |
+                              _weightController.text.isEmpty |
+                              _contactNoController.text.isEmpty |
+                              _contactNameController.text.isEmpty) {
+                            _validate = true;
+                          } else {
+                            _validate = false;
+                          }
+                        });
                         updateProfile(currentLoggedInUser["username"]);
                       },
                     )),
