@@ -3,7 +3,6 @@ import 'package:flutter_application/main.dart';
 import 'package:flutter_application/patient/model/patient_booking_model.dart';
 
 import '../core/api_patient.dart';
-import '../patient.dart';
 import '../widgets/appbar.dart';
 
 class CancelBookingScreen extends StatefulWidget {
@@ -69,7 +68,7 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: makeAppBar(context),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: _bookings.length,
         itemBuilder: (BuildContext ctxt, int i) {
           return GestureDetector(
@@ -81,6 +80,9 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
               ],
             ),
           );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider();
         },
       ),
     );

@@ -80,7 +80,7 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: makeAppBar(context),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: _availDoctors.length,
         itemBuilder: (BuildContext ctxt, int i) {
           return GestureDetector(
@@ -92,6 +92,9 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
               ],
             ),
           );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider();
         },
       ),
     );

@@ -35,7 +35,7 @@ class _ViewMedicineScreenState extends State<ViewMedicineScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: makeAppBar(context),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: _medicines.length,
         itemBuilder: (BuildContext ctxt, int i) {
           return GestureDetector(
@@ -48,6 +48,9 @@ class _ViewMedicineScreenState extends State<ViewMedicineScreen> {
               ],
             ),
           );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider();
         },
       ),
     );
