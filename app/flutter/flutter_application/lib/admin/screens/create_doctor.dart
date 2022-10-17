@@ -1,13 +1,24 @@
+import 'dart:convert';
+
+import 'package:conditional_questions/conditional_questions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/admin/api/api_admin.dart';
 import 'package:flutter_application/admin/screens/admin.dart';
 import 'package:flutter_application/admin/screens/login.dart';
 
 import '../model/doctor_model.dart';
+import '../widgets/appBar.dart';
 
 class CreateDoctor extends StatefulWidget {
-  const CreateDoctor({Key? key}) : super(key: key);
+  const CreateDoctor(this.jwt, this.payload);
 
+  factory CreateDoctor.fromBase64(String jwt) => CreateDoctor(
+      jwt,
+      json.decode(
+          ascii.decode(base64.decode(base64.normalize(jwt.split(".")[1])))));
+
+  final String jwt;
+  final Map<String, dynamic> payload;
   @override
   State<CreateDoctor> createState() => _CreateDoctorState();
 }
@@ -40,8 +51,10 @@ class _CreateDoctorState extends State<CreateDoctor> {
                     // onPressed: () => Navigator.of(context).push(
                     //     MaterialPageRoute(builder: (context) => Admin.fromBase64(jwt))),
                     // todo: need fix routing because of jwt implementation
-                    onPressed: () =>
-                        Navigator.of(context).pushNamed('/adminsignin'),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => Admin.fromBase64(widget.jwt)));
+                    },
                     child: const Text('OK'),
                   ),
                 ]);
@@ -55,7 +68,10 @@ class _CreateDoctorState extends State<CreateDoctor> {
                 content: const Text('Cannot create doctor'),
                 actions: <Widget>[
                   TextButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => Admin.fromBase64(widget.jwt)));
+                    },
                     child: const Text('OK'),
                   ),
                 ]);
@@ -66,21 +82,7 @@ class _CreateDoctorState extends State<CreateDoctor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('ND TELEMEDICINE'),
-          actions: <Widget>[
-            Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: GestureDetector(
-                  onTap: () {
-                    // Navigator.of(context).push(
-                    //   // todo fix routing
-                    //     MaterialPageRoute(builder: (context) => Patient()));
-                  },
-                  child: const Icon(Icons.home),
-                )),
-          ],
-        ),
+        appBar: makeAppBar(context, widget.jwt),
         body: Padding(
             padding: const EdgeInsets.all(10),
             child: ListView(
