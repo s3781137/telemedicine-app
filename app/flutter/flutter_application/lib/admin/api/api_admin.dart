@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_application/admin/model/admin_model.dart';
 import 'package:flutter_application/admin/model/doctor_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class ApiAdmin {
   Future<String?> logIn(String username, String password) async {
@@ -39,5 +40,18 @@ class ApiAdmin {
     } else {
       throw Exception('Unable to fetch products from the REST API');
     }
+  }
+
+  Future<dynamic> updateDoctor(DoctorModel doctor) async {
+    try {
+      Response response = await http.put(
+        Uri.parse('http://localhost:8083/admin/updateDoctor/${doctor.id}'),
+        body: jsonEncode(doctor),
+        headers: <String, String>{"Content-Type": "application/json"},
+      );
+      if (response.statusCode == 200) {
+        return response.statusCode;
+      }
+    } catch (e) {}
   }
 }
