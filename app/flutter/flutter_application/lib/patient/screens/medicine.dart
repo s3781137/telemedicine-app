@@ -13,7 +13,6 @@ class ViewMedicineScreen extends StatefulWidget {
 
 class _ViewMedicineScreenState extends State<ViewMedicineScreen> {
   final ApiClient _apiClient = ApiClient();
-  int? id = -1;
   List<PatientMedicineModel> _medicines = [];
   @override
   void initState() {

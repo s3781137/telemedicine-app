@@ -14,7 +14,6 @@ class CancelBookingScreen extends StatefulWidget {
 
 class _CancelBookingScreenState extends State<CancelBookingScreen> {
   final ApiClient _apiClient = ApiClient();
-  int? id = -1;
   List<PatientBookingModel> _bookings = [];
   @override
   void initState() {
