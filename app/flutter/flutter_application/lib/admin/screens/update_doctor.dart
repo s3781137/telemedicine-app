@@ -1,12 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application/admin/api/api_admin.dart';
-import 'package:flutter_application/admin/model/doctor_profile_model.dart';
 import 'package:flutter_application/admin/screens/doctor_profile.dart';
 import 'package:flutter_application/main.dart';
-import 'package:flutter_application/patient/model/patient_booking_model.dart';
-
 import '../model/doctor_model.dart';
 import '../widgets/appBar.dart';
 
@@ -35,9 +31,6 @@ class _UpdateDoctorScreenState extends State<UpdateDoctorScreen> {
   }
 
   void _load() async {
-    // todo: debug msg
-    print(
-        "_load async: current admin: ${currentLoggedInUser["username"].toString()}");
     List<DoctorModel> doctors = await _apiAdmin
         .fetchDoctors(); // load the availabilities on Widget init
 
