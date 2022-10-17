@@ -9,8 +9,8 @@ import '../patient.dart';
 import '../widgets/appbar.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
-
+  const Profile({required this.patient});
+  final PatientModel patient;
   @override
   State<Profile> createState() => _ProfileState();
 }
@@ -26,6 +26,7 @@ class _ProfileState extends State<Profile> {
   Future<void> updateProfile(dynamic username) async {
     id = await _apiClient.getUserId(username);
     PatientProfileModel profile = PatientProfileModel(
+        // todo fix id
         id: id,
         gender: genderController.text,
         weight: double.parse(weightController.text),
@@ -65,25 +66,21 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  Future<void> checkProfile(dynamic username) async {
-    id = await _apiClient.getUserId(username);
-    PatientModel patient = await _apiClient.getUser(username);
-    // todo condition check
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              title: const Text('Current profile'),
-              content: Text(
-                  "Gender: ${patient.gender}\nWeight: ${patient.weight}\nHeight: ${patient.height}\nContact Number: ${patient.contactNo}\nContact Name: ${patient.contactName}"),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Patient())),
-                  child: const Text('OK'),
-                ),
-              ]);
-        });
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
+
+  void _fetchUserData() async {
+    // do something
+    setState(() {
+      genderController.text = widget.patient.gender!;
+      weightController.text = widget.patient.weight!.toString();
+      heightController.text = widget.patient.height!.toString();
+      contactNoController.text = widget.patient.contactNo!;
+      contactNameController.text = widget.patient.contactName!;
+    });
   }
 
   @override
@@ -166,15 +163,6 @@ class _ProfileState extends State<Profile> {
                       child: const Text('Update'),
                       onPressed: () {
                         updateProfile(currentLoggedInUser["username"]);
-                      },
-                    )),
-                Container(
-                    height: 50,
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: ElevatedButton(
-                      child: const Text('Check current profile'),
-                      onPressed: () {
-                        checkProfile(currentLoggedInUser["username"]);
                       },
                     )),
               ],
