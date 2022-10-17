@@ -30,6 +30,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  bool _validate = false;
   final ApiAdmin _apiAdmin = ApiAdmin();
 
   Future<void> updateProfile(int? id) async {
@@ -40,38 +41,41 @@ class _DoctorProfileState extends State<DoctorProfile> {
       lastName: lastNameController.text,
       email: emailController.text,
     );
-    dynamic res = await _apiAdmin.updateDoctor(doctorNew);
-    if (res == 200) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-                title: const Text('Update Success'),
-                content: const Text('Doctor Profile has been updated'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Admin.fromBase64(widget.jwt)));
-                    },
-                    child: const Text('OK'),
-                  ),
-                ]);
-          });
-    } else {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-                title: const Text('Update Failure'),
-                content: const Text('Cannot update profile'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('OK'),
-                  ),
-                ]);
-          });
+    if (_validate == false) {
+      dynamic res = await _apiAdmin.updateDoctor(doctorNew);
+      if (res == 200) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                  title: const Text('Update Success'),
+                  content: const Text('Doctor Profile has been updated'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                Admin.fromBase64(widget.jwt)));
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ]);
+            });
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                  title: const Text('Update Failure'),
+                  content: const Text('Cannot update profile'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('OK'),
+                    ),
+                  ]);
+            });
+      }
     }
   }
 
@@ -79,6 +83,15 @@ class _DoctorProfileState extends State<DoctorProfile> {
   void initState() {
     super.initState();
     _fetchUserData();
+  }
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    super.dispose();
   }
 
   void _fetchUserData() async {
@@ -110,9 +123,10 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   padding: const EdgeInsets.all(10),
                   child: TextField(
                     controller: usernameController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Username',
+                      errorText: _validate ? 'Username Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
@@ -120,9 +134,11 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   padding: const EdgeInsets.all(10),
                   child: TextField(
                     controller: firstNameController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'First Name',
+                      errorText:
+                          _validate ? 'First Name Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
@@ -130,9 +146,10 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   padding: const EdgeInsets.all(10),
                   child: TextField(
                     controller: lastNameController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Last Name',
+                      errorText: _validate ? 'Last Name Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
@@ -140,9 +157,10 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   padding: const EdgeInsets.all(10),
                   child: TextField(
                     controller: emailController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       labelText: 'Email',
+                      errorText: _validate ? 'Email Can\'t Be Empty' : null,
                     ),
                   ),
                 ),
@@ -152,6 +170,16 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     child: ElevatedButton(
                       child: const Text('Update'),
                       onPressed: () {
+                        setState(() {
+                          if (usernameController.text.isEmpty |
+                              firstNameController.text.isEmpty |
+                              lastNameController.text.isEmpty |
+                              emailController.text.isEmpty) {
+                            _validate = true;
+                          } else {
+                            _validate = false;
+                          }
+                        });
                         updateProfile(widget.doctor.id);
                       },
                     )),
