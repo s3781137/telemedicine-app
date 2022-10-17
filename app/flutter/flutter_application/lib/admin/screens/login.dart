@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/admin/api/api_admin.dart';
 import 'package:flutter_application/admin/screens/admin.dart';
+import 'package:flutter_application/main.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AdminLogin extends StatefulWidget {
@@ -17,12 +18,13 @@ class _AdminLoginState extends State<AdminLogin> {
     var username = usernameController.text;
     var password = passwordController.text;
     var jwt = await _apiAdmin.logIn(username, password);
-    // todo: debug msg
-    print(jwt);
     if (jwt != null) {
       const FlutterSecureStorage().write(key: "jwt", value: jwt);
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => Admin.fromBase64(jwt)));
+      currentLoggedInUser.update(
+          "username", (value) => usernameController.text);
+      currentLoggedInUser.update("userType", (value) => "admin");
     } else {
       showDialog(
           context: context,
@@ -90,6 +92,9 @@ class _AdminLoginState extends State<AdminLogin> {
                     ),
                   ),
                 ),
+                const Padding(
+                  padding: EdgeInsets.all(10),
+                ),
                 Container(
                   height: 50,
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -104,21 +109,9 @@ class _AdminLoginState extends State<AdminLogin> {
                   padding: EdgeInsets.all(10),
                 ),
                 Container(
-                  child: TextButton(
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.resolveWith(
-                          (Set<MaterialState> states) {
-                        return states.contains(MaterialState.disabled)
-                            ? null
-                            : Colors.white;
-                      }),
-                      backgroundColor: MaterialStateProperty.resolveWith(
-                          (Set<MaterialState> states) {
-                        return states.contains(MaterialState.disabled)
-                            ? null
-                            : Colors.blue;
-                      }),
-                    ),
+                  height: 50,
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: ElevatedButton(
                     onPressed: () =>
                         Navigator.of(context).pushNamed('/adminsignup'),
                     // redirect to the sign up page

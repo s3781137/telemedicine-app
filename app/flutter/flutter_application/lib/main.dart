@@ -44,7 +44,6 @@ void main() {
       '/patient/medicine': (context) => const ViewMedicineScreen(),
       '/doctor/chat': (context) => const doctorChat(),
       '/adminsignup': (context) => const AdminRegister(),
-      '/admincreatedoctor': (context) => const CreateDoctor(),
       '/adminsignin': (context) => AdminLogin(),
     },
   ));

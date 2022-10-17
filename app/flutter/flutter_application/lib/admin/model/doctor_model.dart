@@ -11,7 +11,7 @@ class DoctorModel {
   DoctorModel({
     this.id,
     required this.username,
-    required this.password,
+    this.password,
     required this.firstName,
     required this.lastName,
     required this.email,
