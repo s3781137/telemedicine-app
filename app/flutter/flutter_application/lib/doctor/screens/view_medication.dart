@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/admin/api/api_admin.dart';
 import 'package:flutter_application/admin/screens/doctor_profile.dart';
 import 'package:flutter_application/doctor/core/api_doctor.dart';
+import 'package:flutter_application/doctor/screens/patient_medication.dart';
 import 'package:flutter_application/main.dart';
 import 'package:flutter_application/patient/core/api_patient.dart';
 import 'package:flutter_application/patient/model/patient_medicine_model.dart';
@@ -53,43 +54,9 @@ class _ViewMedicationScreenState extends State<ViewMedicationScreen> {
         itemBuilder: (BuildContext ctxt, int i) {
           return GestureDetector(
             onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                        title: const Text('Check detail'),
-                        content: Text(
-                            'Patient: ${_patients[i].firstName} ${_patients[i].lastName}\nID: ${_patients[i].id}\nUsername: ${_patients[i].username}'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () async {
-                              List<PatientMedicineModel> info = await _apiDoctor
-                                  .getMedications(_patients[i].username);
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                        title: const Text('Details'),
-                                        content: Text(info[0].medicine),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ViewMedicationScreen
-                                                              .fromBase64(
-                                                                  widget.jwt)));
-                                            },
-                                            child: const Text('ok'),
-                                          ),
-                                        ]);
-                                  });
-                            },
-                            child: const Text('Click to view health status'),
-                          ),
-                        ]);
-                  });
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => PatientMedicScreen.fromBase64(
+                      widget.jwt, _patients[i].username.toString())));
             },
             child: Column(
               children: [

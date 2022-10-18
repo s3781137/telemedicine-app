@@ -43,4 +43,31 @@ class ApiDoctor {
       throw Exception('Failed to load userdata');
     }
   }
+
+  Future<dynamic> addMedication(PatientMedicineModel medicine) async {
+    var res = await http.post(
+      Uri.parse("http://localhost:8082/prescription/addPrescription"),
+      body: jsonEncode(medicine),
+      headers: <String, String>{"Content-Type": "application/json"},
+    );
+    if (res.statusCode == 200) return res.statusCode;
+    return null;
+  }
+
+  // Method for medicine deletion
+  Future<dynamic> deleteMeidicine(PatientMedicineModel prescription) async {
+    try {
+      Response response = await http.delete(
+          Uri.parse('http://localhost:8082/prescription/deletePrescription'),
+          body: jsonEncode(prescription),
+          headers: <String, String>{"Content-Type": "application/json"});
+      // todo debug
+      print("requestbody: ${response.body.toString()}");
+      if (response.statusCode == 200) {
+        return response.statusCode;
+      }
+    } catch (e) {
+      throw Exception('Failed to delete medicine');
+    }
+  }
 }
