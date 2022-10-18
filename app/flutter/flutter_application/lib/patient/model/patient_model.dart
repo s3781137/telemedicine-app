@@ -9,13 +9,18 @@ String patientModelToJson(List<PatientModel> data) =>
 
 class PatientModel {
   PatientModel(
-      {required this.id,
+      {this.id,
       required this.username,
       required this.password,
       required this.confirmPassword,
       required this.firstName,
       required this.lastName,
-      required this.email});
+      required this.email,
+      required this.gender,
+      required this.height,
+      required this.weight,
+      required this.contactNo,
+      required this.contactName});
 
   int? id;
   String? username;
@@ -24,6 +29,11 @@ class PatientModel {
   String? firstName;
   String? lastName;
   String? email;
+  String? gender;
+  double? weight;
+  double? height;
+  String? contactNo;
+  String? contactName;
 
   factory PatientModel.fromJson(Map<String, dynamic> json) => PatientModel(
         id: json["id"],
@@ -33,6 +43,11 @@ class PatientModel {
         firstName: json["firstName"],
         lastName: json["lastName"],
         email: json["email"],
+        gender: json["gender"],
+        weight: json["weight"],
+        height: json["height"],
+        contactNo: json["contactNo"],
+        contactName: json["contactName"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,5 +58,10 @@ class PatientModel {
         "firstName": firstName,
         "lastName": lastName,
         "email": email,
+        "gender": gender,
+        "weight": weight,
+        "height": height,
+        "contactNo": contactNo,
+        "contactName": contactName,
       };
 }

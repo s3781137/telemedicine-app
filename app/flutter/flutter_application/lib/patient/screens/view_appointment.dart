@@ -1,38 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/main.dart';
+import 'package:flutter_application/patient/model/patient_booking_model.dart';
 
-class ViewAppointmentScreen extends StatelessWidget {
-  const ViewAppointmentScreen();
+import '../core/api_patient.dart';
+import '../widgets/appbar.dart';
+
+class ViewBookingScreen extends StatefulWidget {
+  const ViewBookingScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ViewBookingScreen> createState() => _ViewBookingScreenState();
+}
+
+class _ViewBookingScreenState extends State<ViewBookingScreen> {
+  final ApiClient _apiClient = ApiClient();
+  List<PatientBookingModel> _bookings = [];
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  void _load() async {
+    List<PatientBookingModel> bookings = await _apiClient.fetchBookings(
+        currentLoggedInUser["username"]
+            .toString()); // load the availabilities on Widget init
+
+    setState(() => _bookings = bookings);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('View Current Bookings'),
-        centerTitle: true,
+      appBar: makeAppBar(context),
+      body: ListView.separated(
+        itemCount: _bookings.length,
+        itemBuilder: (BuildContext ctxt, int i) {
+          return GestureDetector(
+            // todo on tap
+            onTap: () => {},
+            child: Column(
+              children: [
+                Text(
+                  "Doctor: ${_bookings[i].doctorUsername} ",
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  "Date and Time: ${_bookings[i].dateTime}",
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider();
+        },
       ),
-      body: _myListView(context),
     );
   }
-}
-
-Widget _myListView(BuildContext context) {
-  return ListView(
-    children: ListTile.divideTiles(
-      context: context,
-      tiles: [
-        ListTile(
-          title: Text('Dr Jeon Junkook, 09:30 26/08/2022, Manor Lakes'),
-        ),
-        ListTile(
-          title: Text('Dr Doja Cat, 10:30 26/08/2022, Footscray'),
-        ),
-        ListTile(
-          title: Text('Dr Justin Bieber, 11:30 16/01/2023, Melbourne Central'),
-        ),
-        ListTile(
-          title: Text('Dr Kanye West, 00:30 06/07/2023,Chadstone'),
-        )
-      ],
-    ).toList(),
-  );
 }

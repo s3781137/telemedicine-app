@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/patient/widgets/appbar.dart';
 
 class AppointmentsScreen extends StatelessWidget {
   const AppointmentsScreen();
@@ -6,10 +7,7 @@ class AppointmentsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Appointments'),
-        centerTitle: true,
-      ),
+      appBar: makeAppBar(context),
       body: _myListView(context),
     );
   }
@@ -22,17 +20,17 @@ Widget _myListView(BuildContext context) {
       context: context,
       tiles: [
         ListTile(
-          title: Text('Book An Appointment'),
+          title: const Text('Book An Appointment'),
           onTap: () =>
               Navigator.of(context).pushNamed('/patient/appointments/book'),
         ),
         ListTile(
-          title: Text('Cancel An Appointment'),
+          title: const Text('Cancel An Appointment'),
           onTap: () =>
               Navigator.of(context).pushNamed('/patent/appointments/cancel'),
         ),
         ListTile(
-          title: Text('View Current Bookings'),
+          title: const Text('View Current Bookings'),
           onTap: () =>
               Navigator.of(context).pushNamed('/patient/appointments/view'),
         ),

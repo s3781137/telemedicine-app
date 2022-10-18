@@ -28,7 +28,14 @@ class firstScreenContent extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                // Label for picture
+                TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
+                    ),
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed("/adminsignin"),
+                    child: const Text("Admin sign in")),
                 Text(
                   "TD Telemedicine For Patients",
                   style: Theme.of(context).textTheme.headline4,

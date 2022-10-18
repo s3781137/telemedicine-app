@@ -6,6 +6,7 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application/patient/model/patient_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_application/patient/core/api_patient.dart';
@@ -60,9 +61,20 @@ void main() {
 
   test("Register user that exists should return null", () async {
     final api = ApiClient();
+    PatientModel patient = PatientModel(
+        username: "test",
+        password: "test",
+        confirmPassword: "test",
+        firstName: "test",
+        lastName: "test",
+        email: "email@email.com",
+        gender: null,
+        weight: null,
+        height: null,
+        contactNo: null,
+        contactName: null);
     //The user "test" should be in the database for this to work
-    var res = await api.register("test", "password", "password", "firstName",
-        "lastName", "email@email.com");
+    var res = await api.register(patient);
     expect(res, null);
   });
 }
