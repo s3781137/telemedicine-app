@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/doctor/screens/add_avail.dart';
+import 'package:flutter_application/doctor/screens/view_health_status.dart';
 
 import '../widget/appBar.dart';
 
@@ -33,16 +34,16 @@ class Doctor extends StatelessWidget {
             },
           ),
           ListTile(
-              // todo: icon
-              // leading: CircleAvatar(
-              //   backgroundImage: AssetImage('assets/ManageProfile.png'),
-              // ),
-              // title: const Text('Delete Doctor'),
-              // onTap: () {
-              //   // Navigator.of(context).push(MaterialPageRoute(
-              //   //     builder: (context) => DeleteDoctorScreen.fromBase64(jwt)));
-              // },
-              ),
+            leading: CircleAvatar(
+              backgroundImage: AssetImage('assets/AddHealthInfo.png'),
+            ),
+            title: const Text('View Health Status'),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) =>
+                      ViewHealthStatusScreen.fromBase64(jwt)));
+            },
+          ),
         ],
       ),
     );
