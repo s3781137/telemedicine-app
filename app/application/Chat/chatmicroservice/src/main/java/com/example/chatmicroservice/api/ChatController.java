@@ -91,5 +91,11 @@ import com.example.chatmicroservice.service.ChatRoomService;
         //return new ResponseEntity<>("okay", HttpStatus.OK);
     }
 
+
+     @GetMapping("/messages")
+     public ResponseEntity<?> findMessage ( @RequestParam int id) {
+         return ResponseEntity
+                 .ok(chatMessageService.findById(id));    
+
  }
 

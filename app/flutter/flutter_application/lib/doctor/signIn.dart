@@ -70,7 +70,7 @@ class _SignInFormState extends State<SignInForm> {
       currentLoggedInUser.update("username", (value) => usernameString);
       currentLoggedInUser.update("userType", (value) => "doctor");
       //Navigates to the welcome page
-      Navigator.of(context).pushNamed('/welcome');
+      Navigator.of(context).pushNamed('/doctor/chat');
     } else {
       //If not show popup error
       showDialog(
