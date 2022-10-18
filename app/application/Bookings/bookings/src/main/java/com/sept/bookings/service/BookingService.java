@@ -10,6 +10,7 @@ import com.sept.bookings.model.DoctorAvailability;
 import com.sept.bookings.repo.AvailabilityRepo;
 import com.sept.bookings.repo.BookingRepo;
 
+
 @Service
 public class BookingService {
     
@@ -30,11 +31,12 @@ public class BookingService {
         return repo.findAll();
     }
 
-    public void cancelBooking(int bookingId){
+    public boolean cancelBooking(int bookingId){
         Booking b=repo.getBookingById(bookingId);
         addAvailability(b.getDoctorUsername(),b.getDateTime());
         //repo.deleteBooking(bookingId);
         repo.delete(b);
+        return true;
     }
 
     public List<Booking> viewPatientBookings(String patientUsername) {
@@ -48,9 +50,10 @@ public class BookingService {
     public List<DoctorAvailability> getAvailability(){
         return Availrepo.getAvailability();
     }
-    public void addAvailability(String doctorUsername, String availability) {
+    public DoctorAvailability addAvailability(String doctorUsername, String availability) {
         DoctorAvailability a=new DoctorAvailability(doctorUsername, availability);
-        Availrepo.save(a);
+        return Availrepo.save(a);
+        
     }
   
 }
