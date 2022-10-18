@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/doctor/screens/patient_medication.dart';
 import 'package:flutter_application/main.dart';
+import 'package:flutter_application/patient/model/patient_symptoms_model.dart';
 import 'package:flutter_application/patient/screens/add_health_info.dart';
 import 'package:flutter_application/patient/screens/profile.dart';
+import 'package:flutter_application/patient/screens/symptoms.dart';
 import 'package:flutter_application/patient/widgets/appbar.dart';
 
 import 'core/api_patient.dart';
@@ -64,7 +67,14 @@ class Patient extends StatelessWidget {
               backgroundImage: AssetImage('assets/AddSymptoms.png'),
             ),
             title: const Text('Add Symptoms'),
-            onTap: () => Navigator.of(context).pushNamed('/welcome'),
+            onTap: () async {
+              PatientSymptomsModel symptoms = await _apiClient
+                  .getSymptoms(currentLoggedInUser["username"]!);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => Symptoms(
+                        symptoms: symptoms,
+                      )));
+            },
           ),
         ],
       ),
