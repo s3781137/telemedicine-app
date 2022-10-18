@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/doctor/screens/add_avail.dart';
 import 'package:flutter_application/doctor/screens/view_health_status.dart';
+import 'package:flutter_application/doctor/screens/view_medication.dart';
 
 import '../widget/appBar.dart';
 
@@ -42,6 +43,16 @@ class Doctor extends StatelessWidget {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) =>
                       ViewHealthStatusScreen.fromBase64(jwt)));
+            },
+          ),
+          ListTile(
+            leading: CircleAvatar(
+              backgroundImage: AssetImage('assets/Medications.png'),
+            ),
+            title: const Text('Medications'),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ViewMedicationScreen.fromBase64(jwt)));
             },
           ),
         ],

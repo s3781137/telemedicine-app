@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_application/patient/model/patient_medicine_model.dart';
 import 'package:flutter_application/patient/model/petient_health_model.dart';
 import 'package:flutter_application/patient/screens/add_health_info.dart';
 import 'package:http/http.dart' as http;
@@ -27,6 +28,17 @@ class ApiDoctor {
         .get(Uri.parse('http://localhost:8084/healthinfo/getHealthInfo/$id'));
     if (response.statusCode == 200) {
       return PatientHealthModel.fromJson(jsonDecode((response.body)));
+    } else {
+      throw Exception('Failed to load userdata');
+    }
+  }
+
+  // Return list of medications for a user
+  Future<List<PatientMedicineModel>> getMedications(String? username) async {
+    Response response = await http.get(Uri.parse(
+        'http://localhost:8082/prescription/view?patientUsername=$username'));
+    if (response.statusCode == 200) {
+      return patientMedicineModelFromJson(response.body);
     } else {
       throw Exception('Failed to load userdata');
     }
