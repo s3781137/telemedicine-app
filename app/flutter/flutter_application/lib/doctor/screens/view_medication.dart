@@ -40,7 +40,7 @@ class _ViewMedicationScreenState extends State<ViewMedicationScreen> {
 
   void _load() async {
     List<PatientModel> patients =
-        await _apiClient.fetchUsers(); // load the availabilities on Widget init
+        await _apiClient.fetchUsers(); // load the patients on Widget init
 
     setState(() => _patients = patients);
   }

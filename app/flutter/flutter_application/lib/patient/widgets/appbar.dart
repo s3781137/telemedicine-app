@@ -4,6 +4,7 @@ import 'package:flutter_application/patient/core/api_patient.dart';
 import '../../main.dart';
 import '../patient.dart';
 
+// appbar widget for most patient screens
 makeAppBar(BuildContext context) {
   return AppBar(
     title: const Text('ND TELEMEDICINE'),
@@ -15,6 +16,7 @@ makeAppBar(BuildContext context) {
             itemBuilder: (context) {
               return [
                 PopupMenuItem(
+                  // log out current user
                   onTap: () => {
                     currentLoggedInUser.update("username", (value) => ""),
                     currentLoggedInUser.update("userType", (value) => ""),

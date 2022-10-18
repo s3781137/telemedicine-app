@@ -12,6 +12,7 @@ import 'package:flutter_application/patient/core/api_patient.dart';
 import 'package:flutter_application/patient/model/patient_medicine_model.dart';
 
 class AddMedication extends StatefulWidget {
+  // need jwt and username to be passed from previous screen
   const AddMedication(this.jwt, this.payload, this.username);
 
   factory AddMedication.fromBase64(String jwt, String username) =>
@@ -35,11 +36,13 @@ class _AddMedicationState extends State<AddMedication> {
   bool _validate = false;
 
   void addMedication() async {
+    // create medicine object
     PatientMedicineModel medicine = PatientMedicineModel(
         doctorUsername: currentLoggedInUser["username"].toString(),
         patientUsername: widget.username,
         medicine: _medicineController.text);
     if (_validate == false) {
+      // call method to add medication
       dynamic res = await _apiDoctor.addMedication(medicine);
       if (res == 200) {
         showDialog(

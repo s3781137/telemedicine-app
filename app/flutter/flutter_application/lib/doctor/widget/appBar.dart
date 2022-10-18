@@ -4,6 +4,7 @@ import '../../main.dart';
 
 makeAppBar(BuildContext context, String jwt) {
   return AppBar(
+    // appbar widget for most doctor screens
     title: Text('ND TELEMEDICINE'),
     actions: <Widget>[
       Padding(

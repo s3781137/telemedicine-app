@@ -15,6 +15,8 @@ class _DoctorLoginState extends State<DoctorLogin> {
   TextEditingController passwordController = TextEditingController();
   final ApiDoctor _apiDoctor = ApiDoctor();
 
+  // login function
+  // will set the currentlogged-in user
   Future<void> logIn() async {
     var username = usernameController.text;
     var password = passwordController.text;

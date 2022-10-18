@@ -22,11 +22,14 @@ class AddAvail extends StatefulWidget {
 }
 
 class _AddAvailState extends State<AddAvail> {
+  // textcontroller for string availability
   final TextEditingController _availController = TextEditingController();
+  // boolean value to check page progress
   bool _validate = false;
   final ApiDoctor _apiDoctor = ApiDoctor();
   Future<void> addAvail() async {
     if (_validate == false) {
+      // call method to add availability
       dynamic res = await _apiDoctor.addAvail(
           currentLoggedInUser["username"].toString(), _availController.text);
       if (res == 200) {

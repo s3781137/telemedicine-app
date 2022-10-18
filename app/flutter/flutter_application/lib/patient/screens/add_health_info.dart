@@ -6,6 +6,7 @@ import '../core/api_patient.dart';
 import '../patient.dart';
 import '../widgets/appbar.dart';
 
+// uses conditional_questions package to deploy adding health info
 class PatientHealthInfo extends StatelessWidget {
   PatientHealthInfo({Key? key}) : super(key: key);
 
@@ -30,6 +31,7 @@ class HealthInfo extends StatefulWidget {
 class _HealthInfoState extends State<HealthInfo> {
   final _key = GlobalKey<QuestionFormState>();
   final ApiClient _apiClient = ApiClient();
+  // index for list from screen
   int lineCancer = 6;
   int lineDiabetes = 5;
   int lineHeartDisease = 4;

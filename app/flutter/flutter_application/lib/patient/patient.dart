@@ -19,6 +19,7 @@ class Patient extends StatelessWidget {
       appBar: makeAppBar(context),
       body: ListView(
         children: <Widget>[
+          // gives a list of listTiles for each feature
           ListTile(
             leading: const CircleAvatar(
               backgroundImage: AssetImage('assets/ManageProfile.png'),

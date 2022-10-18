@@ -39,7 +39,7 @@ class _ViewHealthStatusScreenState extends State<ViewHealthStatusScreen> {
 
   void _load() async {
     List<PatientModel> patients =
-        await _apiClient.fetchUsers(); // load the availabilities on Widget init
+        await _apiClient.fetchUsers(); // load the patients on Widget init
 
     setState(() => _patients = patients);
   }
@@ -58,6 +58,7 @@ class _ViewHealthStatusScreenState extends State<ViewHealthStatusScreen> {
                   builder: (BuildContext context) {
                     return AlertDialog(
                         title: const Text('Check detail'),
+                        // display patient info
                         content: Text(
                             'Patient: ${_patients[i].firstName} ${_patients[i].lastName}\nID: ${_patients[i].id}'),
                         actions: <Widget>[
@@ -70,6 +71,7 @@ class _ViewHealthStatusScreenState extends State<ViewHealthStatusScreen> {
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                         title: const Text('Details'),
+                                        // display health status
                                         content: Text(
                                             'Cancer: ${info.cancer}\nDiabetes: ${info.diabetes}\nHeart Disease: ${info.heartDisease}\nKidney Disease: ${info.kidneyDisease}\nLiver Disease: ${info.liverDisease}\nMedical Problems: ${info.medicalProblems}\nMedication: ${info.medication}\nMedication Descriptions: ${info.medicationDescription}\nPast Surgeries: ${info.pastSurgeries}'),
                                         actions: <Widget>[

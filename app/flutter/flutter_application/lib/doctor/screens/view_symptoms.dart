@@ -28,7 +28,6 @@ class ViewSymptomsScreen extends StatefulWidget {
 
 class _ViewSymptomsScreenState extends State<ViewSymptomsScreen> {
   final ApiClient _apiClient = ApiClient();
-  final ApiDoctor _apiDoctor = ApiDoctor();
 
   List<PatientModel> _patients = [];
   @override
@@ -58,6 +57,7 @@ class _ViewSymptomsScreenState extends State<ViewSymptomsScreen> {
                   builder: (BuildContext context) {
                     return AlertDialog(
                         title: const Text('Check detail'),
+                        // patient info
                         content: Text(
                             'Patient: ${_patients[i].firstName} ${_patients[i].lastName}\nID: ${_patients[i].id}'),
                         actions: <Widget>[

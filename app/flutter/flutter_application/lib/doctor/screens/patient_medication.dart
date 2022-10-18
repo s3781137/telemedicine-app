@@ -35,6 +35,8 @@ class _PatientMedicScreenState extends State<PatientMedicScreen> {
   final ApiDoctor _apiDoctor = ApiDoctor();
 
   List<PatientMedicineModel> _prescription = [];
+
+  // load initial data from database
   @override
   void initState() {
     super.initState();
@@ -43,11 +45,12 @@ class _PatientMedicScreenState extends State<PatientMedicScreen> {
 
   void _load() async {
     List<PatientMedicineModel> prescription = await _apiDoctor.getMedications(
-        widget.username); // load the availabilities on Widget init
+        widget.username); // load the prescription on Widget init
 
     setState(() => _prescription = prescription);
   }
 
+  // function for deleting medicine
   void deleteMedicine(int i) async {
     dynamic res = await _apiDoctor.deleteMeidicine(_prescription[i]);
     if (res == 200) {
