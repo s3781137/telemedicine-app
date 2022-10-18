@@ -100,7 +100,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      working-directory: ./app/application/HealthInformation
+      working-directory: ./app/application/HealthInformation/healthinformation
       run: mvn -B package --file pom.xml
 
 
