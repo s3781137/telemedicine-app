@@ -24,4 +24,5 @@ public class HealthInfoService {
     public Optional<HealthInformation> getHealthInfo(int id) {
         return healthRepo.findById(id);
     }
+
 }
