@@ -26,6 +26,7 @@ public class PrescriptionController {
     @Autowired
     private PrescriptionService service;
 
+    //lists all the precriptions for a patient
     @GetMapping("/view")
         public List<Prescription> getPrescriptionByPatient(String patientUsername) {
             try{
@@ -35,11 +36,8 @@ public class PrescriptionController {
             }
     }
 
-//     @GetMapping("/list")
-//     public List<Prescription> getPrescription(String patientUsername) {
-//         return service.findAll();
-// }
 
+    //adds a prescription for a patient
     @PostMapping("/addPrescription")
     public ResponseEntity<?> addPrescription(@RequestBody Prescription p) {
         try{
@@ -53,6 +51,7 @@ public class PrescriptionController {
         }
     }
 
+    //delets a patient's prescription
     @DeleteMapping("deletePrescription")
     public ResponseEntity<?> deletePrescription(@RequestBody Prescription p) {
         try{
