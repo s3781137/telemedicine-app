@@ -62,11 +62,11 @@ public class ChatController {
     }
 
     @GetMapping("/list")
-    public List<ChatMessage> getPatients() {
+    public List<ChatMessage> getMessages() {
         try {
             return chatMessageService.findAll();
         } catch (Exception e) {
-            throw new ResourceNotFoundException("patient not found");
+            throw new ResourceNotFoundException("messages not found");
         }
     }
 
