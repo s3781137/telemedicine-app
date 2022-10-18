@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/admin/api/api_admin.dart';
 import 'package:flutter_application/admin/screens/doctor_profile.dart';
+import 'package:flutter_application/doctor/core/api_doctor.dart';
 import 'package:flutter_application/main.dart';
 import 'package:flutter_application/patient/core/api_patient.dart';
 import 'package:flutter_application/patient/model/patient_model.dart';
+import 'package:flutter_application/patient/model/petient_health_model.dart';
 import '../model/doctor_model.dart';
 import '../widget/appBar.dart';
 
@@ -26,6 +28,8 @@ class ViewHealthStatusScreen extends StatefulWidget {
 
 class _ViewHealthStatusScreenState extends State<ViewHealthStatusScreen> {
   final ApiClient _apiClient = ApiClient();
+  final ApiDoctor _apiDoctor = ApiDoctor();
+
   List<PatientModel> _patients = [];
   @override
   void initState() {
@@ -49,19 +53,40 @@ class _ViewHealthStatusScreenState extends State<ViewHealthStatusScreen> {
         itemBuilder: (BuildContext ctxt, int i) {
           return GestureDetector(
             onTap: () {
-              // Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (context) =>
-              //         .fromBase64(widget.jwt, _patients[i])));
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
                         title: const Text('Check detail'),
                         content: Text(
-                            'Patient: ${_patients[i].firstName} ${_patients[i].lastName}\nUsername: ${_patients[i].username}'),
+                            'Patient: ${_patients[i].firstName} ${_patients[i].lastName}\nID: ${_patients[i].id}'),
                         actions: <Widget>[
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              PatientHealthModel info = await _apiDoctor
+                                  .getHealthInfo(_patients[i].id);
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                        title: const Text('Details'),
+                                        content: Text(
+                                            'Cancer: ${info.cancer}\nDiabetes: ${info.diabetes}\nHeart Disease: ${info.heartDisease}\nKidney Disease: ${info.kidneyDisease}\nLiver Disease: ${info.liverDisease}\nMedical Problems: ${info.medicalProblems}\nMedication: ${info.medication}\nMedication Descriptions: ${info.medicationDescription}\nPast Surgeries: ${info.pastSurgeries}'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ViewHealthStatusScreen
+                                                              .fromBase64(
+                                                                  widget.jwt)));
+                                            },
+                                            child: const Text('ok'),
+                                          ),
+                                        ]);
+                                  });
+                            },
                             child: const Text('Click to view health status'),
                           ),
                         ]);
