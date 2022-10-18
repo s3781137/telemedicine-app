@@ -95,7 +95,7 @@ class _ViewHealthStatusScreenState extends State<ViewHealthStatusScreen> {
             child: Column(
               children: [
                 Text(
-                  "Patient: ${_patients[i].firstName} ${_patients[i].lastName}",
+                  "Patient: ${_patients[i].firstName} ${_patients[i].lastName}\nID: ${_patients[i].id}",
                   style: const TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w600,
