@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application/doctor/screens/add_avail.dart';
 
 import '../widget/appBar.dart';
 
@@ -27,8 +28,8 @@ class Doctor extends StatelessWidget {
             // ),
             title: const Text('Add availability'),
             onTap: () {
-              // Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (context) => CreateDoctor.fromBase64(jwt)));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => AddAvail.fromBase64(jwt)));
             },
           ),
           ListTile(
