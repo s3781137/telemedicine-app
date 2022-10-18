@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/doctor/screens/add_avail.dart';
 import 'package:flutter_application/doctor/screens/view_health_status.dart';
 import 'package:flutter_application/doctor/screens/view_medication.dart';
+import 'package:flutter_application/doctor/screens/view_symptoms.dart';
 
 import '../widget/appBar.dart';
 
@@ -24,10 +25,9 @@ class Doctor extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           ListTile(
-            // todo: icon
-            // leading: CircleAvatar(
-            //   backgroundImage: AssetImage('assets/ManageProfile.png'),
-            // ),
+            leading: const CircleAvatar(
+              backgroundImage: AssetImage('assets/AddAvail.png'),
+            ),
             title: const Text('Add availability'),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
@@ -35,7 +35,7 @@ class Doctor extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               backgroundImage: AssetImage('assets/AddHealthInfo.png'),
             ),
             title: const Text('View Health Status'),
@@ -46,13 +46,23 @@ class Doctor extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               backgroundImage: AssetImage('assets/Medications.png'),
             ),
             title: const Text('Medications'),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ViewMedicationScreen.fromBase64(jwt)));
+            },
+          ),
+          ListTile(
+            leading: const CircleAvatar(
+              backgroundImage: AssetImage('assets/AddSymptoms.png'),
+            ),
+            title: const Text('View Symptoms'),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ViewSymptomsScreen.fromBase64(jwt)));
             },
           ),
         ],
