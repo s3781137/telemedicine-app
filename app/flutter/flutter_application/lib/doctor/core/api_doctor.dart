@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 
 class ApiDoctor {
   Future<String?> logIn(String username, String password) async {
