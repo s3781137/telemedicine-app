@@ -36,6 +36,15 @@ class Doctor extends StatelessWidget {
           ),
           ListTile(
             leading: const CircleAvatar(
+              backgroundImage: AssetImage('assets/Chat.png'),
+            ),
+            title: const Text('Chat with patients'),
+            onTap: () {
+              Navigator.of(context).pushNamed('/doctor/chat');
+            },
+          ),
+          ListTile(
+            leading: const CircleAvatar(
               backgroundImage: AssetImage('assets/AddHealthInfo.png'),
             ),
             title: const Text('View Health Status'),
