@@ -69,7 +69,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      working-directory: ./app/application/Availability/Availability
+      working-directory: ./app/application/Adminmicroservice
       run: mvn -B package --file pom.xml
 
   chatBuild:
@@ -100,7 +100,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      working-directory: ./app/application/HealthInformation/healthInformation
+      working-directory: ./app/application/HealthInformation
       run: mvn -B package --file pom.xml
 
 
