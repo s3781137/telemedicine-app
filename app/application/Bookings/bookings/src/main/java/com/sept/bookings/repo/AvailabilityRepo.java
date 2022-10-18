@@ -16,14 +16,16 @@ import com.sept.bookings.model.DoctorAvailability;
 public interface AvailabilityRepo extends JpaRepository<DoctorAvailability, Integer> {
 
 
-    
+    //delete a doctor avalability from the database
     @Modifying
     @Query("Delete from DoctorAvailability ")
     void deleteAvailability(String doctorUsername, String availability);
 
+    //get a doctors avalability from the database
     @Query("Select m from DoctorAvailability m where m.doctorUsername = ?1 and m.availability = ?2")
     DoctorAvailability getAvailabilityByUsername(String doctorUsername, String availability);
 
+    //get all the avalabilities added from the database
     @Query("Select m FROM DoctorAvailability m")
     List<DoctorAvailability> getAvailability();
     

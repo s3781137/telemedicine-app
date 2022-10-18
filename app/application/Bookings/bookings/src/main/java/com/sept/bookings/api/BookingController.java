@@ -27,6 +27,9 @@ public class BookingController {
     @Autowired
     private BookingService service;
 
+
+//add a booking only if the doctor has that avalability added. It needs a doctor name and avalability tie
+
     @PostMapping("/addBooking")
     public ResponseEntity<?> addBooking(@RequestBody Booking b) {
          try {
@@ -42,6 +45,8 @@ public class BookingController {
          }
 
     }
+
+    //returns a list of all the bookings for every patient. 
     @GetMapping("/list")
         
         public List<Booking> getBookings() {
@@ -52,6 +57,8 @@ public class BookingController {
             }
     }
 
+    //cancels a booking by taking the booking id and adds the 
+    //doctor's avalability back in.
     @GetMapping("/cancelBooking")
     public ResponseEntity<?> cancelBooking(@RequestParam int bookingId){
         try{
@@ -66,6 +73,7 @@ public class BookingController {
 
     }
     
+    //list all of a patient's booking by their username
     @GetMapping("/viewPatientBookings")
     public List<Booking> viewPatientBookings(@RequestParam String patientUsername ){
         try{
@@ -77,6 +85,7 @@ public class BookingController {
             }
     }
 
+    //list aall of a doctor's booking by their username
     @GetMapping("/viewDoctorBookings")
     public List<Booking> viewDoctorBookings(@RequestParam String doctorUsername ){
         try{
@@ -88,6 +97,7 @@ public class BookingController {
             }
     }
 
+    //adds an avalability for a doctor
     @PostMapping("/addAvailability")
     public ResponseEntity<?> addAvailability(@RequestParam String doctorUsername, @RequestParam String availability){
         try{
@@ -100,6 +110,7 @@ public class BookingController {
             }
     }
 
+    //lists all the doctor avalabilities 
     @GetMapping("/getAvailability")
     public List<DoctorAvailability> getAvailability() {
         try{

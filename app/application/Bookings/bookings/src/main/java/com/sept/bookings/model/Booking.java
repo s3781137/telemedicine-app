@@ -56,16 +56,5 @@ public class Booking {
         return dateTime;
     }
 
-    // public String getbDate(){
-    //     return bDate;
-    // }
-
-    // public String getStartTime(){
-    //     return startTime;
-    // }
-
-    // public String getEndTime(){
-    //     return endTime;
-    // }
 
 }
