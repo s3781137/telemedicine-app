@@ -63,16 +63,21 @@ public class AdminController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
+    // get all doctors
+
     @GetMapping("/listDoctors")
     public List<Doctor> getDoctors() {
         return dService.findAll();
     }
+
+    // get all patients
 
     @GetMapping("/listPatients")
     public List<Patient> getPatients() {
         return pService.findAll();
     }
 
+    // get doctor account by username
     @GetMapping("/getDoctor/{username}")
     public ResponseEntity<?> getDoctorByUsername(@PathVariable(name = "username") String username) {
         try {
@@ -83,6 +88,7 @@ public class AdminController {
         }
     }
 
+    // get patient by username
     @GetMapping("/getPatient/{username}")
     public ResponseEntity<?> getPatientByUsername(@PathVariable(name = "username") String username) {
         try {
@@ -93,6 +99,7 @@ public class AdminController {
         }
     }
 
+    // make a doctor account
     @PostMapping("/createDoctor")
     public ResponseEntity<?> createDoctorAccount(@RequestBody Doctor doctor) {
         if (dService.checkIfUsernameIsFree(doctor)) {
@@ -112,6 +119,7 @@ public class AdminController {
 
     }
 
+    // make a patient account
     @PostMapping("/createPatient")
     public ResponseEntity<?> createPatientAccount(@RequestBody Patient patient) {
         if (pService.checkIfUsernameIsFree(patient)) {
@@ -130,6 +138,7 @@ public class AdminController {
         }
     }
 
+    // make an admin account
     @PostMapping("/createAdmin")
     public ResponseEntity<?> createAdminAccount(@RequestBody Admin admin) {
         if (aService.checkIfUsernameIsFree(admin)) {
@@ -149,6 +158,7 @@ public class AdminController {
 
     }
 
+    // login as admin
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid LoginRequest loginRequest, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
@@ -166,6 +176,7 @@ public class AdminController {
 
     }
 
+    // update doctor details by id
     @PutMapping("/updateDoctor/{id}")
     public ResponseEntity<?> updateDoctor(@PathVariable int id, @RequestBody DoctorDetails doctorDetails) {
         Doctor updateDoctor = dService.getDoctorById(doctorDetails.getId());
@@ -179,6 +190,7 @@ public class AdminController {
         return ResponseEntity.ok(updateDoctor);
     }
 
+    // update patient by id
     @PutMapping("/updatePatient/{id}")
     public ResponseEntity<?> updatePatient(@PathVariable int id, @RequestBody PatientDetails patientDetails) {
         Patient updatePatient = pService.findById(patientDetails.getId());
@@ -192,6 +204,7 @@ public class AdminController {
         return ResponseEntity.ok(updatePatient);
     }
 
+    // delete doctor by username
     @DeleteMapping("/deleteDoctor/{username}")
     public ResponseEntity<?> deleteDoctor(@PathVariable(name = "username") String username) {
         try {
@@ -202,6 +215,7 @@ public class AdminController {
         }
     }
 
+    // delete patient by username
     @DeleteMapping("/deletePatient/{username}")
     public ResponseEntity<?> deletePatient(@PathVariable(name = "username") String username) {
         try {

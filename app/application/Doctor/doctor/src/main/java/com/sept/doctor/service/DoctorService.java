@@ -22,14 +22,17 @@ public class DoctorService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    // get doctor account by id
     public Doctor getDoctorById(Integer id) {
         return repo.findById(id).get();
     }
 
+    // return all doctors accounts in database
     public List<Doctor> findAll() {
         return repo.findAll();
     }
 
+    // save doctor account in database
     public Doctor saveDoctor(Doctor doctor) {
         doctor.setPassword(bCryptPasswordEncoder.encode(doctor.getPassword()));
         doctor.setUsername(doctor.getUsername());
@@ -37,6 +40,7 @@ public class DoctorService {
         return repo.save(doctor);
     }
 
+    // get doctor by username
     public Doctor getDoctorByUsername(String username) {
         Optional<Doctor> doctor = repo.findDoctorByUsername(username);
         if (doctor.isPresent()) {
@@ -46,20 +50,24 @@ public class DoctorService {
         }
     }
 
+    // check if username is taken in database
     public boolean checkIfUsernameIsFree(Doctor doctor) {
         Optional<Doctor> existingDoctor = repo.findDoctorByUsername(doctor.getUsername());
         return existingDoctor.isPresent();
     }
 
+    // delete doctor account by username
     public void deleteDoctor(String username) {
         int id = repo.findIdByUsername(username);
         repo.deleteById(id);
     }
 
+    // find id by username
     public Integer findIdByUsername(String username) {
         return repo.findIdByUsername(username);
     }
 
+    // checks if login credentials are correct
     public boolean checkLoginCredentials(String username, String password) {
         Optional<Doctor> existingDoctor = repo.findDoctorByUsername(username);
         if (existingDoctor.isPresent()) {
@@ -69,15 +77,18 @@ public class DoctorService {
         return false;
     }
 
+    // check if passwords match
     public boolean doPasswordsMatch(String hashedPassword, String plainTextPassword) {
         return bCryptPasswordEncoder.matches(plainTextPassword, hashedPassword);
     }
 
+    // returns doctor exists by username and matches password
     public boolean comparePassword(String username, String plainTextPassword) {
         Optional<Doctor> doctor = repo.findDoctorByUsername(username);
         return (doctor.isPresent() && doPasswordsMatch(doctor.get().getPassword(), plainTextPassword));
     }
 
+    // login as doctor
     public Pair<Optional<String>, Optional<Doctor>> login(String username, String plainTextPassword) {
         Optional<Doctor> doctorOptional = repo.findDoctorByUsername(username);
 
@@ -90,6 +101,7 @@ public class DoctorService {
         return Pair.of(token, doctorOptional);
     }
 
+    // set jwt of doctor
     public void setDoctorToken(String token, String username) {
         repo.setToken(token, username);
 

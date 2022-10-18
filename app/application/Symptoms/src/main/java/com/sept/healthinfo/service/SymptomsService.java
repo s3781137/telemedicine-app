@@ -15,26 +15,23 @@ public class SymptomsService {
     @Autowired
     private SymptomsRepository repo;
 
+    // use repository find symptoms by username
+
     public Symptoms getSymptomsByUsername(String username) {
         return repo.findSymptomsByUsername(username);
     }
+
+    // saves default symptoms under the patient's username
 
     public void makeDefaultSymptoms(String username) {
         Symptoms defaultSymptoms = new Symptoms(0, 0, "no", false, username);
         repo.save(defaultSymptoms);
     }
 
+    // saves symptoms passing through symptom object
+
     public void updateSymptoms(Symptoms symptoms) {
         repo.save(symptoms);
-    }
-
-    public Symptoms findSymptomsByUsername(String username) {
-        return repo.findSymptomsByUsername(username);
-    }
-
-    public void deleteSymptomsByUsername(String username) {
-
-        repo.deleteById(repo.findSymptomsByUsername(username).getId());
     }
 
 }
