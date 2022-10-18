@@ -48,12 +48,13 @@ public class DoctorControllerTests {
 
     }
 
-    // @Test
-    // public void testGetDoctorByUsername() {
-    //     Doctor d = new Doctor("Doctor new username", "password", "password", "Kim", "Seokjin", "kim@gmail.com");
-    //     d = service.saveDoctor(d);
-    //     Assertions.assertEquals(d.getUsername(), service.getDoctorByUsername("Doctor new username").getId());
-    // }
+    @Test
+    public void testGetDoctorByUsername() {
+        Doctor d = new Doctor("Siri", "password", "password", "Kim", "Seokjin", "kim@gmail.com");
+        Doctor d1 = service.saveDoctor(d);
+        Assertions.assertNotNull(d1);
+        Assertions.assertEquals(service.getDoctorByUsername("Siri").getUsername(), "Siri");
+    }
 
 
     @Test
