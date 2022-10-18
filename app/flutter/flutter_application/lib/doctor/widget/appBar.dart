@@ -17,7 +17,7 @@ makeAppBar(BuildContext context, String jwt) {
                     currentLoggedInUser.update("username", (value) => ""),
                     currentLoggedInUser.update("userType", (value) => ""),
                     Navigator.of(context)
-                        .popUntil(ModalRoute.withName("/adminsignin")),
+                        .popUntil(ModalRoute.withName("/doctorsignin")),
                   },
                   value: 'logout',
                   child: Text('Log out'),
