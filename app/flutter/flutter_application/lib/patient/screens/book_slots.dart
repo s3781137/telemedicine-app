@@ -29,16 +29,17 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
   }
 
   void addBooking(int i) async {
+    // todo debug
+    print(
+        "doctorusername when addingbooking: ${_availDoctors[i].doctorUsername.toString()}");
     // Create booking object
     PatientBookingModel booking = PatientBookingModel(
         doctorUsername: _availDoctors[i].doctorUsername.toString(),
         patientUsername: currentLoggedInUser["username"].toString(),
-        doctorName: _apiClient
-            .getDoctorName(_availDoctors[i].doctorUsername.toString())
-            .toString(),
-        patientName: _apiClient
-            .getUserName(currentLoggedInUser["username"].toString())
-            .toString(),
+        doctorName: await _apiClient
+            .getDoctorName(_availDoctors[i].doctorUsername.toString()),
+        patientName: await _apiClient
+            .getUserName(currentLoggedInUser["username"].toString()),
         dateTime: _availDoctors[i].availability.toString());
     // Get response status code
     dynamic res = await _apiClient.addBooking(booking);

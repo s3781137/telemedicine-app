@@ -17,11 +17,11 @@ class PatientBookingModel {
       required this.dateTime});
 
   int? id;
-  String doctorUsername;
-  String patientUsername;
-  String doctorName;
-  String patientName;
-  String dateTime;
+  String? doctorUsername;
+  String? patientUsername;
+  String? doctorName;
+  String? patientName;
+  String? dateTime;
 
   factory PatientBookingModel.fromJson(Map<String, dynamic> json) =>
       PatientBookingModel(
