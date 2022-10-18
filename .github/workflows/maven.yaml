@@ -132,6 +132,6 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      working-directory: ./app/application/Symptoms/healthinfo
+      working-directory: ./app/application/Symptoms
       run: mvn -B package --file pom.xml
 
