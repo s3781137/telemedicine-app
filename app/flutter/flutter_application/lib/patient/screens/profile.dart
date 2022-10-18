@@ -16,6 +16,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  // textcontrollers for inputs
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
@@ -27,13 +28,13 @@ class _ProfileState extends State<Profile> {
   Future<void> updateProfile(dynamic username) async {
     id = await _apiClient.getUserId(username);
     PatientProfileModel profile = PatientProfileModel(
-        // todo fix id
         id: id,
         gender: _genderController.text,
         weight: double.parse(_weightController.text),
         height: double.parse(_heightController.text),
         contactNo: _contactNoController.text,
         contactName: _contactNameController.text);
+    // check if all text fields are not empty
     if (_validate == false) {
       dynamic res = await _apiClient.updateProfile(profile);
       if (res == 200) {

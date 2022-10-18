@@ -30,6 +30,7 @@ class Doctor extends StatelessWidget {
             ),
             title: const Text('Add availability'),
             onTap: () {
+              // page for add availability
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => AddAvail.fromBase64(jwt)));
             },
@@ -40,6 +41,7 @@ class Doctor extends StatelessWidget {
             ),
             title: const Text('Chat with patients'),
             onTap: () {
+              // screen for doctor chat with patients
               Navigator.of(context).pushNamed('/doctor/chat');
             },
           ),
@@ -49,6 +51,7 @@ class Doctor extends StatelessWidget {
             ),
             title: const Text('View Health Status'),
             onTap: () {
+              // screen for viewing health status
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) =>
                       ViewHealthStatusScreen.fromBase64(jwt)));
@@ -60,6 +63,7 @@ class Doctor extends StatelessWidget {
             ),
             title: const Text('Medications'),
             onTap: () {
+              // screen for viewing medication
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ViewMedicationScreen.fromBase64(jwt)));
             },
@@ -70,6 +74,7 @@ class Doctor extends StatelessWidget {
             ),
             title: const Text('View Symptoms'),
             onTap: () {
+              // screen for viewing symptoms
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ViewSymptomsScreen.fromBase64(jwt)));
             },

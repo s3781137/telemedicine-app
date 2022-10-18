@@ -12,6 +12,7 @@ class RegisterHomeScreen extends StatefulWidget {
 }
 
 class _RegisterHomeScreenState extends State<RegisterHomeScreen> {
+  // textcontrollers for input
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmController = TextEditingController();
@@ -22,6 +23,7 @@ class _RegisterHomeScreenState extends State<RegisterHomeScreen> {
   final ApiClient _apiClient = ApiClient();
 
   Future<void> signUp() async {
+    // create a patient object
     PatientModel patient = PatientModel(
         username: usernameController.text,
         password: passwordController.text,
@@ -35,6 +37,7 @@ class _RegisterHomeScreenState extends State<RegisterHomeScreen> {
         contactNo: null,
         contactName: null);
     dynamic res = await _apiClient.register(patient);
+    // check if response status code is 200
     if (res == 200) {
       showDialog(
           context: context,

@@ -24,7 +24,7 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
   void _load() async {
     List<PatientBookingModel> bookings = await _apiClient.fetchBookings(
         currentLoggedInUser["username"]
-            .toString()); // load the availabilities on Widget init
+            .toString()); // load the bookings on Widget init
 
     setState(() => _bookings = bookings);
   }
