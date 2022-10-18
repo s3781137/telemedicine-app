@@ -41,6 +41,16 @@ public class Doctor implements UserDetails {
         this.email = email;
     }
 
+    
+    public Doctor(String username, String password, String confirmPassword, String firstName, String lastName, String email) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.confirmPassword = confirmPassword;
+    }   
+
     public int getId() {
         return id;
     }
