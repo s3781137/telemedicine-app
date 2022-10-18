@@ -209,7 +209,7 @@ class ApiClient {
       String username, PatientSymptomsModel symptoms) async {
     try {
       Response response = await http.put(
-        Uri.parse('http://localhost:8089/symptoms/updateSymptoms/$username'),
+        Uri.parse('http://localhost:8090/symptoms/updateSymptoms/$username'),
         body: jsonEncode(symptoms),
         headers: <String, String>{"Content-Type": "application/json"},
       );
@@ -222,7 +222,7 @@ class ApiClient {
   // Return an instance of PatientSymptomsModel
   Future<PatientSymptomsModel> getSymptoms(String username) async {
     Response response = await http
-        .get(Uri.parse('http://localhost:8089/symptoms/getSymptoms/$username'));
+        .get(Uri.parse('http://localhost:8090/symptoms/getSymptoms/$username'));
     if (response.statusCode == 200) {
       return PatientSymptomsModel.fromJson(jsonDecode((response.body)));
     } else {
