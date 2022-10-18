@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_application/admin/model/doctor_model.dart';
 import 'package:flutter_application/patient/model/availability_model.dart';
 import 'package:flutter_application/patient/model/patient_profile_model.dart';
+import 'package:flutter_application/patient/model/patient_symptoms_model.dart';
 import 'package:flutter_application/patient/model/petient_health_model.dart';
 import 'package:http/http.dart';
 
@@ -200,6 +201,32 @@ class ApiClient {
       return response.statusCode;
     } else {
       throw Exception('Unable to fetch products from the REST API');
+    }
+  }
+
+  // method for updating symptoms
+  Future<dynamic> updateSymptoms(
+      String username, PatientSymptomsModel symptoms) async {
+    try {
+      Response response = await http.put(
+        Uri.parse('http://localhost:8089/symptoms/updateSymptoms/$username'),
+        body: jsonEncode(symptoms),
+        headers: <String, String>{"Content-Type": "application/json"},
+      );
+      if (response.statusCode == 200) {
+        return response.statusCode;
+      }
+    } catch (e) {}
+  }
+
+  // Return an instance of PatientSymptomsModel
+  Future<PatientSymptomsModel> getSymptoms(String username) async {
+    Response response = await http
+        .get(Uri.parse('http://localhost:8089/symptoms/getSymptoms/$username'));
+    if (response.statusCode == 200) {
+      return PatientSymptomsModel.fromJson(jsonDecode((response.body)));
+    } else {
+      throw Exception('Failed to load userdata');
     }
   }
 }
