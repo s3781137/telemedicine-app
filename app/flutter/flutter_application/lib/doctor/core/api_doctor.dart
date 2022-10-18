@@ -10,4 +10,12 @@ class ApiDoctor {
     if (res.statusCode == 200) return res.body;
     return null;
   }
+
+  Future<dynamic> addAvail(String username, String avail) async {
+    var res = await http.post(
+        Uri.parse("http://localhost:8085/booking/addAvailability"),
+        body: {"doctorUsername": username, "availability": avail});
+    if (res.statusCode == 200) return res.statusCode;
+    return null;
+  }
 }
