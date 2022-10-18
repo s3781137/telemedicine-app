@@ -59,3 +59,10 @@ services:
     ports:
       - "8085:8085"
 
+  Symptoms:
+    image: 'symptomsmicroservice'
+    build:
+      context: ./application/Symptoms
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8090"
