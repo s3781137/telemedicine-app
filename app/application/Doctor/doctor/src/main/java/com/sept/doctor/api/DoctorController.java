@@ -56,11 +56,13 @@ public class DoctorController {
     @Autowired
     private DoctorValidator doctorValidator;
 
+    // return all doctor accounts
     @GetMapping("/list")
     public List<Doctor> getDoctors() {
         return service.findAll();
     }
 
+    // get doctor by username
     @GetMapping("/getBy/{username}")
     public ResponseEntity<?> getDoctorByUsername(@PathVariable(name = "username") String username) {
         try {
@@ -71,6 +73,7 @@ public class DoctorController {
         }
     }
 
+    // make doctor account
     @PostMapping("/register")
     public ResponseEntity<?> registerDoctor(@RequestBody Doctor doctor) {
 
@@ -95,22 +98,7 @@ public class DoctorController {
         }
     }
 
-    // @PostMapping("/register")
-    // public ResponseEntity<?> registerUser(@Valid @RequestBody Doctor doctor,
-    // BindingResult result) {
-    // // Validate passwords match
-    // doctorValidator.validate(doctor, result);
-
-    // ResponseEntity<?> errorMap =
-    // mapValidationErrorService.MapValidationService(result);
-    // if (errorMap != null)
-    // return errorMap;
-
-    // Doctor newDoctor = service.saveDoctor(doctor);
-
-    // return new ResponseEntity<Doctor>(newDoctor, HttpStatus.CREATED);
-    // }
-
+    // login as doctor
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid LoginRequest loginRequest, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
@@ -127,6 +115,7 @@ public class DoctorController {
         return ResponseEntity.ok(new JWTLoginSuccessResponse(true, jwt));
     }
 
+    // delete doctor by username
     @DeleteMapping("/delete/{username}")
     public ResponseEntity<?> deleteDoctor(@PathVariable(name = "username") String username) {
         try {

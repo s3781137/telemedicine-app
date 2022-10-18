@@ -22,6 +22,9 @@ public class SymptomsController {
     @Autowired
     private SymptomsService service;
 
+    // get symptoms of patient by username, if symptoms does not exist for that user
+    // default symptoms will be made and retrieved
+
     @GetMapping("/getSymptoms/{username}")
     public ResponseEntity<?> getSymptoms(@PathVariable(name = "username") String username) {
 
@@ -34,22 +37,12 @@ public class SymptomsController {
 
     }
 
-    // @PostMapping("/makeSymptoms/{usernamne}")
-    // public ResponseEntity<?> makeSymptoms(@PathVariable(name = "username") String
-    // username) {
-    // try {
-    // service.makeDefaultSymptoms(username);
-    // return new ResponseEntity<>("Made default symptoms for " + username,
-    // HttpStatus.OK);
-    // } catch (Exception e) {
-    // return new ResponseEntity<>("error", HttpStatus.NOT_ACCEPTABLE);
-    // }
-    // }
+    // update symptoms by username of patient
 
     @PutMapping("updateSymptoms/{username}")
     public ResponseEntity<?> updateSymptoms(@PathVariable(name = "username") String username,
             @RequestBody Symptoms newSymptoms) {
-        Symptoms oldSymptoms = service.findSymptomsByUsername(username);
+        Symptoms oldSymptoms = service.getSymptomsByUsername(username);
         if (!(oldSymptoms == null)) {
             oldSymptoms.setBodyTemperature(newSymptoms.getBodyTemperature());
             oldSymptoms.setCough(newSymptoms.getCough());
@@ -58,7 +51,7 @@ public class SymptomsController {
             service.updateSymptoms(oldSymptoms);
             return new ResponseEntity<>(oldSymptoms, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("There is Symptoms with this username", HttpStatus.OK);
+            return new ResponseEntity<>("There is no Symptoms with this username", HttpStatus.OK);
         }
 
     }

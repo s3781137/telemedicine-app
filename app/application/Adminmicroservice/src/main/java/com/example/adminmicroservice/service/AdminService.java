@@ -20,6 +20,7 @@ public class AdminService {
     @Autowired
     private AdminRepository repo;
 
+    // save admin account into database
     public Admin saveAdmin(Admin admin) {
         admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
         admin.setUsername(admin.getUsername());
@@ -27,6 +28,7 @@ public class AdminService {
         return repo.save(admin);
     }
 
+    // get admin account by username
     public Admin getAdminByUsername(String username) {
         Optional<Admin> admin = repo.findAdminByUsername(username);
         if (admin.isPresent()) {
@@ -36,20 +38,24 @@ public class AdminService {
         }
     }
 
+    // checks if username is taken in database
     public boolean checkIfUsernameIsFree(Admin admin) {
         Optional<Admin> existingAdmin = repo.findAdminByUsername(admin.getUsername());
         return existingAdmin.isPresent();
     }
 
+    // delete admin account
     public void deleteAdmin(String username) {
         int id = repo.findIdByUsername(username);
         repo.deleteById(id);
     }
 
+    // finds id of account by username
     public Integer findIdByUsername(String username) {
         return repo.findIdByUsername(username);
     }
 
+    // checks login credentials
     public boolean checkLoginCredentials(String username, String password) {
         Optional<Admin> existingAdmin = repo.findAdminByUsername(username);
         if (existingAdmin.isPresent()) {
@@ -59,15 +65,18 @@ public class AdminService {
         return false;
     }
 
+    // matches decrypted password
     public boolean doPasswordsMatch(String hashedPassword, String plainTextPassword) {
         return bCryptPasswordEncoder.matches(plainTextPassword, hashedPassword);
     }
 
+    // finds admin and gets the password stored in database
     public boolean comparePassword(String username, String plainTextPassword) {
         Optional<Admin> admin = repo.findAdminByUsername(username);
         return (admin.isPresent() && doPasswordsMatch(admin.get().getPassword(), plainTextPassword));
     }
 
+    // jwt login
     public Pair<Optional<String>, Optional<Admin>> login(String username, String plainTextPassword) {
         Optional<Admin> AdminOptional = repo.findAdminByUsername(username);
 
