@@ -57,9 +57,10 @@ public class DoctorService {
     }
 
     // delete doctor account by username
-    public void deleteDoctor(String username) {
+    public boolean deleteDoctor(String username) {
         int id = repo.findIdByUsername(username);
         repo.deleteById(id);
+        return true;
     }
 
     // find id by username
