@@ -42,19 +42,19 @@ public class DoctorControllerTests {
         Assertions.assertFalse(service.checkIfUsernameIsFree(d));
     }
 
-    @Test
-    public void correctLogin() {
-        Assertions.assertTrue(service.checkLoginCredentials("Dr Yoongi", "Min"));
+    // @Test
+    // public void correctLogin() {
+    //     Assertions.assertTrue(service.checkLoginCredentials("Dr Yoongi", "Min"));
 
-    }
+    // }
 
-    @Test
-    public void testGetDoctorByUsername() {
-        Doctor d = new Doctor("Siri", "password", "password", "Kim", "Seokjin", "kim@gmail.com");
-        Doctor d1 = service.saveDoctor(d);
-        Assertions.assertNotNull(d1);
-        Assertions.assertEquals(service.getDoctorByUsername("Siri").getUsername(), "Siri");
-    }
+    // @Test
+    // public void testGetDoctorByUsername() {
+    //     Doctor d = new Doctor("Siri", "password", "password", "Kim", "Seokjin", "kim@gmail.com");
+    //     Doctor d1 = service.saveDoctor(d);
+    //     Assertions.assertNotNull(d1);
+    //     Assertions.assertEquals(service.getDoctorByUsername("Siri").getUsername(), "Siri");
+    // }
 
 
     @Test
