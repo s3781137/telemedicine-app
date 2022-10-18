@@ -40,6 +40,7 @@ public class ChatController {
     @Autowired
     private ChatRoomService chatRoomService;
 
+    //send a message to a reciever from a sender
     @PostMapping("/send")
     public ResponseEntity<?> sendMessage(@RequestBody ChatMessage chatMessage) {
         try {
@@ -61,6 +62,7 @@ public class ChatController {
         }
     }
 
+    //list all the messages in the databsase
     @GetMapping("/list")
     public List<ChatMessage> getMessages() {
         try {
@@ -70,6 +72,7 @@ public class ChatController {
         }
     }
 
+    //count the number of messages between two people
     @GetMapping("/messageCount")
     public ResponseEntity<Long> messageCount(@RequestParam int senderId, @RequestParam int recipientId,
             @RequestParam MessageStatus status)// RECEIVED) {
@@ -82,6 +85,7 @@ public class ChatController {
         }
     }
 
+    //finds all the messages between a sender and a reciever
     @GetMapping("/findMessages") // {senderId}/{recipientId}
     public ResponseEntity<?> findMessage(@RequestParam int senderId, @RequestParam int recipientId) {
         try {
@@ -92,6 +96,7 @@ public class ChatController {
         // return new ResponseEntity<>("okay", HttpStatus.OK);
     }
 
+    //finds a message by the message id
     @GetMapping("/messages")
     public ResponseEntity<?> findMessage(@RequestParam int id) {
         return ResponseEntity

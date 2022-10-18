@@ -13,12 +13,14 @@ import java.util.List;
 @Repository
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Integer> {
 
+    //selects all the mesages from the databse between two people and counts them
         @Query("SELECT count(b) FROM ChatMessage b WHERE b.senderId = ?1 and b.recipientId = ?2 and b.status = ?3 ")
         long countBySenderIdAndRecipientIdAndStatus(@Param("senderId") int senderId,
         @Param("recipientId") int recipientId, 
         @Param("status") MessageStatus status);
 
 
+    //selects all the messages from the database between two people
         @Query("SELECT b FROM ChatMessage b WHERE b.senderId = ?1 and b.recipientId = ?2 ")
         List<ChatMessage> findChat(@Param("senderId") int senderId, @Param("recipientId") int recipientId);
 
@@ -29,6 +31,7 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Intege
             @Param("recipientId") int recipientId);
             
 
+            //lists all the messages from the database
         @Query("Select m FROM ChatMessage m")
         List<ChatMessage> findAll();
 }

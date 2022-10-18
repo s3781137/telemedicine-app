@@ -23,36 +23,37 @@ public class ChatMessageService {
     @Autowired private ChatMessageRepository repository;
     @Autowired private ChatRoomService chatRoomService;
 
+    //saves a chat message
     public ChatMessage save(ChatMessage chatMessage) {
         chatMessage.setStatus(MessageStatus.RECEIVED);
         repository.save(chatMessage);
         return chatMessage;
     }
 
+    //lists chat messages
     public List<ChatMessage> findAll() {
         return repository.findAll();
     }
 
 
+    //counts the number of messages betwen two people form the database
     public long countNewMessages(int senderId, int recipientId, MessageStatus status) {
         return repository.countBySenderIdAndRecipientIdAndStatus(
                 senderId, recipientId, MessageStatus.RECEIVED);
     }
 
+    //lists the chat messages between two people
     public List<ChatMessage> findChatMessages(int senderId, int recipientId) {
-        //Optional<Integer> chatId = chatRoomService.getChatId(senderId, recipientId, false);
-
-        // List messages =
-        //         chatId.map(cId -> repository.findByChatId(senderId, recipientId)).orElse(new ArrayList<>());
 
         List<ChatMessage> messages = repository.findChat(senderId, recipientId);
         if(messages.size() > 0) {
-          //  updateStatuses(MessageStatus.DELIVERED, senderId, recipientId);
+
         }
 
         return messages;
     }
 
+    //finds a chat message by an id
     public ChatMessage findById(int id) {
         return repository
                 .findById(id)
@@ -64,6 +65,7 @@ public class ChatMessageService {
                         new ResourceNotFoundException("can't find message (" + id + ")"));
     }
 
+    //updates the status of a message
     public void updateStatuses(MessageStatus status, int senderId, int recipientId) {
         
         repository.updateDetails(status, senderId, recipientId);
