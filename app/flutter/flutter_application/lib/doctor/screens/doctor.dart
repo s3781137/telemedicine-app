@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 
+import '../widget/appBar.dart';
+
 class Doctor extends StatelessWidget {
   Doctor(this.jwt, this.payload);
 
@@ -15,8 +17,7 @@ class Doctor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // todo appbar
-      // appBar: makeAppBar(context, jwt),
+      appBar: makeAppBar(context, jwt),
       body: ListView(
         children: <Widget>[
           ListTile(
@@ -24,34 +25,23 @@ class Doctor extends StatelessWidget {
             // leading: CircleAvatar(
             //   backgroundImage: AssetImage('assets/ManageProfile.png'),
             // ),
-            title: const Text('Create Doctor'),
+            title: const Text('Add availability'),
             onTap: () {
               // Navigator.of(context).push(MaterialPageRoute(
               //     builder: (context) => CreateDoctor.fromBase64(jwt)));
             },
           ),
           ListTile(
-            // todo: icon
-            // leading: CircleAvatar(
-            //   backgroundImage: AssetImage('assets/ManageProfile.png'),
-            // ),
-            title: const Text('Update Doctor'),
-            onTap: () {
-              // Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (context) => UpdateDoctorScreen.fromBase64(jwt)));
-            },
-          ),
-          ListTile(
-            // todo: icon
-            // leading: CircleAvatar(
-            //   backgroundImage: AssetImage('assets/ManageProfile.png'),
-            // ),
-            title: const Text('Delete Doctor'),
-            onTap: () {
-              // Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (context) => DeleteDoctorScreen.fromBase64(jwt)));
-            },
-          ),
+              // todo: icon
+              // leading: CircleAvatar(
+              //   backgroundImage: AssetImage('assets/ManageProfile.png'),
+              // ),
+              // title: const Text('Delete Doctor'),
+              // onTap: () {
+              //   // Navigator.of(context).push(MaterialPageRoute(
+              //   //     builder: (context) => DeleteDoctorScreen.fromBase64(jwt)));
+              // },
+              ),
         ],
       ),
     );
