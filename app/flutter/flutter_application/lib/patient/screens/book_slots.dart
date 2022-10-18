@@ -29,9 +29,6 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
   }
 
   void addBooking(int i) async {
-    // todo debug
-    print(
-        "doctorusername when addingbooking: ${_availDoctors[i].doctorUsername.toString()}");
     // Create booking object
     PatientBookingModel booking = PatientBookingModel(
         doctorUsername: _availDoctors[i].doctorUsername.toString(),
